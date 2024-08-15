@@ -1,0 +1,26 @@
+<?php
+/** @var  $block \ADM\QuickDevBar\Block\Tab\Panel */
+?>
+<p>
+<?=  __('List only events dispatched when Magento generate this page')?>
+</p>
+<?php if ($block->getEvents()):?>
+<table class="qdb_table striped filterable">
+<thead>
+<tr>
+    <th>Event</th>
+    <th>Data</th>
+    <th>Call Number</th>
+</tr>
+</thead>
+<tbody>
+    <?php foreach ($block->getEvents() as $event): ?>
+      <tr>
+        <td><?=  $event['event']; ?></td>
+        <td><?=  (!empty($event['args']) ? '<ul><li>'.implode('</li><li>', $event['args']).'</li></ul>' : ''); ?></td>
+        <td><?=  $event['nbr']; ?></td>
+      </tr>
+    <?php endforeach ?>
+</tbody>
+</table>
+<?php endif;?>

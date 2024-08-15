@@ -1,0 +1,16 @@
+<?php
+/** @var $block \ADM\QuickDevBar\Block\Tab\Content\Layout */
+?>
+<?php if ($block->getHandles()):?>
+<table class="qdb_table_2col">
+<tr>
+    <th><?=  __('Handles'); ?></th>
+    <td>
+    <?php foreach ($block->getHandles() as $handle): ?>
+        <?=  $handle; ?></br>
+    <?php endforeach;?>
+    <br/>
+    </td>
+</tr>
+</table>
+<?php endif; ?>

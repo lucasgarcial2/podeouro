@@ -1,0 +1,24 @@
+<?php
+/** @var  $block \ADM\QuickDevBar\Block\Tab\Content\Model */
+?>
+<?php if ($block->getModels()):?>
+<table class="qdb_table striped filterable">
+<thead>
+<tr>
+    <th>Event</th>
+    <th>Call Number</th>
+</tr>
+</thead>
+<tbody>
+    <?php
+    $i = 0;
+    foreach ($block->getModels() as $model): ?>
+  <tr>
+    <td><?=  $block->htmlFormatClass($model['class']); ?></td>
+    <td><?=  $model['nbr']; ?></td>
+  </tr>
+        <?php $i++; ?>
+    <?php endforeach ?>
+</tbody>
+</table>
+<?php endif;?>

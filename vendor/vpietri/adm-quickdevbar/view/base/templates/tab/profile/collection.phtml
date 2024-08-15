@@ -1,0 +1,24 @@
+<?php
+/** @var  $block \ADM\QuickDevBar\Block\Tab\Panel */
+?>
+<?php if ($block->getCollections()):?>
+<table class="qdb_collection qdb_table striped filterable sortable tablesorter">
+<thead>
+<tr>
+    <th>Collection</th>
+    <th>Call Number</th>
+</tr>
+</thead>
+<tbody>
+    <?php
+    $i = 0;
+    foreach ($block->getCollections() as $collection): ?>
+  <tr>
+    <td><?=  $block->htmlFormatClass($collection['class']); ?></td>
+    <td><?=  $collection['nbr']; ?></td>
+  </tr>
+        <?php $i++; ?>
+    <?php endforeach ?>
+</tbody>
+</table>
+<?php endif;?>

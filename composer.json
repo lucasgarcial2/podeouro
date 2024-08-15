@@ -1,0 +1,11 @@
+{
+    "require": {
+        "vpietri/adm-quickdevbar": "^0.2.4",
+        "rafaelstz/traducao_magento2_pt_br": "dev-master"
+    },
+    "config": {
+        "allow-plugins": {
+            "magento/magento-composer-installer": true
+        }
+    }
+}

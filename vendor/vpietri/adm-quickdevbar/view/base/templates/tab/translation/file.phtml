@@ -1,0 +1,26 @@
+<?php
+/** @var  $block \ADM\QuickDevBar\Block\Tab\Panel */
+?>
+<?php if ($block->getTranslations()):?>
+    <table class="qdb_table striped filterable">
+        <thead>
+        <tr>
+            <th>File</th>
+            <th>Original</th>
+            <th>Translation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $i = 0;
+        foreach ($block->getTranslations() as $original => $translation): ?>
+            <tr>
+                <td><?=  $translation['file']; ?></td>
+                <td><?=  $original; ?></td>
+                <td><?=  $translation['translation']; ?></td>
+            </tr>
+            <?php $i++; ?>
+        <?php endforeach ?>
+        </tbody>
+    </table>
+<?php endif;?>

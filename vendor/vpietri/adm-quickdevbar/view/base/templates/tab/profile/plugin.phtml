@@ -1,0 +1,24 @@
+<?php
+/** @var  $block \ADM\QuickDevBar\Block\Tab\Panel */
+?>
+<table class="qdb_plugin qdb_table striped filterable sortable tablesorter">
+<thead>
+<tr>
+    <th>Types</th>
+    <th>Plugin</th>
+    <th>Sort Order</th>
+    <th>Method</th>
+</tr>
+</thead>
+<tbody>
+<?php
+foreach ($block->getPluginList() as $type): ?>
+    <tr>
+      <td class="type"><?=  $block->htmlFormatClass($type['type']); ?></td>
+      <td class="plugin"><?=  $block->htmlFormatClass($type['plugin']); ?></td>
+      <td class="sort_order"><?=  $type['sort_order']; ?></td>
+      <td class="methods"><?=  $type['method']; ?></td>
+    </tr>
+    <?php endforeach ?>
+</tbody>
+</table>

@@ -1,0 +1,31 @@
+<?php
+/** @var  $block \ADM\QuickDevBar\Block\Tab\Panel */
+?>
+<p>
+<?=  __('List only observer that intercept dispatched events when Magento generate this page')?>
+</p>
+<?php if ($block->getObservers()):?>
+<table class="qdb_table striped filterable">
+<thead>
+<tr>
+    <th>Event</th>
+    <th>Name</th>
+    <th>Call Number</th>
+    <th>Instance</th>
+</tr>
+</thead>
+<tbody>
+    <?php
+    $i = 0;
+    foreach ($block->getObservers() as $observer): ?>
+  <tr>
+    <td><?=  $observer['event']; ?></td>
+    <td><?=  $observer['name']; ?></td>
+    <td><?=  $observer['call_number']; ?></td>
+    <td><?=  $block->htmlFormatClass($observer['instance']); ?></td>
+  </tr>
+        <?php $i++; ?>
+    <?php endforeach ?>
+</tbody>
+</table>
+<?php endif;?>

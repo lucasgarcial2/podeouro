@@ -10,11 +10,11 @@ DOMAIN=${1:-magento.test}
 
 bin/stop
 
-bin/start --no-dev
+bin/start
 [ $? != 0 ] && echo "Failed to start Docker services" && exit
 
 bin/clinotty chmod u+x bin/magento
-rm -rf src && mkdir src
+#rm -rf src && mkdir src
 
 echo "Adding Magento modules to Composer allow-plugins directive..."
 bin/clinotty composer config --no-plugins allow-plugins.magento/magento-composer-installer true

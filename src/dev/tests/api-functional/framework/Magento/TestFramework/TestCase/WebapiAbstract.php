@@ -8,6 +8,7 @@ namespace Magento\TestFramework\TestCase;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Webapi\Exception as WebapiException;
+use Magento\TestFramework\SkippableTrait;
 use Magento\Webapi\Model\Soap\Fault;
 use Magento\TestFramework\Helper\Bootstrap;
 
@@ -19,20 +20,22 @@ use Magento\TestFramework\Helper\Bootstrap;
  */
 abstract class WebapiAbstract extends \PHPUnit\Framework\TestCase
 {
+    use SkippableTrait;
+
     /** TODO: Reconsider implementation of fixture-management methods after implementing several tests */
     /**#@+
      * Auto tear down options in setFixture
      */
-    const AUTO_TEAR_DOWN_DISABLED = 0;
-    const AUTO_TEAR_DOWN_AFTER_METHOD = 1;
-    const AUTO_TEAR_DOWN_AFTER_CLASS = 2;
+    public const AUTO_TEAR_DOWN_DISABLED = 0;
+    public const AUTO_TEAR_DOWN_AFTER_METHOD = 1;
+    public const AUTO_TEAR_DOWN_AFTER_CLASS = 2;
     /**#@-*/
 
     /**#@+
      * Web API adapters that are used to perform actual calls.
      */
-    const ADAPTER_SOAP = 'soap';
-    const ADAPTER_REST = 'rest';
+    public const ADAPTER_SOAP = 'soap';
+    public const ADAPTER_REST = 'rest';
     /**#@-*/
 
     /**
@@ -566,6 +569,9 @@ abstract class WebapiAbstract extends \PHPUnit\Framework\TestCase
     public function processRestExceptionResult(\Exception $e)
     {
         $error = json_decode($e->getMessage(), true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $error['message'] = $e->getMessage();
+        }
         //Remove line breaks and replace with space
         $error['message'] = trim(preg_replace('/\s+/', ' ', $error['message']));
         // remove trace and type, will only be present if server is in dev mode

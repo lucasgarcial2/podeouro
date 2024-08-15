@@ -1,0 +1,29 @@
+<?php
+/** @var  $block \ADM\QuickDevBar\Block\Tab\Panel */
+
+$_website = $block->getWebsite();
+$_store = $block->getStore();
+?>
+
+<table class="qdb_table_2col">
+  <tr>
+    <th><?=  __('Website Id'); ?></th>
+    <td><?=  $_website->getId(); ?></td>
+  </tr>
+  <tr>
+    <th><?=  __('Website Name'); ?></th>
+    <td><?=  $_website->getName(); ?></td>
+  </tr>
+  <tr>
+    <th><?=  __('Store Id'); ?></th>
+    <td><?=  $_store->getId(); ?></td>
+  </tr>
+  <tr>
+    <th><?=  __('Store Name'); ?></th>
+    <td><?=  $_store->getName(); ?></td>
+  </tr>
+  <tr>
+    <th><?=  __('Store Code'); ?></th>
+    <td><?=  $_store->getCode(); ?></td>
+  </tr>
+</table>

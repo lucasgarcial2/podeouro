@@ -1,0 +1,24 @@
+<?php
+/** @var $block \ADM\QuickDevBar\Block\Tab\Content\Block */
+?>
+<?php if ($block->getBlocks()):?>
+<table class="qdb_table striped filterable">
+<thead>
+<tr>
+    <th>Block</th>
+    <th>Call Number</th>
+</tr>
+</thead>
+<tbody>
+    <?php
+    $i = 0;
+    foreach ($block->getBlocks() as $blockInfo): ?>
+  <tr>
+    <td><?=  $block->htmlFormatClass($blockInfo['class']); ?></td>
+    <td><?=  $blockInfo['nbr']; ?></td>
+  </tr>
+        <?php $i++; ?>
+    <?php endforeach ?>
+</tbody>
+</table>
+<?php endif;?>
