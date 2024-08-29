@@ -1,0 +1,33 @@
+/*Page title*/
+.cdz-block-title{
+	text-align: center;
+	.b-title.h2{
+		color: @main_title_text;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		position: relative;
+		&:before{
+			content: "";
+			position: absolute;
+			transform: translateY(-50%);
+			top: 50%;
+			left: 0;
+			width: 100%;
+			height: 1px;
+			border-top: 5px double #e4e4e4;
+			margin-top: 0px;
+		}
+		span{
+			background:@main_background;
+			padding: 0 30px;
+			position: relative;
+		}
+	}
+}
+
+@media @phone{
+	.no-padding-left, .no-padding-right {
+		padding-left: 10px !important;
+		padding-right: 10px !important;
+	}
+}

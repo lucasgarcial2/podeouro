@@ -1,0 +1,96 @@
+.avsb-style-02 {
+	padding:20px;
+	margin-top:20px;
+	.cdz-avsb-block-title{
+		margin-bottom: 20px;
+		.b-title{
+			text-transform: uppercase;
+			font: @f_special;
+		}
+	}
+    select:not(.multiselect), input.input-text, .cdz-select-wrap .mk{
+        font-size: 14px;
+        height: 40px;
+        line-height: 38px;
+        border-radius: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+		background:@main_box_background;
+    }
+    .cdz-avsb-title {
+        display:none;
+    }
+    .cdz-avsb-wrap {
+		position: relative;
+        .fieldset{
+            margin: 0;
+        }
+        .actions-toolbar {
+            padding: 10px 0;
+        }
+    }
+    .attr-item {
+        margin-bottom: 10px;
+    }
+    .item-label {
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        display: block;
+		font-weight: 500;
+		font-size: 110%;
+    }
+    .actions-toolbar {
+		text-align: center;
+        button, .primary{
+            display: inline-block;
+            vertical-align: middle;
+            float: none;
+            margin: 0;
+			width:100%;
+        }
+		.action.search{
+			.abs-style(@btn_default_text, @btn_default_border, @btn_default_background);
+			&:hover{
+				&:not(.disabled){
+					.abs-style(@btn_normal_text, @btn_normal_border, @btn_normal_background);	
+				}
+			}	
+		}
+        a.more-link{
+            color: @main_text_normal;
+            margin-top: 20px;
+            display:inline-block;
+            border-bottom: 1px solid;
+            padding-bottom: 3px;
+            text-transform: uppercase;
+            &:hover{
+                color: @main_hover_text;
+            }
+			
+        }
+        
+    }
+    @media @desktop {
+        position: absolute;
+		top: 0;
+		z-index: 99;
+		width: 300px;
+		height: 100%;
+		background:rgba(0, 0, 0, 0.5);
+		color:#fff;
+		padding-top: 50px;
+		margin-top:0;
+    }
+	@media @phone{
+		padding:10px;
+		border: 1px solid @main_box_border;
+		background:@main_box_background;
+		.abs-borderradius(@main_box_radius);
+		.cdz-avsb-block-title .b-title{
+			font:@fm_h1;
+		}
+	}
+}
+.slideshow-container{
+	position: relative;
+}

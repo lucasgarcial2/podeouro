@@ -1,0 +1,129 @@
+@tabs_09_background: @main_box_background;
+@tabs_09_item_label_width: 300px;
+@tabs_09_item_label_background: @main_box_background;
+@tabs_09_item_label_text: @main_title_text;
+@tabs_09_item_label_active_background: lighten(@main_hover_text_box, 40%);
+@tabs_09_item_label_active_text: @main_hover_text_box;
+@tabs_09_item_label_hover_background: @main_background;
+@tabs_09_item_label_hover_text: @main_hover_text_box;
+@tabs_09_item_content_background: @main_box_background;
+@tabs_09_border: @main_box_border;
+//==================================
+
+.tabs-style-02{
+    @media @tablet_vertical {
+        &.cdz-tabs-wrap > .cdz-block-content {
+            display: flex;
+            background: @tabs_09_item_label_background;
+            border:1px solid @main_border;
+			border-top:2px solid @main_border;
+        }
+        .abs-dropdown {
+            width: @tabs_09_item_label_width;
+			border-right:1px solid @main_border;
+            .item {
+                background: @tabs_09_item_label_background;
+                margin: 0;
+                position: relative;
+                transition: all ease 400ms;
+                a {
+                    padding: 10px;
+                    color: @tabs_09_item_label_text;
+                    display: block;
+                    width:100%;
+                }
+                &:hover {
+                    background: @tabs_09_item_label_hover_background;
+                    a {
+                        color: @tabs_09_item_label_hover_text;
+                    }
+                }
+                &.active {
+                    background: @tabs_09_item_label_active_background;
+                    color: @tabs_09_item_label_active_text;
+                    border-color: transparent;
+                    padding-right: 30px;
+                    width: 100%;
+                    .rtl-layout & {
+                        padding-right: 0;
+                        padding-left: 30px;
+                    }
+                    a {
+                        color: @tabs_09_item_label_active_text;
+                        font-weight: 600;
+                    }
+                    &:after {
+                        .abs-iconfont2("\E991", 17px);
+                        position: absolute;
+                        right: 5px;
+                        top: ~'calc(50% - 8px)';
+                        .rtl-layout & {
+                            right: auto;
+                            left: 5px;
+                            content: "\E974";
+                        }
+                    }
+                }
+            }
+        }
+		.product-item-name{
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+        .cdz-tabs {
+            width: ~'calc(100% - @{tabs_09_item_label_width})';
+            margin: 0;
+            background: @tabs_09_item_content_background;
+        }
+    }
+    .mobile-tabs-style-01();
+    @media @phone {
+        .cdz-block-title {
+            margin-bottom: -35px;
+            padding-bottom: 0;
+            .b-title {
+				max-width: 100%;
+                &:before, &:after {
+                    display: none;
+                }
+            }
+        }
+        &.cdz-tabs-wrap > .cdz-block-content.cdz-tabs-bg {
+            background-image: none !important;
+            background-color: transparent !important;
+            min-height: 0 !important;
+        }
+    }
+}
+
+.tabs_02_special_color (@class, @color, @background_color) {
+    .tabs-style-02 {
+        &@{class} {
+            @media @tablet_vertical {
+				&.cdz-tabs-wrap > .cdz-block-content {
+					border-top-color:@color;
+				}
+				.abs-dropdown {
+					.item {
+						&:hover {
+							background: @background_color;
+							a {
+								color: @color;
+							}
+						}
+						&.active {
+							background: @background_color;
+							color: @color;
+							a {
+								color: @color;
+							}
+						}
+					}
+				}
+			}
+        }
+    }
+}
+
+/*.tabs_02_special_color(~'.tabs-style-09-color-02', @tabs_09_color_02_tabs_background, @tabs_09_color_02_label_background, @tabs_09_color_02_label_text );*/

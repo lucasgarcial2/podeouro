@@ -1,0 +1,8 @@
+@media @tablet_vertical {
+	.page-header {
+        margin-bottom: 0;
+        .header-top{
+        	font-size: 100%;
+        }
+    }
+}

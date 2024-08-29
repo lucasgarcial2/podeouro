@@ -1,0 +1,115 @@
+/*Parallax banner*/
+.parallax-banner {
+    position: relative;
+    .desc {
+        text-align: center;
+        color: #ffffff;
+        height: 100%;
+        letter-spacing: 2px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 73%;
+        margin: 0 auto;
+        z-index: 1;
+        .h1 {
+            color: #ffffff;
+            font-size: 40px;
+            font-weight: 600;
+        }
+        @media @phone {
+            width: 100%;
+        }
+    }
+	.cdz-banner-text{
+		padding: 20px;
+		position: relative;
+		background-color: rgba(95,94,94,.43);
+		color:#fff;
+		.cdz-banner-inner{
+			.h1 {
+				color: #ffffff;
+			}
+		}
+		@media only screen and (min-width: 1024px){
+			padding: 70px 87px;
+			.abs-boxshadow(19px 19px 6px fade(@main_hover_text, 50%));
+			.abs-transform(skew(-205deg));
+			width: 90%;
+			margin-bottom:30px;
+			.cdz-banner-inner{
+				.abs-transform(skew(205deg));
+				.h1 {
+					font-size: 300%;
+				}
+			}
+		}
+	}
+}
+.parallax-bg {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 339px;
+    &:before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: rgba(0, 0, 0, 0.4)
+    }
+    @media @phone {
+        background-size: cover;
+		display: block!important;
+    }
+    &.parallax-bg3x{
+        @media @tablet_vertical {
+            min-height: 500px;
+        }
+        @media @tablet_horizontal {
+            min-height: 770px;
+        }  
+        @media @phone {
+            display: flex !important;
+            .desc .h1{
+                font-size:  30px;
+            }
+        }
+    }
+    &.parallax-bg2x{
+        @media @tablet_vertical {
+            min-height: 400px;
+        }
+        @media @tablet_horizontal {
+            min-height: 600px;
+        }
+        @media @phone {
+            display: flex !important;
+            .desc .h1{
+                font-size:  30px;
+            }
+        }
+    }
+    
+
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 1024px) {
+    .parallax-bg {
+        background-attachment: unset !important;
+        background-position: center top !important;
+    }
+}
+/*IE Fix*/
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .parallax-banner .desc {
+        max-width: 70%;
+        display: inline-block;
+        padding: 10%
+    }
+}

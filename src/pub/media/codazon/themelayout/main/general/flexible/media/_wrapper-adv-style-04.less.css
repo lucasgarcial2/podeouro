@@ -1,0 +1,47 @@
+/*Download App*/
+.wrapper-adv-style-04{
+	background: #f7f7f7;
+	border: 1px solid @main_border;
+	.form-area{
+		padding: 90px 50px;
+	}
+	.form-title{
+		color: @main_title_text;
+		font-size: 200%;
+	}
+	.form-content{
+		padding: 30px 0;
+	}
+	.form-app-store{
+		margin: 0 -10px;
+		a{
+			display: inline-block;
+		}
+		> a{
+			margin: 0 10px;
+		}
+	}
+	.block.newsletter{
+		width: 100%;
+		input[type="email"]{
+			line-height: 44px;
+			height: 44px;
+		}
+		.field .control:before{
+			line-height: 44px;
+		}
+		.action.subscribe{
+			.abs-borderradius(0);
+		}
+	}
+	@media @phone{
+		.form-area{
+			padding: 20px;
+		}
+		.form-app-store img{
+			max-width: 115px;
+		}
+	}
+
+}
+

@@ -1,0 +1,29 @@
+.wrapper-adv-style-10 {
+	.item{
+		display: flex;
+		align-items: center;
+		.item-image{
+			width:50px;
+			float:left;
+			margin:0 10px;
+		}
+		.item-content{
+			overflow: hidden;
+			.item-content-title{
+				font: @f_h4;
+				.abs-link(@main_title_text, @main_hover_text);
+			}
+			.item-content-decs{}
+		}
+	}
+	.owl-carousel.owl-drag .owl-item:after {
+		width: 1px;
+		height: 100%;
+		background: @main_border;
+		position: absolute;
+		top: 0;
+		left: -10px;
+		content: '';
+		z-index: 2;
+	}
+}

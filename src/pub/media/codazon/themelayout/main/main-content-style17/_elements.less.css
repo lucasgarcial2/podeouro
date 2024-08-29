@@ -1,0 +1,197 @@
+@slideshow_text_01: #b888ff;
+@slideshow_text_02: #fbb419;
+.cdz-slideshow {
+	.slide-caption {
+		.h1{
+			color:@slideshow_text_01;
+			span{
+				color:@slideshow_text_02;
+			}
+		}
+		.slide-title{
+			color:@main_title_text;
+			text-shadow: 5px 6px 0px fade(@main_title_text, 15%);
+		}
+	}
+}
+@media @tablet_vertical {
+	.cdz-slideshow {
+		.slide-caption {
+			.slide-title{
+				font:@f_special;
+			}
+		}
+	}
+	.parallax-banner .desc .h1{
+		font:@f_special;
+	}	
+	.btn.btn-bkg{
+		height:69px;
+		line-height: 68px;
+		background:none;
+		border:none;
+		padding:0;
+		display:inline-block;
+		text-transform: uppercase;
+		color:#fff!important;
+		font-size: 150%;
+		white-space: nowrap;
+		font-weight:600;
+		margin-top:20px;
+		.abs-transition();
+		span{
+			.abs-cssbg(transparent, "codazon/themelayout/images/btn-bkg.png", ~"0 0", no-repeat);
+			display: inline-block;
+			height: 100%;
+			padding-left: 62px;
+			span{
+				background-position: 100% 100%;
+				padding-left: 0;
+				padding-right: 63px;
+			}
+		}
+		&:hover{
+			transform: translateY(-10px);
+		}
+	}
+}
+/*Title*/
+.cdz-block-title {
+    text-align: center;
+    position: relative;
+    margin-bottom: 35px;
+    .b-title.h2{
+        padding-bottom: 60px;
+        position: relative;
+		font:@f_h1;
+		text-shadow: 5px 6px 0px fade(@main_title_text, 15%);
+        &:before {
+            position: absolute;
+            content: '';
+            bottom: 0px;
+			width: 197px;
+			height: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+            .abs-cssbg(transparent, "codazon/themelayout/images/icon-sepa.png", ~"0 0", no-repeat);
+        }
+    }
+}
+
+
+/*Tab*/
+.tabs-style-04 .box-cate-link .item{
+	.abs-borderradius(@btn_radius);
+	a{
+		padding: 7px 25px;
+	}
+}
+.bkg-icon{
+	position: relative;
+	&:before{
+		content: '';
+		width: 100%;
+		.abs-cssbg(transparent, "codazon/themelayout/images/bkg-line.png", ~"0 0", repeat-x);
+		position: absolute;
+		top: 0;
+		z-index: 99;
+		height: 30px;
+	}
+	&:after{
+		content: '';
+		width: 100%;
+		.abs-cssbg(transparent, "codazon/themelayout/images/bkg-line2.png", ~"0 0", repeat-x);
+		position: absolute;
+		bottom: 0;
+		z-index: 99;
+		height: 30px;
+	}
+}
+
+
+/*Label*/
+.cdz-product-labels{
+	left:10px;
+	top:10px;
+	.rtl-layout & {
+		left:auto;
+		right:10px;
+	}
+	.label-item{
+		border-radius: 0;
+		border-top-left-radius: 10px;
+		border-bottom-right-radius: 10px;
+		padding: 1px 10px;
+		text-transform: none;
+	}
+}
+
+
+/*Blog*/
+.post-list .post-holder,
+.post-view .post-holder{
+	.blog-box(1px); /*_blog*/
+}
+
+/*Category*/
+.sidebar .block:not(.account-nav){
+	.block-style05(1px);	
+}
+.toolbar{
+	.toolbar-option3(1px);
+}
+/*category - product list*/
+.list.products-list{
+	.item.product-item{
+		.toolbar-option3(0px);
+		.abs-borderradius(@main_box_radius);
+		transition: box-shadow ease 400ms;
+        &:hover {
+            box-shadow: 0 2px 8px #bebebe;
+        }
+	}
+}
+
+
+@media @tablet_vertical{
+	.product-list-style-02 .product-item-actions{
+		.tocart, a.tocompare, .action.towishlist,a.qs-button{
+			.abs-borderradius(@btn_radius);
+		}
+	}
+}
+
+/*My account*/
+.account-nav{
+	.content{
+		.toolbar-option3(1px);
+	}
+}
+/*Product page*/
+.product-view-style-02,
+.product-view-style-01,
+.product-view-style-03{
+	.main-inner,
+	.product.info.detailed .product.items{
+		.product-info-box(1px); /*_product-view*/
+	}
+}
+.product-view-style-04 {
+	.product-media-wrapper,
+	.product-info-main {
+		.product-left,
+		.product-right{
+			.product-info-box(1px);
+		}
+	}
+	.product.info.detailed .product.items{
+		.product-info-box(1px);
+	}
+}
+
+.block.related,
+.block.upsell,
+.block.crosssell{
+	.toolbar-option3(1px);
+	padding: 20px;
+}

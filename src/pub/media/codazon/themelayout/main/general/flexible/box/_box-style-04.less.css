@@ -1,0 +1,49 @@
+.box-style-04 {
+	/**/
+	.row{
+		margin-left: -3px!important;
+		margin-right: -3px!important;
+	}
+	[class*='col-lg-'],
+	[class*='col-md-'],
+	[class*='col-sm-']{
+		padding-right: 3px !important;
+		padding-left: 3px !important;
+	}
+	.cdz-box-headding{
+		color:  #fff;
+		background-color: #000;
+		text-align: center;
+		padding: 20px;
+		margin-bottom: 5px;
+		.b-title{
+			font:  @f_special;
+		}
+		.extra-links{
+			display: inline-block;
+			li{
+				margin:  5px 0px;
+			}
+			a{
+				text-transform: uppercase;
+				.abs-link(#fff, @main_hover_text);	
+			}
+		}
+		&.box-headding-top{
+			.extra-links{
+			display: inline-block;
+				li{
+					display: inline-block;
+					margin:  0 5px;
+				}
+			}
+		}
+		&.box-headding-left{
+			height: 100%;
+		}
+		&.box-headding-right{
+			height: 100%;
+		}
+	}
+	
+}

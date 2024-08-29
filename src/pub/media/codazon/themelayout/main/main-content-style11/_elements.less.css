@@ -1,0 +1,125 @@
+/*Kids Home page*/
+/*Slide show*/
+.cdz-slideshow {
+	.slide-title{
+		font: @f_special;
+		font-size: 150%;
+		
+	}
+	@media @tablet_vertical{
+		.slide-title{
+			font-size: 400%;
+			margin-bottom: 20px;
+			
+		}
+		.slide-text{
+			margin-bottom:40px;
+		}
+	}
+}
+
+/*Label*/
+.cdz-product-labels{
+	left:10px;
+	top:10px;
+	.rtl-layout & {
+		left:auto;
+		right:10px;
+	}
+	.label-item{
+		border-radius: 0;
+		border-top-left-radius: 10px;
+		border-bottom-right-radius: 10px;
+		padding: 1px 10px;
+		text-transform: none;
+	}
+}
+
+.cdz-block-title .b-title.h2{
+	font: @f_special;
+	text-align: center;
+	@media @tablet_vertical{
+		&.small-title{
+			font-size:200%;
+			text-align: inherit;
+		}
+	}
+	@media @phone{
+		font-size:200%;
+		text-align: center;
+	}
+}
+
+/*Blog*/
+.post-list .post-holder,
+.post-view .post-holder{
+	.blog-box(1px); /*_blog*/
+}
+
+/*Category*/
+.sidebar .block:not(.account-nav){
+	.block-style05(1px);	
+}
+.toolbar{
+	.toolbar-option3(1px);
+}
+/*category - product list*/
+.list.products-list{
+	.item.product-item{
+		.toolbar-option3(0px);
+		.abs-borderradius(@main_box_radius);
+		transition: box-shadow ease 400ms;
+        &:hover {
+            box-shadow: 0 2px 8px #bebebe;
+        }
+	}
+}
+
+.wrapper-adv-style-06 .cdz-block-content{
+	.tt-inner{
+			color: @main_price_text;
+	}
+}
+
+@media @tablet_vertical{
+	.product-list-style-02 .product-item-actions{
+		.tocart, a.tocompare, .action.towishlist,a.qs-button{
+			.abs-borderradius(@btn_radius);
+		}
+	}
+}
+
+/*My account*/
+.account-nav{
+	.content{
+		.toolbar-option3(1px);
+	}
+}
+/*Product page*/
+.product-view-style-02,
+.product-view-style-01,
+.product-view-style-03{
+	.main-inner,
+	.product.info.detailed .product.items{
+		.product-info-box(1px); /*_product-view*/
+	}
+}
+.product-view-style-04 {
+	.product-media-wrapper,
+	.product-info-main {
+		.product-left,
+		.product-right{
+			.product-info-box(1px);
+		}
+	}
+	.product.info.detailed .product.items{
+		.product-info-box(1px);
+	}
+}
+
+.block.related,
+.block.upsell,
+.block.crosssell{
+	.toolbar-option3(1px);
+	padding: 20px;
+}

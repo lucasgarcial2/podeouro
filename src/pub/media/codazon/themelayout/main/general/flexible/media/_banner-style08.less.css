@@ -1,0 +1,31 @@
+.banner-style08{
+	.scale-effect();
+	.banner-content{
+		padding-top: 20px;
+		position: relative;
+		.bc-title{
+			&:before{
+				content: '';
+			    position: absolute;
+			    width: 2px;
+			    height: 0;
+			    background-color: @main_hover_text;
+			    top: -35px;
+			   	.abs-transition();
+			    z-index: 1;
+			    left: 0;
+			    right: 0;
+			    margin: 0 auto;
+			}
+		}
+	}
+	&:hover{
+		.banner-content .bc-title{
+			color:  @main_hover_text;
+			.abs-transition();
+			&:before{
+				height: 50px;
+			}
+		}
+	}
+}

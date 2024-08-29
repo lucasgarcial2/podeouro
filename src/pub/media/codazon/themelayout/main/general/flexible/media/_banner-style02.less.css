@@ -1,0 +1,47 @@
+/*banner hover border*/
+.banner-style02{
+	.scale-effect();
+	position: relative;
+    .item-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        color: inherit;
+        padding: 30px 10%;
+        &.text-left{
+            text-align:left;
+        }
+        &.text-right{
+            text-align:right;
+        }
+        &.content-middle{
+            justify-content: center;
+
+        }
+        &.content-end{
+            justify-content: flex-end;
+        }
+        
+    }
+	.bc-primary-color {color:@main_hover_text}
+    .bc-white-color{color:  #ffffff}
+    @media @general_tablet {
+        .item-content {
+            padding: 15px 10%;
+        }
+        .bc-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .bc-desc, .bc-btn, .bc-subtitle{
+            font-size: 13px;
+        }
+
+    }
+}

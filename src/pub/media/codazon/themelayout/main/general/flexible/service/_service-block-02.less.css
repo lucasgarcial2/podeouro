@@ -1,0 +1,23 @@
+/*Fashion Vintage*/
+.service-banner-style02{
+	.item-icon{
+		margin-bottom:15px;
+		font-size: 45px;
+		.abs-transition();
+	}
+	.item{
+		display: flex;
+		align-items: center;	
+		justify-content: center;
+		flex-direction: column;
+		&:hover{
+			cursor:pointer;
+			.item-icon{
+				.abs-scale(1.2);
+			}
+		}
+	}
+	.item-content{
+		letter-spacing: 1px;
+	}
+}

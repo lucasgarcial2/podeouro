@@ -1,0 +1,115 @@
+@banner_text_01: @main_title_text;
+@banner_text_hover_01: @main_text_normal2;
+@banner_text_02: @main_text_normal2;
+.banner-style07{
+    position: relative;
+    overflow: hidden;
+	border: 1px solid @main_box_border;
+	.abs-boxshadow(@main_box_shadow);
+	.abs-borderradius(@main_box_radius);
+	.shine-effect();
+    .item-content{
+        position: absolute;
+        top:0;
+        left: 0;
+        text-align: center;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+        width: 100%;
+        height: 100%;
+        &.content-end{
+            justify-content: flex-end;
+        }
+        .bc-title{
+            font-size: 250%;
+            font-weight: 600;
+        }
+        .bc-desc{ font-size-size: 120%}
+        .bc-actions{ padding-top: 20px; }
+        .bc-btn{
+            border: 1px solid @banner_text_01;
+            background: #ffffff;
+            color: @banner_text_01;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+            font: @f_special;
+			font-size: 130%;
+			.abs-borderradius(@main_box_radius);
+            .abs-transition();
+            &:hover{
+                .abs-style(@btn_hover_text, @btn_hover_border, @btn_hover_background);
+            }
+        }
+    }
+	.cdz-banner-right{
+		.cdz-bn-title{
+			font: @f_special;
+			font-size: 200%;
+			color: @banner_text_01;
+			padding:10px 0;
+			border-bottom: 1px solid @main_border;
+		}
+		ul,ol{
+			margin: 0;
+			padding: 0;
+			list-style: none none;
+		}
+		.cdz-bn-list{
+			font: @f_h5;
+			li {
+				padding: 10px 0;
+				margin:0;
+				border-bottom: 1px solid @main_border;
+				a{display: block;}
+				a:after{
+					.abs-iconfont('\f105', 100%);
+					line-height: 1.35;
+					float: right;
+					.rtl-layout & {
+						float: left;
+						content: '\f104';
+					}
+				}
+				&.last{
+					border-bottom:none;
+					font: @f_special;
+					font-size: 130%;
+					a{
+						.abs-link(@banner_text_01, @banner_text_hover_01);
+						&:after{
+							content:"\f101";
+							.rtl-layout & {
+								content: '\f100';
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.banner_style07_color (@class, @color, @color_hover) {
+    &@{class} {
+		.item-content{
+			.bc-btn{
+				border-color: @color;
+				color: @color;
+			}
+		}
+		.cdz-banner-right{
+			.cdz-bn-title{
+				color: @color;
+			}
+			.cdz-bn-list li.last a{
+				.abs-link(@color, @color_hover);
+			}
+		}
+	}
+}
+
+.banner_style07_color(~'.banner-style07-color-02', @banner_text_02, @main_hover_text );

@@ -1,0 +1,7 @@
+@media @tablet_vertical {
+	.sticky-menu:not(.active) {
+		.header-menu-wrap > div{
+			border-top:  1px solid @header_border;
+		}
+	}
+}

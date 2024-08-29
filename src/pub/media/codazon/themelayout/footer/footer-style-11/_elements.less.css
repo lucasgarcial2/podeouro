@@ -1,0 +1,10 @@
+.page-footer{
+	background-size: cover;
+	padding-top: 270px;
+	.footer-content-top {
+		padding: 0px 10px 50px;
+	}
+	.footer-content-middle{
+		padding-bottom:50px;
+	}
+}

@@ -1,0 +1,40 @@
+.service-banner-style08 {
+    padding:  10px 0;
+    text-align: center;
+    p{
+        margin: 0;
+    }
+    .item-text{
+        padding: 17px 5px;
+        text-align: center;
+        vertical-align: middle;
+        background: #f2f2f4;
+        color:  #222222;
+        margin: 0px 15px
+    }
+    .item-title{
+        text-transform: uppercase;
+        color: @service-banner-title;
+        padding-bottom: 0px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    .item{
+        display: block;
+        padding:  10px 0;
+        
+        @media @phone{
+            
+            .item-text {
+               
+                .item-title{
+                    font-size: 11px;
+                }
+                .item-sub-title{
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+}

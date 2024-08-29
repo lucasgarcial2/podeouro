@@ -1,0 +1,46 @@
+/*banner hover border*/
+.banner-style09{
+	.cdz-banner{
+		position: relative;
+	}
+	&.row{
+		margin-left: -5px;
+		margin-right: -5px;
+		[class*="col-xs"]{
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+	}
+    .item-content {
+        position: absolute;
+		top: 10px;
+		left: 50%;
+		-webkit-transform: translateX(-50%);
+		transform: translateX(-50%);
+        &.text-center{
+            text-align:center;
+        }
+        &.text-left{
+            text-align:left;
+        }
+        &.text-right{
+            text-align:right;
+        }
+        &.content-middle{
+            top: 50%;
+			transform: translate(-50%, -50%);
+			-webkit-transform: translate(-50%, -50%);
+        }
+        &.content-end{
+            top: inherit;
+			bottom:10px;
+        }
+		.bc-btn, a.action{
+			padding:7px 10px;
+			display:inline-block;
+			width:auto;
+			min-width: 150px;
+		}
+        
+    }
+}

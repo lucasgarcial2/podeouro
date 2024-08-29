@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<config>
+  <identifier>footer-style-27</identifier>
+  <title>Footer Style 27</title>
+  <variables>
+    <footer_background>#ffffff</footer_background>
+    <footer_background_file></footer_background_file>
+    <footer_background_image_option></footer_background_image_option>
+    <footer_background_normal>#ffffff</footer_background_normal>
+    <footer_border>#ebebeb</footer_border>
+    <footer_bottom_background>#ffffff</footer_bottom_background>
+    <footer_font>12px</footer_font>
+    <footer_hover_text>#e40046</footer_hover_text>
+    <footer_text>#555555</footer_text>
+    <footer_text_normal>#000000</footer_text_normal>
+    <footer_title_font>14px</footer_title_font>
+    <footer_title_text>#000000</footer_title_text>
+    <footer_top_background>#ffffff</footer_top_background>
+  </variables>
+  <layout_xml>&lt;body&gt;&#xD;
+    &lt;referenceBlock name="footer_links" remove="true" /&gt;&#xD;
+    &lt;referenceBlock name="copyright" remove="true" /&gt;&#xD;
+    &lt;referenceBlock name="report.bugs" remove="true" /&gt;&#xD;
+    &lt;referenceBlock name="form.subscribe" remove="true" /&gt;&#xD;
+    &lt;move element="theme-layout-footer" destination="footer-container" /&gt;&#xD;
+&lt;/body&gt;</layout_xml>
+  <custom_variables/>
+  <custom_fields>
+    <version>62ffbe458c6a6</version>
+    <auto_detect_files>
+      <item>service/_service-block-04.less.css</item>
+    </auto_detect_files>
+    <custom_variables></custom_variables>
+    <custom_less_code></custom_less_code>
+    <custom_css_code></custom_css_code>
+    <flexible_less/>
+  </custom_fields>
+  <parent/>
+  <content>&lt;div class="footer-style-27"&gt;&#xD;
+&lt;div class="main-footer"&gt;&#xD;
+&lt;div class="footer-content-top"&gt;&#xD;
+&lt;div class="container"&gt;&#xD;
+&lt;div class="service-banner-style04 row"&gt;&#xD;
+&lt;div class="item col-sm-6 col-xs-24"&gt;&#xD;
+&lt;div class="footer-logo"&gt;&lt;img src="{{media url="wysiwyg/codazon/footer-logo.svg"}}" alt="About Us"&gt;&lt;/div&gt;&#xD;
+&lt;p class="text-uppercase title h4"&gt;Love your Skin naturally&lt;/p&gt;&#xD;
+&lt;div class="footer-social"&gt;&#xD;
+&lt;p class="social"&gt;&lt;a href="#"&gt;&lt;span class="fa fa-facebook"&gt;facebook&lt;/span&gt;&lt;/a&gt; &lt;a href="#"&gt;&lt;span class="fa fa-twitter"&gt;twitter&lt;/span&gt;&lt;/a&gt; &lt;a href="#"&gt;&lt;span class="fa fa-pinterest-p"&gt;pinterest&lt;/span&gt;&lt;/a&gt; &lt;a href="#"&gt;&lt;span class="fa fa-google-plus"&gt;google plus&lt;/span&gt;&lt;/a&gt; &lt;a href="#"&gt;&lt;span class="fa fa-rss"&gt;rss&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;div class="col-sm-18 col-xs-24"&gt;&#xD;
+&lt;div class="row"&gt;&#xD;
+&lt;div class="item col-sm-6 col-xs-12"&gt;&#xD;
+&lt;p class="item-icon"&gt;&lt;span class="fa fa-truck"&gt;&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&#xD;
+&lt;p class="title h4"&gt;Express Shipping&lt;/p&gt;&#xD;
+&lt;p&gt;Delivery within 2 days&lt;/p&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;div class="item col-sm-6 col-xs-12"&gt;&#xD;
+&lt;p class="item-icon"&gt;&lt;span class="fa-phone fa"&gt;&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&#xD;
+&lt;p class="title h4"&gt;Support 24/7&lt;/p&gt;&#xD;
+&lt;p&gt;Mail &amp;amp; Telephone&lt;/p&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;div class="item col-sm-6 col-xs-12"&gt;&#xD;
+&lt;p class="item-icon"&gt;&lt;span class="fa-exchange fa"&gt;&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&#xD;
+&lt;p class="title h4"&gt;14 Days to Change&lt;/p&gt;&#xD;
+&lt;p&gt;Your Mind&lt;/p&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;div class="item col-sm-6 col-xs-12"&gt;&#xD;
+&lt;p class="item-icon"&gt;&lt;span class="fa-thumbs-o-up fa"&gt;&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&#xD;
+&lt;p class="title h4"&gt;+200 Brands&lt;/p&gt;&#xD;
+&lt;p&gt;Guarantee Highest Quality&lt;/p&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;div class="footer-content-middle"&gt;&#xD;
+&lt;div class="container"&gt;&#xD;
+&lt;div class="footer content"&gt;&#xD;
+&lt;div class="row middle-top"&gt;&#xD;
+&lt;div class="col-sm-12 middle-top-wrapper middle-top-wrapper-left"&gt;&#xD;
+&lt;div class="footer-box bg-box"&gt;&#xD;
+&lt;div class="newsletter"&gt;&#xD;
+&lt;p class="newsletter-title h5"&gt;Subscribe Us&lt;/p&gt;&#xD;
+&lt;div&gt;&#xD;
+&lt;div class="newsletter-content"&gt;{{block class="Magento\Newsletter\Block\Subscribe" name="cdz.newsletter" template="subscribe.phtml"}}&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;div class="footer-app"&gt;&#xD;
+&lt;p class="app-title h5"&gt;Download App&lt;/p&gt;&#xD;
+&lt;div class="footer-app-store"&gt;&lt;a href="#"&gt;&lt;img src="{{media url="wysiwyg/codazon/footer-img-02.jpg"}}" alt="Codazon_alt"&gt; &lt;/a&gt; &lt;a href="#"&gt;&lt;img src="{{media url="wysiwyg/codazon/footer-img-01.jpg"}}" alt="Codazon_alt"&gt; &lt;/a&gt;&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;div class="col-sm-12 middle-top-wrapper middle-top-wrapper-right"&gt;&#xD;
+&lt;div class=" footer-box"&gt;&#xD;
+&lt;p class="h5" data-cdz-toggle="#footer-content-1"&gt;Stay in touch with us&lt;/p&gt;&#xD;
+&lt;div class="footer-content-1"&gt;&#xD;
+&lt;ul class="footer-link"&gt;&#xD;
+&lt;li class="f-address"&gt;&lt;span class="pe-7s-map-marker"&gt;&amp;nbsp;&lt;/span&gt;Montergade 19 1140, Copenhagen, Denmark&lt;/li&gt;&#xD;
+&lt;li class="f-phone"&gt;&lt;span class="pe-7s-call"&gt;&amp;nbsp;&lt;/span&gt;&lt;a href="tel:+1123 456 xxx"&gt;+123 456 xxx&lt;/a&gt;&lt;/li&gt;&#xD;
+&lt;li class="f-email"&gt;&lt;span class="pe-7s-mail-open"&gt;&amp;nbsp;&lt;/span&gt;codazon@gmail.com&lt;/li&gt;&#xD;
+&lt;li class="f-time"&gt;&lt;span class="pe-7s-timer"&gt;&amp;nbsp;&lt;/span&gt;Week 7 days from 7:00 to 20:00&lt;/li&gt;&#xD;
+&lt;/ul&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;div class="footer-payment"&gt;&lt;img class="img-responsive" src="{{media url="wysiwyg/codazon/footer-payment.png"}}" alt="Accept Payment"&gt;&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;div class="footer-content-bottom text-center"&gt;&#xD;
+&lt;div class="container"&gt;&#xD;
+&lt;div class="row"&gt;&#xD;
+&lt;div class="col-sm-24"&gt;&#xD;
+&lt;div class="bottom-links-wrapper"&gt;&#xD;
+&lt;ul class="bottom-links"&gt;&#xD;
+&lt;li&gt;&lt;a href="#"&gt;Shopping guide&lt;/a&gt;&lt;/li&gt;&#xD;
+&lt;li&gt;&lt;a href="#"&gt;Company&lt;/a&gt;&lt;/li&gt;&#xD;
+&lt;li&gt;&lt;a href="#"&gt;About us &lt;/a&gt;&lt;/li&gt;&#xD;
+&lt;li&gt;&lt;a href="#"&gt;Policies&lt;/a&gt;&lt;/li&gt;&#xD;
+&lt;li&gt;&lt;a href="#"&gt;Services Stores&lt;/a&gt;&lt;/li&gt;&#xD;
+&lt;li&gt;&lt;a href="#"&gt;Contact us&lt;/a&gt;&lt;/li&gt;&#xD;
+&lt;/ul&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;div class="col-sm-24"&gt;&#xD;
+&lt;div class="footer-address"&gt;&#xD;
+&lt;p&gt;&#xA9; 2021 Codazon Ltd. Trademarks and brands&lt;/p&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;&#xD;
+&lt;/div&gt;</content>
+</config>

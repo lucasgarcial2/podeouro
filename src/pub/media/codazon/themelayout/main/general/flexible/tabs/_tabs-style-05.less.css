@@ -1,0 +1,74 @@
+.tabs-style-05{
+    @media @tablet_vertical{
+        .cdz-block-title{
+            text-align: center;
+        }
+        .box-cate-link{
+            text-align: center;
+            .item{
+                display: inline-block;
+                margin: 0px 10px;
+            }
+            .tab-title{
+                padding: 10px 25px;
+                position: relative;
+                display: inline-block;
+                transition: .5s;
+                color: @main_tab_text;
+                background: transparent;
+                line-height: 1;
+                position: relative;
+                font: @f_h4;
+                min-width: 100px;
+                text-align: center;
+                box-sizing: content-box;
+                &:before {
+                    content: '';
+                    background: @main_tab_background;
+                    box-shadow: 5px 5px 0px #d6d6d6;
+					border: 1px solid @main_tab_border;
+                    .absolute-full-box();
+                    transform: skew(-30deg);
+					.abs-transition();
+                    .rtl-layout & {
+                        transform: skew(30deg);
+                        box-shadow: -5px 5px 0px #d6d6d6;
+                    }
+                }
+                > span{
+                    position: relative;
+                }
+            }
+            .tab-icon {
+                display: inline-block;
+                width: 100%;
+                margin-bottom: 10px;
+                font-size: 30px;
+            }
+            .item.active, .item:hover{
+                .tab-title{                                       
+                    color: @main_tab_hover_text;
+                    &:before{
+                        background: @main_tab_hover_background;
+						border-color: @main_tab_hover_border;
+                    }
+                }
+            }
+        }
+        .tab-content{
+            padding: 40px 0px 20px 0px;
+        }
+    }
+    .mobile-tabs-style-01();
+    @media @phone {
+        .cdz-block-title {
+            margin-bottom: -35px;
+            padding-bottom: 0;
+            .b-title {
+                &:before, &:after {
+                    display: none;
+                }
+            }
+        }
+    }
+}

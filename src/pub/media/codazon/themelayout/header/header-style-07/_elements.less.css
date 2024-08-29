@@ -1,0 +1,7 @@
+@media @tablet_vertical{
+	.cms-index-index {
+		.page-header {
+			background-color: fade(@header_background, 50%);
+		}
+	}
+}

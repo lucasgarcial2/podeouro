@@ -1,0 +1,46 @@
+/*slider category*/
+.wrapper-adv-style-08 {
+    .item-title {
+        display: block;
+        width: 100%;
+        text-align: center;
+        float: left;
+        margin-top: 10px;
+        font-weight: 600;
+        font-size: 15px;
+        color: @main_title_text;
+        @media @phone {
+            font-size: 13px;
+        }
+    }
+    &.white-title {
+        .item-title {
+            color: #fff;
+        }
+    }
+    .item {
+        padding-bottom: 10px;
+        transition: transform ease 400ms;
+		box-shadow:0 1px 3px 0 #dfdfdf;
+		border:1px solid @main_border;
+		display: inline-block;
+		width: 100%;
+		position: relative;
+		&:before{
+			content: '';
+			position: absolute;
+			height: 2px;
+			width: 0;
+			left: 0;
+			right: 0;
+			transition: all 0.3s ease 0s;
+			bottom: -1px;
+			background: @main_hover_text;
+		}
+    }
+    .item:hover {
+        &:before{
+			width: 100%;
+		}
+    }
+}

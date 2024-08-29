@@ -1,0 +1,42 @@
+/*slider categories*/
+.wrapper-adv-style-13{
+	.item{
+		background-color:  #fff;
+		padding: 30px;
+		.cdz-banner {
+	        position: relative;
+	        overflow: hidden;
+	        img{
+	            .abs-transition();
+	        }
+	        &:hover{
+	            img{.abs-transform(scale(1.1));}
+	        }
+	    }
+		.item-content{
+			padding-bottom: 20px;
+			.bc-title{
+	            font-weight: 600;
+	            color: @main_title_text;
+                margin-bottom: 5px;
+	        }
+	        .bc-desc{ font-style: italic;}
+	        .bc-btn{
+	            border: 0px solid;
+	            background: #ffffff;
+	            color: #121212;
+	            text-transform: capitalize;
+	            text-decoration: none;
+	            padding: 10px 30px;
+	            display: inline-block;
+	            font: @f_h5;
+	            .abs-transition();
+	            &:hover{
+	                .abs-style(@btn_hover_text, @btn_hover_border, @btn_hover_background);
+	            }
+	        }
+		}
+	}
+
+}
+
