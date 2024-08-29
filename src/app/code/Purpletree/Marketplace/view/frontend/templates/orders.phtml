@@ -1,0 +1,155 @@
+<!--
+/**
+* Purpletree_Marketplace orders
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+
+<?php  
+	$_orders = $this->getOrders();
+?>
+<div class="pts-container_review custom-pager">
+
+	<form class="form seller" data-mage-init='{"validation": {}}' action="#" id="seller-form" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data" >
+		<?php echo $this->getBlockHtml('formkey')?> 
+		<fieldset class="fieldset" >
+			<div class="fields overview " data-role="filter-form" id="date_range">
+				<span class="field field-row ">
+					<label class="label" for="date_from">
+					<span><?php echo __('From') ?>:</span>
+					</label>
+					<input class="input-text" type="text" id="date_from" name="from" />
+					<span id="date_from_advice"></span>
+				</span>
+				<span class="field  field-row">
+					<label for="date_to" class="label">
+					<span><?php echo __('To') ?>:</span>
+					</label>
+					<input class="input-text" type="text" id="date_to" name="report_to" />
+					<span id="date_to_advice"></span>
+				</span>
+				<span class="field-row">
+					&nbsp;&nbsp;<button type="submit" id="com_filter" title="<?php echo __('Filter');?>" class="action submit primary pts-newbtn-next">
+					<span><?php echo __('Filter');?></span>
+					</button>
+				</span>
+			</div>
+		</fieldset>
+	</form>
+	<div class="orderslistt">
+	<?php if($_orders && count($_orders)):?>
+	<div class="table-wrapper orders-history">
+	 <table class="data table table-order-items history" id="my-orders-table">
+            <caption class="table-caption"><?php echo __('Order Record') ?></caption>
+            <thead>
+                <tr>
+                    <th class="col id" scope="col"><?php echo __('Order #') ?></th>
+                    <th class="col date" scope="col"><?php echo __('Date') ?></th>
+                    <th class="col shipping" scope="col"><?php echo __('Ship To') ?></th>
+                    <th class="col status" scope="col"><?php echo __('Seller Status') ?></th>
+                    <th class="col status" scope="col"><?php echo __('Admin Status') ?></th>
+                    <th class="col actions" scope="col">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($_orders as $order1){
+				?>
+                    <tr>
+                        <td class="col id" data-th="Order #"><?php echo $order1->getRealOrderId(); ?></td>
+                        <td class="col date" data-th="Date"><?php $dateReview=strtotime($order1->getCreatedAt()); echo date('d-M-y',$dateReview);?></td>
+						<td class="col shipping" data-th="Ship To"><?php if($order1->getShippingAddress()) { echo $order1->getShippingAddress()->getName(); } ?></td>
+                        <td class="col sellerstatus" data-th="Status"><?php echo $this->getSellerOrderStatus($order1->getId()); ?></td>
+                        <td class="col status" data-th="Status"><?php echo $order1->getStatusLabel(); ?></td>
+						<td class="col actions" data-th="Actions">
+						 <a href="<?php /* @escapeNotVerified */ echo $this->getViewUrl($order1) ?>" class="action view">
+							<span><?php /* @escapeNotVerified */ echo __('View Order') ?></span>
+						</a>
+						</td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+	</div>
+	<?php if ($this->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom pts-pagination"><?php echo $this->getPagerHtml(); ?></div>
+    <?php endif ?>
+<?php else: ?>
+    <div class="message info empty notickets" style="margin-top:20px;"><span><?php echo __('No Orders Yet'); ?></span></div>
+<?php endif ?>
+<script type="text/javascript">
+	require(['jquery', 'jquery/ui'], function($){ 
+		$(document).ready(function(){
+			 $("#limiter").on('click', function(event) {
+				event.preventDefault();
+			 });
+			 $("#limiter").on('change', function(event) {
+				event.preventDefault();
+				url1 = $(this).val();
+				$.ajax({
+					 type:"get", 
+					 url:url1,
+					 showLoader: true,
+					 success: function(data) {
+						  $('.orderslistt').html($(data).find('.orderslistt').html());
+					 }
+				});
+			 });
+			 });
+			 });
+</script>
+</div>
+<script>
+	require([
+		"jquery",
+		"mage/calendar"
+	], function($){
+
+	   $("#date_range").dateRange({
+		 buttonText:"<?php echo __('Select Date') ?>",
+		 from:{
+			id:"date_from"
+		 },
+		 to:{
+			id:"date_to"
+		 }
+	   });
+	});
+</script>
+
+<script type="text/javascript">
+	require(['jquery', 'jquery/ui'], function($){ 
+		$(document).ready(function(){
+			$("#seller-form").submit(function(e){
+				e.preventDefault();
+			});
+			//$('#com_filter').click(function(){
+				$('#com_filter').on('click', function() {
+				var datefrom=$("#date_from").val();
+				var dateto=$("#date_to").val();
+				//if(datefrom!=''&& dateto!='')
+			//	{
+					$.ajax({
+						dataType: "html",
+						showLoader: true,
+						data: $("#seller-form").serialize(),                   
+						type: 'POST',
+						success: function (result) { 
+						 $('.orderslistt').html($(result).find('.orderslistt').html());
+						}
+					});
+				//}
+			});
+		});
+	});
+</script>	
+
+</div>

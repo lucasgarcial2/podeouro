@@ -1,0 +1,63 @@
+<!--
+/**
+* Purpletree_Marketplace productoption
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$attrbute = $objectManager->create('Magento\Catalog\Model\Product\AttributeSet\Options');
+$attrbuteSets=$attrbute->toOptionArray();
+
+?>
+<form class="form productoption" data-mage-init='{"validation": {}}' action="<?php echo $this->getUrl('*/*/productcreate') ?>" id="product-form" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data" >
+	<?php echo $this->getBlockHtml('formkey')?> 
+    <fieldset class="fieldset" >
+		<div class="fields">
+			<div class="field product_attribute required">
+				<label class="label" for="product_attribute"><span><?php echo __('Select Attribute Set');?></span></label>
+				<div class="control">
+					<select name="product_attribute" class="" id="product_attribute"  data-validate="{required:true}">
+						<?php foreach($attrbuteSets as $set){ ?>
+						<?php $val = explode('_seller_',$set['label']); ?>
+						<?php if(isset($val[1])) { ?>
+						<?php if(end($val) == $this->getSellerId()) { ?>
+							<option value="<?php echo $set['value'];?>"><?php echo $set['label'];  ?></option>
+						<?php } } else { ?>
+							<option value="<?php echo $set['value'];?>"><?php echo $set['label'];  ?></option>
+						<?php } } ?>
+						
+					</select> 
+				</div>
+			</div>
+			<div class="field product_type required">			
+				<label class="label" for="product_type"><span><?php echo __('Select Product Type');?></span></label>
+				<div class="control">	
+					<select name="product_type" class="" id="product_type" name="type" data-validate="{required:true}" aria-required="true">
+						<option value="simple">Simple</option>
+						<option value="configurable">Configurable</option>
+						<option value="downloadable">Downloadable</option>
+						<option value="virtual">Virtual</option>
+					</select>
+				</div>
+			</div>
+		</div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary pts-review-box">
+            <button type="submit" title="Submit" class="action submit primary pts-newbtn-next">
+                <span><?php echo __("Submit");?></span>
+            </button>
+        </div>
+    </div>
+</form>
+

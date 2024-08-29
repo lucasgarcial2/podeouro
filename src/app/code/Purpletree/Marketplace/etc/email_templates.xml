@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Purpletree_Marketplace email_templates
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Software
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+	<template id="low_notification_email" label="Low Notification Mail" file="low_notification_email.html" type="html" module="Purpletree_Marketplace" area="frontend"/>
+	<template id="seller_registration_email" label="Seller Registration Email" file="seller_registration_email.html" type="html" module="Purpletree_Marketplace" area="frontend"/>	<template id="vendor_contact" label="Vendor Contact" file="vendor_contact.html" type="html" module="Purpletree_Marketplace" area="frontend"/>
+	<template id="vendor_order" label="Vendor Order" file="vendor_order.html" type="html" module="Purpletree_Marketplace" area="frontend"/>	
+</config>        

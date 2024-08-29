@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Purpletree_Marketplace purpletree_marketplace_payments_edit
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+ * It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+ *
+ * @category    Purpletree
+ * @package     Purpletree_Marketplace
+ * @author      Purpletree Infotech Private Limited
+ * @copyright   Copyright (c) 2017
+ * @license     https://www.purpletreesoftware.com/license.html
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="editor"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Purpletree\Marketplace\Block\Adminhtml\Payments\Edit" name="purpletree_marketplace_payments_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Purpletree\Marketplace\Block\Adminhtml\Payments\Edit\Tabs" name="purpletree_marketplace_payments_tabs">
+                <block class="Purpletree\Marketplace\Block\Adminhtml\Payments\Edit\Tab\Payments" name="purpletree_marketplace_payments_edit_tab_payments"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">payments</argument>
+                    <argument name="block" xsi:type="string">purpletree_marketplace_payments_edit_tab_payments</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,126 @@
+<!--
+/**
+* Purpletree_Marketplace sellerreview
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<?php 
+$customerId=$this->getCustomerId();
+$sellerId=$this->getSellerId();
+$isreview=$this->isReviewed();
+$reviews=$this->getReviews();
+?>
+<div class="pts-container_review">
+	<?php if($reviews && count($reviews)):?>
+	
+		<div class="pts-review-listing">
+			<?php foreach($reviews as $review){  ?>
+		
+			<div class="pts-details">
+				<div class="pts-rating-box">
+						<div class="pts-rating" style="width:<?php echo $review->getRating()*20;?>%;"></div>
+				</div>
+				<div class="pts-clear"></div>
+				<div class="pts-review-left" >
+					
+					<div class="pts-clear"></div>
+					<p>
+					<?php $user=$this->getUserDetails($review->getCustomerId());
+					echo $user->getFirstname().' '.$user->getLastname().' wrote:';?>
+					</p>
+					<p><strong><?php echo $review->getReviewTitle();?></strong></p>
+					<?php $dateReview=strtotime($review->getCreatedAt()); echo date('d M,Y',$dateReview);?>
+				</div>
+				<div class="pts-review-right">
+					<?php echo $review->getReviewDescription();?>
+				</div>
+			</div>
+			<div class="pts-clear"></div>
+			<?php }?>
+		</div>
+		<div class="pts-clear"></div>
+		<?php if ($this->getPagerHtml()): ?>
+		<div class="pts-pagination">
+			<div class="order-products-toolbar toolbar bottom"><?php echo $this->getPagerHtml(); ?></div>
+		</div>
+		<?php endif ?>
+	<?php else: ?>
+		<div class="message info empty notickets"><span><?php echo __('No Reviews Added Yet'); ?></span></div>
+	<?php endif ?>
+	<?php if($customerId!='' && count($isreview) == 0 && $this->getCustomerId() != $this->getSellerId())
+	{
+	?>
+	<h2><?php echo __('Submit Store Review');?></h2>
+		<div class="pts-review-box">
+			<form class="form seller" data-mage-init='{"validation": {}}' action="<?php echo $this->getUrl('*/*/reviewsave') ?>" id="seller-form" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data" >
+				<?php echo $this->getBlockHtml('formkey')?> 
+				<fieldset class="fieldset" >
+					<div class="fields">
+						<div class="field review_description required">
+							<label class="label" for="review_title"><span><?php echo __('Store Review Title');?></span></label>
+							<div class="control">
+								<input name="review_title" id="review_title" title="<?php echo __('Store Review Title');?>" value="" class="input-text" required type="text" data-validate="{required:true}">
+							</div>
+						</div>
+						<div class="field review_description required">
+							<label class="label" for="review_description"><span><?php echo __('Store Review Description');?></span></label>
+							<div class="control">
+								 <textarea name="review_description" id="review_description" title="<?php echo __('Store Review Description');?>" value="" class="input-text" type="text" data-validate="{required:true}" rows="3"></textarea>
+							</div>
+						</div>
+						<div class="field rating required">
+							 <label class="label" for="rating"><span><?php echo __('Store Rating');?></span></label>
+							<div class="control">
+								<input class="pts-rating-radio pts-rdbtn" type="radio" data-validate="{'validate-one-required-by-name':true}" name="rating" value="1" > 
+								<div class="pts-rating-review">
+									<div class="pts-rating" style="width:20%"></div>
+								</div>
+								
+								<input class="pts-rating-radio" type="radio" data-validate="{'validate-one-required-by-name':true}"  name="rating" value="2"> 
+								<div class="pts-rating-review">
+									<div class="pts-rating" style="width:40%"></div>
+								</div>
+								 
+								<input class="pts-rating-radio" type="radio" data-validate="{'validate-one-required-by-name':true}"  name="rating" value="3"> 
+								<div class="pts-rating-review">
+									<div class="pts-rating" style="width:60%"></div>
+								</div>
+								 
+								<input class="pts-rating-radio" type="radio" data-validate="{'validate-one-required-by-name':true}"  name="rating" value="4"> 								
+								<div class="pts-rating-review">
+									<div class="pts-rating" style="width:80%"></div>
+								</div>
+								
+								<input class="pts-rating-radio" type="radio" data-validate="{'validate-one-required-by-name':true}"  name="rating" value="5"> 
+								<div class="pts-rating-review">
+									<div class="pts-rating" style="width:100%"></div>
+								</div>
+								
+							</div>
+							<input name="seller_id" id="seller_id" value="<?php echo $sellerId;?>" type="hidden">
+							<input name="customer_id" id="customer_id" value="<?php echo $customerId;?>" type="hidden">
+						</div>
+					</div>
+				</fieldset>
+				<div class="actions-toolbar">
+					<div class="primary">
+						<input name="hideit" id="hideit" value="" type="hidden">
+						<button type="submit" title="<?php echo __('Store Review Submit');?>" class="action submit primary pts-newbtn-next">
+							<span><?php echo __('Store Review Submit');?></span>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	<?php }
+	?>
+</div>

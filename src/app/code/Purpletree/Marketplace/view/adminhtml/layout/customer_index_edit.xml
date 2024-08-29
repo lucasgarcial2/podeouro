@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+
+<!--
+/**
+* Purpletree_Marketplace customer_index_edit
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	   <head>
+		<script src="Purpletree_Marketplace::css/purpletree_marketplace_admin_design.css"/>
+	</head>
+    <body>
+        <referenceBlock name="customer_form">
+             <block class="Purpletree\Marketplace\Block\Adminhtml\Customer\Edit\BecomeSeller" name="custom_edit_tab_is_seller">
+			   <arguments>
+                        <argument name="sort_order" xsi:type="number">1</argument>
+                    </arguments>
+			 </block>
+             <block class="Purpletree\Marketplace\Block\Adminhtml\Customer\Edit\SellerInformation" name="custom_edit_tab_is_seller_information" before="customer_edit_tab_view">
+			   <arguments>
+                        <argument name="sort_order" xsi:type="number">2</argument>
+                    </arguments>
+			 </block>
+			 <block class="Purpletree\Marketplace\Block\Adminhtml\Edit\Tab\SellerCommission" name="customer_edit_tab_commission" before="customer_edit_tab_view">
+			   <arguments>
+                        <argument name="sort_order" xsi:type="number">3</argument>
+                    </arguments>
+			 </block>
+			 <block class="Purpletree\Marketplace\Block\Adminhtml\Edit\Tab\SellerReviews" name="customer_edit_tab_reviews" before="customer_edit_tab_view">
+			   <arguments>
+                        <argument name="sort_order" xsi:type="number">4</argument>
+                    </arguments>
+			 </block>
+			 <block class="Purpletree\Marketplace\Block\Adminhtml\Edit\Tab\SellerPayments" name="customer_edit_tab_payments" before="customer_edit_tab_view">
+			   <arguments>
+                        <argument name="sort_order" xsi:type="number">5</argument>
+                    </arguments>
+			 </block>
+			  <block class="Purpletree\Marketplace\Block\Adminhtml\Edit\Tab\SellerCategories" name="customer_edit_tab_Categories" before="customer_edit_tab_view">
+			   <arguments>
+                        <argument name="sort_order" xsi:type="number">6</argument>
+                    </arguments>
+			 </block>
+			 <block class="Purpletree\Marketplace\Block\Adminhtml\Edit\Tab\SellerProducts" name="customer_edit_tab_products" before="customer_edit_tab_view">
+			   <arguments>
+                        <argument name="sort_order" xsi:type="number">7</argument>
+                    </arguments>
+			 </block>
+			 <block class="Purpletree\Marketplace\Block\Adminhtml\Edit\Tab\SellerProductsAssigned" name="customer_edit_tab_products_assigned" before="customer_edit_tab_view">
+			   <arguments>
+                        <argument name="sort_order" xsi:type="number">8</argument>
+                    </arguments>
+			 </block>
+			  <block class="Purpletree\Marketplace\Block\Adminhtml\Edit\Tab\SellerOrders" name="customer_edit_tab_products_seller_orders" before="customer_edit_tab_view">
+			   <arguments>
+                        <argument name="sort_order" xsi:type="number">8</argument>
+                    </arguments>
+			 </block>
+             <block class="Purpletree\Marketplace\Block\Adminhtml\Customer\Edit\RemoveSeller" name="custom_edit_tab_become_remove_seller" before="customer_edit_tab_view">
+			   <arguments>
+                        <argument name="sort_order" xsi:type="number">8</argument>
+                    </arguments>
+			 </block>
+        </referenceBlock>    
+    </body>
+</page>

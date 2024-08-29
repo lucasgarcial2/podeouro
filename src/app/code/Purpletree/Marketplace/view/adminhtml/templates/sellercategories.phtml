@@ -1,0 +1,36 @@
+<!--
+/**
+* Purpletree_Marketplace sellercategories
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<?php $categories = $this->getStoreCategories(true, false, true); 
+?>
+<ul class="productcategorytree">
+    <?php
+    foreach ($categories as $category):
+        if (!$category->getIsActive()) {
+            continue;
+        }
+		$check = '';
+		if(in_array($category->getId(),$this->getSellerCategories())) {
+			$check = "checked=checked";
+		} ?>
+        <li>
+		<label for="catnoselect<?php echo $category->getId() ?>"><?php echo $category->getName() ?></label>
+        <input <?php echo $check; ?> form="customer_form" data-form-part="customer_form" name="seller[category][]" value="<?php echo $category->getId() ?>" class="catselect" type="checkbox" id="cate<?php echo $category->getId() ?>" />
+        <input <?php echo $check; ?> class="catnoselect" type="checkbox" id="catnoselect<?php echo $category->getId() ?>" />
+        <?php echo $this->getChildCategoriesLoop($category); ?>
+		</li>
+		
+	<?php endforeach; ?>
+</ul> 

@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Purpletree_Marketplace di
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Software
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+
+	<!-- CategoryCOmmission --> 
+			<virtualType name="PurpletreeMarketplaceCategorycommissionGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Purpletree\Marketplace\Model\ResourceModel\Categorycommission\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">PurpletreeMarketplaceGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <type name="Purpletree\Marketplace\Model\ResourceModel\Categorycommission\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">purpletree_marketplace_categorycommission</argument>
+            <argument name="eventPrefix" xsi:type="string">purpletree_marketplace_categorycommission_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">categorycommission_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Purpletree\Marketplace\Model\ResourceModel\Categorycommission</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="purpletree_marketplace_categorycommission_listing_data_source" xsi:type="string">Purpletree\Marketplace\Model\ResourceModel\Categorycommission\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+	<!-- CategoryCommission --> 
+	<!-- SellerListing --> 
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="customer_listing_data_source" xsi:type="string">Purpletree\Marketplace\Model\ResourceModel\Customer\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+	<virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid"
+                 type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="seller_id" xsi:type="string">sales_order.seller_id</item>
+            </argument>
+        </arguments>
+    </virtualType>
+	<!--commison grid-->
+	<virtualType name="PurpletreeMarketplaceCommissionGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Purpletree\Marketplace\Model\ResourceModel\Commission\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">PurpletreeMarketplaceGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <type name="Purpletree\Marketplace\Model\ResourceModel\Commission\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">purpletree_marketplace_commissions</argument>
+            <argument name="eventPrefix" xsi:type="string">purpletree_marketplace_commission_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">commission_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Purpletree\Marketplace\Model\ResourceModel\Commission</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="purpletree_marketplace_commission_listing_data_source" xsi:type="string">Purpletree\Marketplace\Model\ResourceModel\Commission\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+		<!--commison grid-->
+		
+		<!--Reviews grid-->
+		<virtualType name="PurpletreeMarketplaceReviewsGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Purpletree\Marketplace\Model\ResourceModel\Reviews\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">PurpletreeMarketplaceGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <type name="Purpletree\Marketplace\Model\ResourceModel\Reviews\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">purpletree_marketplace_reviews</argument>
+            <argument name="eventPrefix" xsi:type="string">purpletree_marketplace_reviews_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">reviews_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Purpletree\Marketplace\Model\ResourceModel\Reviews</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="purpletree_marketplace_reviews_listing_data_source" xsi:type="string">Purpletree\Marketplace\Model\ResourceModel\Reviews\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+		<!--Reviews grid-->
+			<!--payment grid-->
+			<virtualType name="PurpletreeMarketplacePaymentsGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Purpletree\Marketplace\Model\ResourceModel\Payments\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">PurpletreeMarketplaceGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <type name="Purpletree\Marketplace\Model\ResourceModel\Payments\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">purpletree_marketplace_payments</argument>
+            <argument name="eventPrefix" xsi:type="string">purpletree_marketplace_payments_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">payments_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Purpletree\Marketplace\Model\ResourceModel\Payments</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="purpletree_marketplace_payments_listing_data_source" xsi:type="string">Purpletree\Marketplace\Model\ResourceModel\Payments\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+	<!--payment grid-->
+	<!--order listing grid-->
+	<virtualType name="PurpletreeMarketplaceSellerorderGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Purpletree\Marketplace\Model\ResourceModel\Sellerorder\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">PurpletreeMarketplaceGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <type name="Purpletree\Marketplace\Model\ResourceModel\Sellerorder\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">purpletree_marketplace_sellerorder</argument>
+            <argument name="eventPrefix" xsi:type="string">purpletree_marketplace_sellerorder_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">sellerorder_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Purpletree\Marketplace\Model\ResourceModel\Sellerorder</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="purpletree_marketplace_order_listing_data_source" xsi:type="string">Purpletree\Marketplace\Model\ResourceModel\Sellerorder\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+	<!--order listing grid-->
+	
+		<!--Customer Enquire grid-->
+
+	<virtualType name="PurpletreeMarketplaceVendorContactGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Purpletree\Marketplace\Model\ResourceModel\VendorContact\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">PurpletreeMarketplaceGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <type name="Purpletree\Marketplace\Model\ResourceModel\VendorContact\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">purpletree_marketplace_vendorcontact</argument>
+            <argument name="eventPrefix" xsi:type="string">purpletree_marketplace_vendorcontact_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">vendorcontact_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Purpletree\Marketplace\Model\ResourceModel\VendorContact</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="purpletree_marketplace_vendorcontact_listing_data_source" xsi:type="string">Purpletree\Marketplace\Model\ResourceModel\VendorContact\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+	<!--Customer Enquire grid-->
+	<type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
+        <plugin name="Purpletree_Marketplace_Plugin_ProductCollection" type="Purpletree\Marketplace\Plugin\ProductCollection" />
+    </type>
+    <!-- Stripe Split Payment Plugin -->
+    <type name="StripeIntegration\Payments\Observer\WebhooksObserver">
+        <plugin name="Purpletree_Marketplace_stripe_split_payment" type="Purpletree\Marketplace\Plugin\StripePayment\Observer\WebhookObserverPlugin" />
+    </type>
+</config>

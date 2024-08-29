@@ -1,0 +1,178 @@
+<!--
+/**
+* Purpletree_Marketplace sellerpayment
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<?php 
+$payments=$this->getPayments();
+//$sellerId=$this->getSellerId();
+$saleDetails=$this->getSaleDetails();
+$paidAmount=$this->getPaytmentDetails();
+$paidAmt=($paidAmount)?$paidAmount:0;
+
+$dueAmount=$saleDetails['total_amount']-$saleDetails['commissions']-$paidAmt;
+?>
+<?php if($saleDetails && count($saleDetails)) { ?>
+	<div class="pts-seller-dashboard ">
+		<table class="data table table-order-items history pts-seller-payment" id="my-pay-table">
+			<caption class="table-caption"><?php echo __('Payment Record') ?></caption>
+			<thead>
+				<tr>
+					<th class="col id" scope="col"><?php echo __('Total Sales'); ?></th>
+					<th class="col shipping" scope="col"><?php echo __('Commissions'); ?></th>
+					<th class="col shipping" scope="col"><?php echo __('Paid Amount'); ?></th>
+					<th class="col total" scope="col"><?php echo __('Due Amount'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="pts-payment-tr">
+					<td class="col shipping" data-th="Amount"><?php echo $this->getFormattedPrice($saleDetails['total_amount']); ?></td>
+					<td class="col shipping" data-th="Payment"><?php echo $this->getFormattedPrice($saleDetails['commissions']);?></td>
+					<td class="col status" data-th="Status"><?php echo $this->getFormattedPrice($paidAmt); ?></td>
+					<td class="col date" data-th="Date"><?php echo $this->getFormattedPrice($dueAmount); ?></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+<?php } ?>
+<div class="pts-container_review custom-pager">
+	
+	
+		<form class="form seller" data-mage-init='{"validation": {}}' action="#" id="seller-form" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data" >
+			<?php echo $this->getBlockHtml('formkey')?> 
+			<fieldset class="fieldset" >
+				<div class="fields overview " data-role="filter-form" id="date_range">
+					<span class="field field-row ">
+						<label class="label" for="date_from">
+						<span><?php echo __('From') ?>:</span>
+						</label>
+						<input class="input-text" type="text" id="date_from" name="from" />
+						<span id="date_from_advice"></span>
+					</span>
+					<span class="field  field-row">
+						<label for="date_to" class="label">
+						<span><?php echo __('To') ?>:</span>
+						</label>
+						<input class="input-text" type="text" id="date_to" name="report_to" />
+						<span id="date_to_advice"></span>
+					</span>
+					<span class="field-row">
+						&nbsp;&nbsp;<button type="submit" id="com_filter" title="<?php echo __('Filter');?>" class="action submit primary pts-newbtn-next">
+							<span><?php echo __('Filter');?></span>
+						</button>
+					</span>
+					<!--<input class="input-text" type="hidden" name="seller_id" value="<?php //echo $sellerId;?>"/>-->
+				</div>
+			</fieldset>
+		</form>
+		<div class="paymentlistt">
+			<?php if($payments && count($payments)):?>
+		<div class="table-wrapper orders-history">
+			<table class="data table table-order-items history" id="my-orders-table">
+				<caption class="table-caption"><?php echo __('Payment Record') ?></caption>
+				<thead>
+					<tr>
+						<th class="col id" scope="col"><?php echo __('Payment Transaction Number') ?></th>
+						<th class="col shipping" scope="col"><?php echo __('Payment Amount') ?></th>
+						<th class="col shipping" scope="col"><?php echo __('Payment Mode') ?></th>
+						<th class="col total" scope="col"><?php echo __('Status') ?></th>
+						<th class="col date" scope="col"><?php echo __('Date') ?></th>
+					</tr>
+				</thead>
+				<tbody class="paymentbody">
+					<?php foreach ($payments as $payment){
+					?>
+						<tr>
+							<td class="col id" data-th="Transaction #"><?php echo $payment->getTransactionId(); ?></td>
+							<td class="col shipping" data-th="Amount"><?php echo $this->getFormattedPrice($payment->getAmount()); ?></td>
+							<td class="col shipping" data-th="Payment"><?php echo $payment->getPaymentMode(); ?></td>
+							<td class="col status" data-th="Status"><?php echo $payment->getStatus(); ?></td>
+							<td class="col date" data-th="Date"><?php $dateReview=strtotime($payment->getCreatedAt()); echo date('d-M-y',$dateReview);?></td>
+						</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+		</div>
+		<?php if ($this->getPagerHtml()): ?>
+		<div class="pts-pagination">
+			<div class="order-products-toolbar toolbar bottom"><?php echo $this->getPagerHtml(); ?></div>
+		</div>
+		<?php endif ?>
+	<?php else: ?>
+		<div class="message info empty notickets" style="margin-top:20px;"><span><?php echo __('No Payment Added Yet'); ?></span></div>
+	<?php endif ?>
+	<script type="text/javascript">
+	require(['jquery', 'jquery/ui'], function($){ 
+		$(document).ready(function(){
+			 $("#limiter").on('click', function(event) {
+				event.preventDefault();
+			 });
+			 $("#limiter").on('change', function(event) {
+				event.preventDefault();
+				url1 = $(this).val();
+				$.ajax({
+					 type:"get", 
+					 url:url1, 
+					 showLoader: true,
+					 success: function(data) {
+						  $('.paymentlistt').html($(data).find('.paymentlistt').html());
+					 }
+				});
+			 });
+			 });
+			 });
+</script>
+</div>
+
+<script>
+	require([
+		"jquery",
+		"mage/calendar"
+	], function($){
+
+	   $("#date_range").dateRange({
+		 buttonText:"<?php echo __('Select Date') ?>",
+		 from:{
+			id:"date_from"
+		 },
+		 to:{
+			id:"date_to"
+		 }
+	   });
+	});
+</script>
+
+<script type="text/javascript">
+	require(['jquery', 'jquery/ui'], function($){ 
+		$(document).ready(function(){
+			$("#seller-form").submit(function(e){
+				e.preventDefault();
+			});
+			//$('#com_filter').click(function(){
+			$('#com_filter').on('click', function() {
+				var datefrom=$("#date_from").val();
+				var dateto=$("#date_to").val();
+					$.ajax({
+						dataType: "html",
+						showLoader: true,
+						data:$("#seller-form").serialize(),                   
+						type: 'POST',
+						success: function (result) {
+					  $('.paymentlistt').html($(result).find('.paymentlistt').html());
+						}
+					});
+			});
+		});
+	});
+</script>	
+</div>

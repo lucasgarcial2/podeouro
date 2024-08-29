@@ -1,0 +1,232 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Purpletree_Marketplace system
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Software
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="purpletree" translate="label" sortOrder="130">
+            <label>Purpletree</label>
+        </tab>
+        <section translate="label" id="purpletree_marketplace" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Marketplace</label>
+            <tab>purpletree</tab>
+            <resource>Purpletree_Marketplace::marketplace_configuration</resource>
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General Configuration</label>
+                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Module Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+              <field id="process_data" translate="label" type="password" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>License Key</label>
+					<comment>Get this from Module Developer</comment>	
+					 <backend_model>Purpletree\Marketplace\Model\Config\Backend\Processdata</backend_model>
+					<validate>required-entry</validate>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+				<field id="process_data_field" translate="label" type="label" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>License Status</label>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+				<field id="orderstatus" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+                   <label>Status for which Commission will calculate</label>
+                    <source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
+					<validate>required-entry</validate>
+                </field>
+				<field id="commission" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Commission</label>
+                    <comment>In percent per product sale</comment>
+					<validate>required-entry</validate>
+                </field>
+				<field id="allow_seller_manage_order" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Allow Seller to Manage Orders</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+				<field id="seller_approval_required" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Seller Approval Required</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+				<field id="product_approval_required" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Product Approval Required</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+				<field id="allow_category_seller" translate="label" type="multiselect"
+                    sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow Category for Seller</label>
+                    <source_model>Purpletree\Marketplace\Model\Config\Source\Category</source_model>
+					<backend_model>Purpletree\Marketplace\Model\Config\Backend\Category</backend_model>
+                </field>
+				<field id="fieldstoshow" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+				   <label>Fields to show on Storepage</label>
+				   <frontend_model>Purpletree\Marketplace\Block\System\Config\Form\Field\FieldstoShow</frontend_model>
+				</field>
+				
+            </group>
+				<group id="manage_links" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+				<field id="seller_on_signup_page" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Become Seller Show on Signup Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+				
+                <label>Manage Links</label>
+				<field id="header_enable" translate="label comment" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+                     <label>Enable Header Link</label>
+					  <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                   <comment>Enable/Disable header link</comment>
+				   
+                </field>
+				<field id="header_text" translate="label comment" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Header Link Label</label>
+                   <comment>Label/Title for header link.</comment>
+				  
+                </field>
+				<field id="footer_enable" translate="label comment" type="select" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1">
+                     <label>Enable Footer Link</label>
+					  <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                   <comment>Enable/Disable Footer link</comment>
+				
+                </field>
+				<field id="footer_text" translate="label comment" type="text" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Footer Link Label</label>
+                    <comment>Label/Title for footer link.</comment>
+					
+                </field>
+				<field id="sellers_link_label" translate="label comment" type="text" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Browse Sellers Label</label>
+					<validate>required-entry</validate>
+                    <comment>Label/Title for Browse Sellers link.</comment>
+					
+                </field>
+				<field id="sellers_link_seo" translate="label comment" type="text" sortOrder="19" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Browse Sellers SEO url</label>
+					<validate>required-entry</validate>
+                    <comment>SEO URL for Browse Sellers link. Default is marketplacesellers</comment>
+					
+                </field>
+			</group>
+			<group id="inventry" translate="label comment" sortOrder="12" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Inventory</label>
+                <field id="enable_low_notification" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable Low Notification</label>
+					<comment>Send ow stock notification mail to sellers.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+				<field id="low_stock_qty" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Low Stock Quantity</label>
+					<comment>Send low stock notification mail to sellers when product quantity will be equal or less then this quantity.</comment>
+					<validate>required-entry</validate>
+					<depends>
+                        <field id="enable_low_notification">1</field>
+                    </depends>
+                </field>
+            </group>
+			<group id="seller_review" translate="label" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Seller Review</label>
+                <field id="seller_review_enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Show reviews on seller store page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+				<field id="live_validate_text" translate="label" type="hidden" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					 <frontend_model>Purpletree\Marketplace\Block\System\Config\Form\Field\Disable</frontend_model>
+					 <depends>
+                        <field id="seller_review_enabled">3</field>
+                    </depends>
+                </field>
+				<field id="encypt_text" translate="label" type="hidden" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					 <frontend_model>Purpletree\Marketplace\Block\System\Config\Form\Field\Disable</frontend_model>
+					 <depends>
+                        <field id="seller_review_enabled">3</field>
+                    </depends>
+                </field>
+            </group>
+			
+			<group id="seller_group_filter" translate="label" sortOrder="18" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Filter sellers by Group</label>
+                <field id="seller_group_enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Sellers filter enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					 <comment>Enable/Disable Seller Group Filter</comment>
+                </field>				
+            </group>
+			<include path="Purpletree_Marketplace::system/split_payments.xml"/>
+        </section>
+		<section id="carriers" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="1">
+             <group id="purpletreetablerate" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Purpletree Shipping Table Rates</label>
+                <field id="handling_type" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Calculate Handling Fee</label>
+                    <source_model>Magento\Shipping\Model\Source\HandlingType</source_model>
+                </field>
+                <field id="handling_fee" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1">
+                    <label>Handling Fee</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="condition_name" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Condition</label>
+                    <source_model>Purpletree\Marketplace\Model\Config\Source\Tablerate</source_model>
+                </field>
+                <field id="include_virtual_price" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Include Virtual Products in Price Calculation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="export" translate="label" type="Purpletree\Marketplace\Block\Adminhtml\Shippingform\Field\Export" sortOrder="5" showInWebsite="1">
+                    <label>Export</label>
+                </field>
+                <field id="import" translate="label" type="Purpletree\Marketplace\Block\Adminhtml\Shippingform\Field\Import" sortOrder="6" showInWebsite="1">
+                    <label>Import</label>
+                    <backend_model>Purpletree\Marketplace\Model\Config\Backend\Tablerate</backend_model>
+                </field>
+                <field id="name" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Method Name</label>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1">
+                    <label>Sort Order</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Title</label>
+                </field>
+                <field id="sallowspecific" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" canRestore="1">
+                    <label>Ship to Applicable Countries</label>
+                    <frontend_class>shipping-applicable-country</frontend_class>
+                    <source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="91" showInDefault="1" showInWebsite="1">
+                    <label>Ship to Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="showmethod" translate="label" type="select" sortOrder="92" showInDefault="1" showInWebsite="1">
+                    <label>Show Method if Not Applicable</label>
+                    <frontend_class>shipping-skip-hide</frontend_class>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="specificerrmsg" translate="label" type="textarea" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Displayed Error Message</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
+

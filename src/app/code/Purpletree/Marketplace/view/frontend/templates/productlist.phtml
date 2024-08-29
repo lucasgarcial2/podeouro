@@ -1,0 +1,163 @@
+<!--
+/**
+* Purpletree_Marketplace productist
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+
+<?php $productCollection = $this->getProductCollection();
+	 // $sellerId = $this->getSellerId();
+?>
+<p>
+<div class="actions-toolbar">
+    <div class="primary">
+        <a href="<?php echo $this->getUrl('*/*/productoption'); ?>" title="Add New Product" class="action primary add pts-newbtn-next"><span><?php echo __('Add Product');?></span></a>
+    </div>
+
+</div>
+</p>
+
+<?php if($productCollection && count($productCollection)): ?>
+		<form class="form seller" data-mage-init='{"validation": {}}' action="#" id="seller-form" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data" >
+			<?php echo $this->getBlockHtml('formkey')?> 
+			<fieldset class="fieldset" >
+				<div class="fields overview " data-role="filter-form" id="date_range">
+					<span class="field field-row ">
+						<label class="label" for="product_name">
+						<span><?php echo __('Product Name') ?>:</span>
+						</label>
+						<input class="input-text pts-inpttxt" type="text" id="product_name" name="product_name" />
+						<span id="date_from_advice"></span>
+					</span>
+					<span class="field  field-row">
+						<label for="product_sku" class="label">
+						<span><?php echo __('Product SKU') ?>:</span>
+						</label>
+						<input class="input-text pts-inpttxt" type="text" id="product_sku" name="product_sku" />
+					</span>
+					<span class="field-row">
+						&nbsp;&nbsp;<button type="submit" id="com_filter" title="<?php echo __('Filter');?>" class="action submit primary">
+						<span><?php echo __('Filter');?></span>
+						</button>
+					</span>
+					<!--<input class="input-text" type="hidden" name="seller_id" value="<?php //echo $sellerId;?>"/>-->
+				</div>
+			</fieldset>
+		</form>
+		<div class="productlistt">
+	<div class="table-wrapper orders-history">
+	 <table class="data table table-order-items history" id="my-orders-table">
+            <caption class="table-caption"><?php echo __('Grid Record') ?></caption>
+            <thead>
+                <tr>
+                    <th scope="col" class="col"><?php echo __('ID') ?></th>
+                    <th scope="col" class="col"><?php echo __('Name') ?></th>
+                    <th scope="col" class="col"><?php echo __('Type') ?></th>
+                    <th scope="col" class="col"><?php echo __('Attribute Set') ?></th>
+                    <th scope="col" class="col"><?php echo __('SKU') ?></th>
+                    <th scope="col" class="col"><?php echo __('Price') ?></th>
+                    <th scope="col" class="col"><?php echo __('Visibility') ?></th>
+                    <th scope="col" class="col"><?php echo __('Status') ?></th>
+					<th scope="col" class="col"><?php echo __('Websites') ?></th>
+                    <th scope="col" class="col "><?php echo __('Action') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($productCollection as $product): ?>
+                    <tr>
+                        <td class="col id"><?php echo $product->getEntityId(); ?></td>
+                        <td class="col"><?php echo $product->getName(); ?></td>
+						<td class="col"><?php echo ucfirst($product->getTypeId()).' Product'; ?></td>
+                        <td class="col id"><?php echo $this->getattributeName($product->getAttributeSetId()); ?></td>
+                        <td class="col"><?php echo $product->getSKU(); ?></td>
+						<td class="col"><?php echo $this->convertToCurrency($product->getPrice()); ?></td>
+						<td class="col"><?php echo $product->getResource()->getAttribute('visibility')->getFrontend()->getValue($product ); ?></td>
+						<td class="col"><?php echo $product->getResource()->getAttribute('status')->getFrontend()->getValue($product ); ?></td>
+						<td class="col">
+						<?php foreach($product->getWebsiteIds() as $websiteid) {
+									echo $this->getWebsiteName($websiteid).' '; 
+								} 
+						?></td>
+                        <td class="col">
+						<a href="<?php echo $this->getUrl('*/*/productedit',['id' =>$product->getId()]) ?>"><?php echo __('Edit') ?></a>|
+							<a href="<?php echo $this->getUrl('*/*/productdelete',['id' =>$product->getId()]) ?>"><?php echo __('Delete') ?></a>
+						</td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+		 <?php 
+		/* 	
+			echo count($productCollection).'</br>';
+			foreach ($productCollection as $product) {
+			echo $product->getName();
+			echo '</br>';
+			} */
+		?> 
+	</div>
+	<?php if ($this->getPagerHtml()): ?>
+	<div class="pts-pagination">
+		<div class="order-products-toolbar toolbar bottom"><?php echo $this->getPagerHtml(); ?></div>
+	</div>
+	<?php endif ?>
+<?php else: ?>
+    <div class="message info empty notickets"><span><?php echo __('No Product Found'); ?></span></div>
+<?php endif ?>
+
+<script type="text/javascript">
+	require(['jquery', 'jquery/ui'], function($){ 
+		$(document).ready(function(){
+			 $("#limiter").on('click', function(event) {
+				event.preventDefault();
+			 });
+			 $("#limiter").on('change', function(event) {
+				event.preventDefault();
+				url1 = $(this).val();
+				$.ajax({
+					 type:"get", 
+					 url:url1, 
+					 showLoader: true,
+					 success: function(data) {
+						  $('.productlistt').html($(data).find('.productlistt').html());
+					 }
+				});
+			 });
+			 });
+			 });
+</script>
+</div>
+<script type="text/javascript">
+	require(['jquery', 'jquery/ui'], function($){ 
+		$(document).ready(function(){
+			$("#seller-form").submit(function(e){
+				e.preventDefault();
+			});
+			//$('#com_filter').click(function(){
+				$('#com_filter').on('click', function() {
+				var productName=$("#product_name").val();
+				var productSku=$("#product_sku").val();
+				//if(productName!=''|| productSku!='')
+				//{
+					$.ajax({
+						dataType: "html",
+						showLoader: true,
+						data: $("#seller-form").serialize(),                   
+						type: 'POST',
+						success: function (result) { 
+						 $('.productlistt').html($(result).find('.productlistt').html());
+						}
+					});
+				//} 
+			});
+		});
+	});
+</script>

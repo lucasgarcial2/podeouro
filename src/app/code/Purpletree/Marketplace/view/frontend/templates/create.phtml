@@ -1,0 +1,1573 @@
+<!--
+/**
+* Purpletree_Marketplace create
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<?php
+$noimage 			= $this->getViewFileUrl('Purpletree_Marketplace::images/noimage.png');
+$productType		= $this->getProductType();
+$attributeType		= $this->getAttributeSet();
+$allattributesofSet = $this->getAdditionalAttributes($attributeType);
+$categories 		= $this->getStoreCategories(true, false, true);
+?>
+<form data-mage-init='{"validation": {}}' class="form generateticket" action="<?php echo $this->getUrl('*/*/productsave') ?>" id="generateticket-form" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data" >
+ <?php echo $block->getBlockHtml('formkey') ?>
+    <fieldset class="fieldset">
+		<div class="field note no-label"><h3><b><?php echo __('Enter Product Details')?></b></h3></div>
+
+<?php  if($this->dataHelper()->getGeneralConfig('general/product_approval_required') == 0) { ?>
+		<div class="field status">
+			<div class="purpletree-lbl">
+				<label class="label" for="status"><span><?php echo __('Enable Product')?></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<select class="purpletree-lgwidth" name="status" id="status" title="status">
+					 <option value="1"><?php echo __('Enabled')?></option>
+					 <option value="2"><?php echo __('Disabled')?></option>
+				</select> 
+			</div>
+		</div>
+<?php } ?>		
+		<div class="field name required">
+			<div class="purpletree-lbl">
+				<label class="label" for="name"><span><?php echo __('Product Name')?><span class="purpletree-txtred">&nbsp;<b>*</b></span></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<input name="name" id="name" title="Product Name" class="input-text purpletree-lgwidth" required type="text" data-validate="{required:true}">
+			</div>
+		</div>
+		<div class="field sku required">
+			<div class="purpletree-lbl">
+				<label class="label" for="sku"><span><?php echo __('SKU')?><span class="purpletree-txtred">&nbsp;<b>*</b></span></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				 <input name="sku"  id="sku" title="<?php echo __('SKU')?>" class="input-text purpletree-lgwidth purpletree-lgwidth validate-length maximum-length-64 input-text required-entry" required type="text" data-validate="{required:true}">
+			</div>
+		</div>
+		<div class="field price required">
+			<div class="purpletree-lbl">
+				 <label class="label" for="price"><span><?php echo __('Price')?><span class="purpletree-txtred">&nbsp;<b>*</b></span></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+			<div class="purpletree-shtwidth pricedivvv">
+						<label class="admin__addon-prefix" for="BNL8UQD">
+			                <span><?php echo $this->getCurrentCurrencySymbol() ?></span>
+			            </label>
+				 <input name="price" id="price" title="Price" class="input-text purpletree-shtwidth validate-zero-or-greater" required type="text" data-validate="{required:true}" >
+			 </div>
+			 <?php if($productType=='simple' || $productType=='virtual' || $productType=='downloadable'){ ?>
+			    <div>
+			    <span class="advanceprice" style="color: #007bdb;cursor: pointer;"><?php echo __('Advanced Pricing'); ?></span>
+			    </div>
+			 <?php } ?>
+			</div>
+		</div>
+		<div class="field quantity ">
+			<div class="purpletree-lbl">
+				 <label class="label" for="quantity"><span><?php echo __('Quantity')?></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				 <input name="quantity" id="quantity" title="Quantity" class="validate-zero-or-greater purpletree-shtwidth validate-number input-text" type="text" data-validate="{'validate-number':true}">
+			</div>
+		</div>
+		<div class="field Categoryies ">
+			<div class="purpletree-lbl">
+				<label class="label" for="quantity"><span><?php echo __('Categories')?></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				
+				 <ul class="productcategorytree">
+				
+    <?php
+	$allowedcats = array();
+	 if(!empty($this->getSellerCategories())) {
+		   $allowedcats = $this->getSellerCategories();
+	   }
+		
+    foreach ($categories as $category):
+        if (!$category->getIsActive()) {
+            continue;
+        }
+		if(!empty($allowedcats)) {
+		   if(in_array($category->getId(),$allowedcats)) { 
+			?>
+			<li>
+			<label for="catnoselect<?php echo $category->getId() ?>"><?php echo $category->getName() ?></label>
+			<input name="category[]" value="<?php echo $category->getId() ?>" type="checkbox" id="cate<?php echo $category->getId() ?>" />
+			<input class="catnoselect" type="checkbox" id="catnoselect<?php echo $category->getId() ?>" />
+			<?php echo $this->getChildCategoriesLoop($category,$allowedcats); ?>
+			</li>
+		<?php } } else { ?>
+<li>
+			<label for="catnoselect<?php echo $category->getId() ?>"><?php echo $category->getName() ?></label>
+			<input name="category[]" value="<?php echo $category->getId() ?>" type="checkbox" id="cate<?php echo $category->getId() ?>" />
+			<input class="catnoselect" type="checkbox" id="catnoselect<?php echo $category->getId() ?>" />
+			<?php echo $this->getChildCategoriesLoop($category); ?>
+			</li>
+<?php			}?>
+	<?php endforeach; ?>
+</ul> 
+
+			</div>
+		</div>
+		<?php if($productType=='simple' || $productType=='configurable'){ ?>
+		<div class="field weight ">
+			<div class="purpletree-lbl">
+				 <label class="label" for="weight"><span><?php echo __('Weight')?></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				  <input name="weight" id="weight" title="Weight" class="validate-zero-or-greater input-text purpletree-shtwidth validate-number" type="text" data-validate="{'validate-number':true}">
+				 <select class="" name="product_has_weight" id="weightoptn" title="stockstatus">
+					 <option value="1"><?php echo __('This item has weight')?></option>
+					 <option value="0"><?php echo __('This item has no weight')?></option>
+				</select> 
+			</div>
+		</div>
+		<?php  }?>
+		<input name="product_attribute" id="product_attribute" value="<?php echo $attributeType ;?>" type="hidden">
+		<input name="product_type" id="product_type" value="<?php echo $productType ;?>" type="hidden">
+		<div class="field stockstatus">
+			<div class="purpletree-lbl">
+				 <label class="label" for="stockstatus"><span><?php echo __('Stock Status')?></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<select class="purpletree-shtwidth" name="stockstatus" id="stockstatus" title="stockstatus">
+					 <option value="1"><?php echo __('In Stock')?></option>
+					 <option value="0"><?php echo __('Out of Stock')?></option>
+				</select> 
+			</div>
+		</div>
+       <div class="field tax">
+			<div class="purpletree-lbl">
+				 <label class="label" for="tax"><span><?php echo __('Tax Class')?></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<select class="purpletree-shtwidth" name="tax" id="tax" title="tax">
+					 <option value="0"><?php echo __('None')?></option>
+					 <?php if(!empty($this->getTaxData())) { ?>
+					 <?php foreach($this->getTaxData() as $taxclass) { ?>
+					 <option value="<?php echo $taxclass['value'] ?>"><?php echo $taxclass['label'] ?></option>
+					 <?php } } ?>
+				</select> 
+			</div>
+		</div>
+		
+		<div class="field newfrm">
+			<div class="purpletree-lbl">
+				 <label class="label" for="date"><span><?php echo __('Set Product as New From')?> :</span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<input name="datepickerfrom" id="datepickerfrom" title="Datepickerfrom" type="text">&nbsp;&nbsp;<span> <?php echo __('TO')?> </span> &nbsp;&nbsp;
+				<input name="datepickerto" id="datepickerto" title="Datepickerto" type="text">
+			</div>
+		</div>		
+	
+		<div class="field visibilty">
+			<div class="purpletree-lbl">
+				<label class="label" for="visibilty"><span> <?php echo __('Visibility')?></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<select class="purpletree-shtwidth" name="visibilty" id="visibilty" title="visibilty">
+					<option data-title="Not Visible Individually" value="1"><?php echo __('Not Visible Individually')?></option>
+					<option data-title="Catalog" value="2"><?php echo __('Catalog')?></option>
+					<option data-title="Search" value="3"><?php echo __('Search')?></option>
+					<option data-title="Catalog, Search" value="4" selected ><?php echo __('Catalog, Search')?></option>
+				</select> 
+			</div>
+		</div>
+		<div class="field country">
+			<div class="purpletree-lbl">
+				<label class="label" for="manufacture"><span><?php echo __('Country of Manufacture')?></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<select name="manufacture"class="purpletree-shtwidth" id="manufacture" title="manufacture">
+					 <?php  foreach($this->getCountry() as $country) { ?>
+						<option value="<?php echo $country['value'] ?>"><?php echo $country['label']; ?></option>
+					 <?php }  ?>
+				</select> 
+			</div>
+		</div>
+	
+		<div class="purpletree-seprator" id="sepratorcontent"><h3><b><?php echo __('Content')?></b></h3></div>
+		<div class="purpletree-content">
+			<div class="field productdescription ">
+				<div class="purpletree-lbl">
+					<label class="label" for="productdescription"><span><?php echo __('Description')?></span></label>
+				</div>
+				<div class="purpletree-lblryt">
+				   <textarea name="productdescription" id="productdescription" title="Description" class="input-text purpletree-lgwidth"  rows="5"  ></textarea>
+				</div>
+			</div>
+			<div class="field productshortdescription">
+				<div class="purpletree-lbl">
+					<label class="label" for="productshortdescription"><span><?php echo __('Short Description')?></span></label>
+				</div>
+				<div class="purpletree-lblryt">
+					<textarea name="productshortdescription" id="productshortdescription" title="productshortdescription" class="input-text purpletree-lgwidth" rows="5"></textarea>
+				</div>
+			</div>
+		</div>	
+		<?php if($productType=='configurable'){ ?>
+		
+		<div class="purpletree-seprator" id="sepratorconfig"><h3><b><?php echo __('Configuration')?></b></h3></div>
+		<div class="purpletree-config">
+			<div class="purpletree-lblryt">
+				<p><?php echo __('Configurable products allow customers to choose options (Ex: shirt color). You need to create a simple product for each configuration (Ex: a product for each color)')?></p>
+			</div>	
+			<div class="purpletree-lbl">
+				<button id="createconfigbtn" type="button" class="action-secondary">
+					<span><?php echo __('Create Configurations')?></span>
+				</button>
+			</div>	
+		</div>
+		<?php } ?>
+<div class="purpletree-variations">
+
+</div>		
+		<div class="purpletree-seprator" id="seocontent"><h3><b><?php echo __('Search Engine Optimization')?></b></h3></div>
+		<div class="purpletree-seo">
+			<div class="field title ">
+				<div class="purpletree-lbl">
+					<label class="label" for="title"><span> <?php echo __('Meta Title')?></span></label>
+				</div>
+				<div class="purpletree-lblryt">
+					 <input name="metatitle" id="metatitle" title="metatitle" class="input-text purpletree-lgwidth" type="text">
+				</div>
+			</div>
+			 <div class="field keywords ">
+				<div class="purpletree-lbl">
+					<label class="label" for="keywords"><span><?php echo __('Meta Keywords')?></span></label>
+				</div>
+				<div class="purpletree-lblryt">
+				   <textarea name="meta_keyword" id="metakeywords" title="Keywords" class="input-text purpletree-lgwidth" rows="3"></textarea>
+				</div>
+			</div>
+			 <div class="field description ">
+				<div class="purpletree-lbl">
+					<label class="label" for="metadescription"><span><?php echo __('Meta Description')?></span></label>
+				</div>
+				<div class="control purpletree-lblryt">
+				   <textarea name="metadescription" id="metadescription" title="Description" class="input-text purpletree-lgwidth" rows="3"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="purpletree-seprator" id="websitecontent"><h3><b><?php echo __('Product in Websites')?> </b></h3></div>
+			<div class="field purpletree-websiteoption">
+			<span> <?php echo __('Websites'); ?></span> 
+			<?php foreach($this->getWebsiteRepository() as $_website) { ?>
+						<input type="checkbox" name="productwebsite[]" id="productwebsite" value="<?php echo $_website->getId() ?>" checked>
+						<span><?php echo $_website->getName(); ?></span></br>
+			<?php } ?> 
+		</div>
+		
+		<div class="purpletree-seprator" id="imagecontent"><h3><b><?php echo __('Product Image')?></b></h3></div>
+		<div class="field purpletree-image">
+			<?php $imgval = 0; ?>
+		<div class="image-placeholder1" id="thisimggg-<?php echo $imgval ?>">        
+		<div class="image image-placeholder" id="thisimgg-<?php echo $imgval ?>">        
+        <div id="media_gallery_content_Uploader" class="uploader">
+            <div class="fileinput-button form-buttons button">
+                <span><?php echo __('Browse Files...')?></span>
+                <input class="fileupload" data-img-id="<?php echo $imgval ?>" id="fileupload-main" name="image[]" type="file">
+            </div>
+            <div class="clear"></div>
+        </div>
+ 
+        <img id="previewing" src="<?php echo $noimage; ?>">
+        <p class="image-placeholder-text"><?php echo __('Click here to add images.')?></p>
+      </div>
+      </div>
+		</div>
+			<!-- Additional Attributes -->
+			<?php $editorwysiwug = ""; ?>
+		<?php if(!empty($allattributesofSet)) { ?>
+		<div class="purpletree-seprator" id="addionalattribut"><h3><b><?php echo __('Additional Attributes')?></b></h3></div>
+		<div class="field purpletree-addionalattribut" >
+			<?php foreach($allattributesofSet as $attrii) { ?>
+			<?php if($attrii['backend_type'] == 'varchar' && $attrii['frontend_input'] == 'text') { ?>
+				<div class="field <?php echo $attrii['attribute_code']; ?> ">
+				<div class="purpletree-lbl">
+					<label class="label" for="<?php echo $attrii['attribute_code']; ?>"><span><?php echo $attrii['frontend_label']; ?></span></label>
+				</div>
+				<div class="purpletree-lblryt">
+			<input value="" name="addionalattribut[<?php echo $attrii['attribute_code']; ?>]" id="<?php echo $attrii['attribute_code']; ?>" title="<?php echo $attrii['frontend_label']; ?>" class="input-text purpletree-lgwidth" type="text" <?php if($attrii['is_required']) { ?> required data-validate="{required:true}" <?php } ?> />
+				</div>
+			</div>
+			<?php } elseif($attrii['backend_type'] == 'decimal' && $attrii['frontend_input'] == 'price') { ?>
+				<div class="field <?php echo $attrii['attribute_code']; ?> ">
+				<div class="purpletree-lbl">
+					<label class="label" for="<?php echo $attrii['attribute_code']; ?>"><span><?php echo $attrii['frontend_label']; ?></span></label>
+				</div>
+				<div class="purpletree-lblryt pricedivvv">
+			<label class="admin__addon-prefix" for="BNL8UQD">
+			                <span><?php echo $this->getCurrentCurrencySymbol() ?></span>
+			            </label>
+				 <input type="text" style="width:unset !important;" value="" name="addionalattribut[<?php echo $attrii['attribute_code']; ?>]" id="<?php echo $attrii['attribute_code']; ?>" title="<?php echo $attrii['frontend_label']; ?>" class="input-text purpletree-shtwidth validate-zero-or-greater" <?php if($attrii['is_required']) { ?> required data-validate="{required:true}" <?php } ?> />
+				</div>
+			</div>
+			<?php } elseif($attrii['backend_type'] == 'text' && $attrii['frontend_input'] == 'textarea') { ?>
+			<?php
+				$attrrr = $this->getattributeoptionsss($attrii['attribute_id']);
+				$wysiwygfield = $attrrr->getIsWysiwygEnabled();
+				if($wysiwygfield) {
+					$editorwysiwug .= ",editorrr".$attrii['attribute_code'];
+				}
+			?>
+				<div class="field <?php echo $attrii['attribute_code']; ?> ">
+				<div class="purpletree-lbl">
+					<label class="label" for="<?php echo $attrii['attribute_code']; ?>"><span><?php echo $attrii['frontend_label']; ?></span></label>
+				</div>
+				<div class="purpletree-lblryt">
+				  <textarea <?php if($attrii['is_required']) { ?> required data-validate="{required:true}" <?php } ?> name="addionalattribut[<?php echo $attrii['attribute_code']; ?>]" id="editorrr<?php echo $attrii['attribute_code']; ?>" title="<?php echo $attrii['frontend_label']; ?>" class="input-text purpletree-lgwidth" rows="5"  ></textarea>
+				</div>
+			</div>
+			<?php } elseif($attrii['backend_type'] == 'datetime' && $attrii['frontend_input'] == 'date') { ?>
+				<div class="field <?php echo $attrii['attribute_code']; ?> ">
+				<div class="purpletree-lbl">
+					<label class="label" for="<?php echo $attrii['attribute_code']; ?>"><span><?php echo $attrii['frontend_label']; ?></span></label>
+				</div>
+				<div class="purpletree-lblryt">
+				<input <?php if($attrii['is_required']) { ?> required data-validate="{required:true}" <?php } ?> value="" name="addionalattribut[<?php echo $attrii['attribute_code']; ?>]" id="<?php echo $attrii['attribute_code']; ?>" title="<?php echo $attrii['frontend_label']; ?>" type="text"/>
+				</div>
+			</div>
+			<script type="text/javascript">
+	require([
+		"jquery",
+		"mage/calendar"
+		], function($){
+		  $('#<?php echo $attrii["attribute_code"]; ?>').datepicker({ dateFormat: 'mm/dd/yy' });
+		});
+</script>
+			<?php } elseif($attrii['backend_type'] == 'int' && $attrii['frontend_input'] == 'boolean') { ?>
+				<div class="field <?php echo $attrii['attribute_code']; ?> ">
+				<div class="purpletree-lbl">
+					<label class="label" for="<?php echo $attrii['attribute_code']; ?>"><span><?php echo $attrii['frontend_label']; ?></span></label>
+				</div>
+				<div class="purpletree-lblryt">
+				<select class="purpletree-shtwidth" name="addionalattribut[<?php echo $attrii['attribute_code']; ?>]" id="<?php echo $attrii['attribute_code']; ?>" title="<?php echo $attrii['frontend_label']; ?>">
+						<option data-title="Yes" value="1"><?php echo __('Yes'); ?></option>
+						<option data-title="No" value="0"><?php echo __('No'); ?></option>
+				</select>
+				</div>
+			</div>
+			<?php } elseif($attrii['backend_type'] == 'int' && $attrii['frontend_input'] == 'select') { ?>
+				<div class="field <?php echo $attrii['attribute_code']; ?> ">
+				<div class="purpletree-lbl">
+					<label class="label" for="<?php echo $attrii['attribute_code']; ?>"><span><?php echo $attrii['frontend_label']; ?></span></label>
+				</div>
+				<div class="purpletree-lblryt">
+					<?php $loadattribu = $this->getattributeoptionsss($attrii['attribute_id']); ?>
+					<?php if(!empty($loadattribu->getSource()->getAllOptions(false))) { ?>
+				<select <?php if($attrii['is_required']) { ?> required data-validate="{required:true}" <?php } ?> class="purpletree-shtwidth" name="addionalattribut[<?php echo $attrii['attribute_code']; ?>]" id="<?php echo $attrii['attribute_code']; ?>" title="<?php echo $attrii['frontend_label']; ?>">
+						<option value=""><?php echo __('--Please Select--'); ?></option>
+					<?php foreach($loadattribu->getSource()->getAllOptions(false) as $key => $attributeoptions) { ?>
+						<option data-title="<?php echo $attributeoptions['label']; ?>" value="<?php echo $attributeoptions['value']; ?>"><?php echo $attributeoptions['label']; ?></option>
+					<?php } ?>
+				</select>
+				<?php } ?>
+				</div>
+			</div>
+			<?php } elseif($attrii['backend_type'] == 'varchar' && $attrii['frontend_input'] == 'multiselect') { 
+			 
+			?>
+				<div class="field <?php echo $attrii['attribute_code']; ?> ">
+				<div class="purpletree-lbl">
+					<label class="label" for="<?php echo $attrii['attribute_code']; ?>"><span><?php echo $attrii['frontend_label']; ?></span></label>
+				</div>
+				<div class="purpletree-lblryt">
+					<?php $loadattribu = $this->getattributeoptionsss($attrii['attribute_id']); ?>
+					<?php if(!empty($loadattribu->getSource()->getAllOptions(false))) { ?>
+				<select <?php if($attrii['is_required']) { ?> required data-validate="{required:true}" <?php } ?> multiple="" class="purpletree-shtwidth" name="addionalattributMulti[<?php echo $attrii['attribute_code']; ?>][]" id="<?php echo $attrii['attribute_code']; ?>" title="<?php echo $attrii['frontend_label']; ?>">
+					<?php foreach($loadattribu->getSource()->getAllOptions(false) as $key => $attributeoptions) { ?>
+						<option data-title="No" value="<?php echo $attributeoptions['value']; ?>"><?php echo $attributeoptions['label']; ?></option>
+					<?php } ?>
+				</select>
+				<?php } ?>
+				</div>
+			</div>
+			<?php } ?>
+			<?php } ?>
+		</div>
+		<?php } ?>
+		<!-- Additional Attributes -->
+	<?php if($productType=='downloadable'){ ?>	
+	<div class="purpletree-seprator" id="downloadable"><h3><b><?php echo __('Downloadable Information'); ?> </b></h3></div>
+	<div class="field purpletree-downloadable" <?php if($productType=='downloadable'){ echo 'style="display:block"';}?>	>
+
+		<div class="control" id="downloadableobxdetial">
+			 <span><b><?php echo __('Links'); ?></b></span>
+			 <div class="">
+				<label class="label purpletree-lbl" for="title"><span> <?php echo __('Title'); ?></span></label>
+			</div>
+			 <div class="control">
+				 <input name="linkttl" id="linkttl" title="linkttl" class="input-text purpletree-downloablebox" value="Links" type="text">
+			</div>
+			 <div class="purpletree-lbl">
+				
+			</div>
+			<div class="control">
+				 <input type="checkbox" name="linkchk" class="linkchkbox" id="linkchk" value="1" ><span><?php echo __('Links can be purchased separately'); ?></span>
+			</div>
+			 <div class="purpletree-tableproduct">
+				<table class="data table table-order-items history" id="downloadabletable">
+					<thead>
+						<tr>
+							<th scope="col" class="col title"><?php echo __('Title') ?></th>
+							<th scope="col" class="col price"><?php echo __('Price') ?></th>
+							<th scope="col" class="col file"><?php echo __('File') ?></th>
+							<th scope="col" class="col sample"><?php echo __('Sample') ?></th>
+							<th scope="col" class="col shareable"><?php echo __('Shareable') ?></th>
+							<th scope="col" class="col maxdwn"><?php echo __('Max. Downloads') ?></th>
+							<th scope="col" class="col ">&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody id="downloadablebody">
+					</tbody>
+				</table>
+				<button type="button" name="addproductlink" id="addproductlink" class=""><?php echo __('Add Link'); ?></button>
+			</div>
+			<div class="control">
+			 <span><b><?php echo __('Samples'); ?></b></span>
+			 <div class="">
+				<label class="label purpletree-lbl" for="title"><span> <?php echo __('Title'); ?></span></label>
+			</div>
+			 <div class="control">
+				 <input name="samplelinkttl" id="samplelinkttl" title="samplelinkttl" class="input-text purpletree-downloablebox" value="Sample" type="text">
+			</div>
+			<div class="purpletree-tableproduct">
+				<table class="data table table-order-items history" id="sampletable">
+					<thead>
+						<tr>
+							<th scope="col" class="col title"><?php echo __('Title ') ?></th>
+							<th scope="col" class="col file"><?php echo __('File') ?></th>
+							<th scope="col" class="col ">&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody id="sampleproduct">
+					</tbody>
+				</table>
+				<button type="button" name="addproductsample" id="addproductsample" class=""><?php echo __('Add Link'); ?></button>
+			</div>
+		</div>
+		</div>
+	</div>	
+	<?php } ?>	
+		
+		
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <input name="hideit" id="hideit" value="" type="hidden">
+            <button type="submit" title="Submit" class="action submit primary pts-newbtn-next">
+                <span><?php echo __('Submit')?></span>
+            </button>
+        </div>
+    </div>
+	 <?php if($productType=='simple' || $productType=='virtual' || $productType=='downloadable'){ ?>
+	<div id="popup-config-pricing" class="popup222" >
+<div class="admin__fieldset-wrapper-content _show">
+<fieldset class="admin__fieldset">
+	
+<div class="admin__field">
+    <div class="admin__field-label">
+       <label for="special_price">
+            <span ><?php echo __('Special Price'); ?></span>
+        </label>
+    </div>
+    <div class="admin__field-control">
+<div class="admin__control-addon putborder">
+<label class="admin__addon-prefix" for="special_price">
+                <span><?php echo $this->getCurrentCurrencySymbol() ?></span>
+            </label>
+<input value="" class="admin__control-text" type="text" name="special_price" id="special_price" maxlength="255">
+
+        </div>
+    </div>
+</div>
+<fieldset class="admin__field" >
+<legend class="admin__field-label">
+        <span><?php echo __('Special Price From'); ?></span>
+    </legend>
+
+    <div class="admin__field-control admin__control-grouped-date admin__control-grouped">
+
+<div class="admin__field admin__field-date">
+    <div class="admin__field-label"><label for="specialpricefrom">
+            <span><?php echo __('Special Price From'); ?></span>
+        </label>
+    </div>
+    <div class="admin__field-control putborder">
+<input class="ptssspecialfrom" value="" name="specialpricefrom" id="specialpricefrom" title="Special Price From" type="text"/>
+    </div>
+</div>
+<div class="admin__field admin__field-date">
+    <div class="admin__field-label">
+       <label for="specialpriceto">
+            <span><?php echo __('To'); ?></span>
+        </label>
+    </div>
+    <div class="admin__field-control putborder">
+		<input class="ptssspecialto" value="" name="specialpriceto_popup" id="specialpriceto" title="Special Price To" type="text"/>
+    </div>
+</div>
+    </div>
+</fieldset>
+
+<div class="admin__field">
+    <div class="admin__field-label">
+       <label for="productcost">
+            <span><?php echo __('Cost'); ?></span>
+        </label>
+    </div>
+    <div class="admin__field-control">
+	<div class="admin__control-addon putborder">
+<label class="admin__addon-prefix" for="productcost">
+                <span><?php echo $this->getCurrentCurrencySymbol() ?></span>
+            </label>
+	<input value="" class="admin__control-text" type="text" name="productcost_popup"  id="productcost" maxlength="255">
+		
+        </div>
+    </div>
+</div>
+<div class="admin__field" >
+    <div class="admin__field-label">
+	<label for="productmsrp">
+            <span><?php echo __("Manufacturer's Suggested Retail Price"); ?></span>
+        </label>
+    </div>
+    <div class="admin__field-control">
+	<div class="admin__control-addon putborder">
+<label class="admin__addon-prefix" for="productmsrp">
+                <span><?php echo $this->getCurrentCurrencySymbol() ?></span>
+            </label>
+	<input value="" class="admin__control-text" type="text" name="productmsrp_popup"  id="productmsrp" maxlength="255">
+
+        </div>
+    </div>
+</div>
+<div class="admin__field">
+    <div class="admin__field-label">
+       <label for="msrp_display_actual_price_type">
+            <span><?php echo __('Display Actual Price'); ?></span>
+        </label>
+    </div>
+    <div class="admin__field-control">
+<select class="admin__control-select" name="msrp_display_actual_price_type_popup" id="msrp_display_actual_price_type">
+	<option title="Use config" value="0"><?php echo __('Use config'); ?></option>
+	<option title="On Gesture" value="1"><?php echo __('On Gesture'); ?></option>
+	<option title="In Cart" value="2"><?php echo __('In Cart'); ?></option>
+	<option title="Before Order Confirmation" value="3"><?php echo __('Before Order Confirmation'); ?></option>
+</select>
+    </div>
+</div>
+</fieldset>
+    </div>	
+    </div>	
+	<input type="hidden" id="special_price_hide" name="special_price" value=""/>	
+<input type="hidden" id="specialpricefrom_hide" name="specialpricefrom" value=""/>	
+<input type="hidden" id="specialpriceto_hide" name="specialpriceto" value=""/>	
+<input type="hidden" id="productcost_hide" name="productcost" value=""/>	
+<input type="hidden" id="productmsrp_hide" name="productmsrp" value=""/>	
+<input type="hidden" id="msrp_display_actual_price_type_hide" name="msrp_display_actual_price_type" value=""/>	
+	 <?php } ?>
+</form>
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+				 <?php if($productType=='configurable'){ ?>
+            var options = {
+                type: 'slide',
+                responsive: true,
+                innerScroll: true,
+                title: 'Create Product Configurations'
+            };
+
+            var popup = modal(options, $('#popup-config'));
+				 <?php } if($productType=='simple' || $productType=='virtual' || $productType=='downloadable'){ ?>
+
+			
+			var options1 = {
+                type: 'slide',
+                responsive: true,
+                innerScroll: true,
+				modalClass: 'config-pricing-modal',
+                title: ' Advanced Pricing'
+            };
+
+            var popuppricing = modal(options1, $('#popup-config-pricing'));
+				 <?php } ?>
+        }
+    );
+</script>
+<script type="text/javascript">
+	require(['jquery'], function($,modal){ 
+	$(document).on('click','.modals-overlay,.config-pricing-modal .action-close',function(event){
+		$('#special_price_hide').val($('#special_price').val());
+		$('#specialpricefrom_hide').val($('#specialpricefrom').val());
+		$('#specialpriceto_hide').val($('#specialpriceto').val());
+		$('#productcost_hide').val($('#productcost').val());
+		$('#productmsrp_hide').val($('#productmsrp').val());
+		$('#msrp_display_actual_price_type_hide').val($('#msrp_display_actual_price_type').val());
+	});
+	$(document).on('click','.advanceprice',function(event){
+	event.preventDefault();
+		$('#popup-config-pricing').modal('openModal');
+		$('#popup-config-pricing').show();
+	});
+	$(document).on('click','.removethisimg',function(event){
+	event.preventDefault();
+		var thisid = parseInt($(this).attr('data-img-id'));
+		var storevalue1 = 0;
+		var storevalue2 = 0;
+		var storevalue3 = 0;
+		var storevalue4 = 0;
+		if ($('.purpletree-image .image-placeholder1:first-child .item-roles').length) {
+		if($('#thisimggg-'+thisid+' .item-role-image input').is(':checked')) {
+			storevalue1 = 1;
+		}
+		if($('#thisimggg-'+thisid+' .item-role-small_image input').is(':checked')) {
+			storevalue2 = 1;
+		}
+		if($('#thisimggg-'+thisid+' .item-role-swatch_image input').is(':checked')) {
+			storevalue3 = 1;
+		}
+		if($('#thisimggg-'+thisid+' .item-role-thumbnail input').is(':checked')) {
+			storevalue4 = 1;
+		}
+		}
+		$('#thisimggg-'+thisid).remove();
+		if(storevalue1 == 1) {
+			$('.purpletree-image .image-placeholder1:first-child .item-role-image input').attr('checked','checked');
+		}if(storevalue2 == 1) {
+			$('.purpletree-image .image-placeholder1:first-child .item-role-small_image input').attr('checked','checked');
+		}if(storevalue3 == 1) {
+			$('.purpletree-image .image-placeholder1:first-child .item-role-swatch_image input').attr('checked','checked');
+		}if(storevalue4 == 1) {
+			$('.purpletree-image .image-placeholder1:first-child .item-role-thumbnail input').attr('checked','checked');	
+		}
+		
+	});
+$(document).on('change','.fileupload',function(event){
+	var imgid = parseInt($(this).attr('data-img-id'));
+	var file = this.files[0];
+	var imagefile = file.type;
+	var match= ["image/jpeg","image/png","image/jpg"];
+	if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]))) {
+		$('#thisimggg-'+imgid+' .image-placeholder-text').css('dispaly', 'block');
+			$('#thisimggg-'+imgid+' #previewing').attr('src','<?php echo $noimage; ?>');
+			alert('Please Select A valid Image File');
+			return false;
+	}
+	else {
+		id = imgid;
+		var newidid = imgid+1;
+		var form_data = new FormData();         
+		form_data.append('image', this.files[0]);
+		$.ajax({
+					type 	 : 'POST',
+					url 	 : '<?php echo $this->getBaseUrl(); ?>marketplace/index/upload',
+					data	 : form_data,   
+					cache: false,
+					contentType: false,
+					processData: false,
+					showLoader: true, //use for display loader 
+					dataType: "json",
+						success: function( data ){
+					if(data.status == 'notlogged') {
+					window.location.href= '<?php echo $this->getUrl('customer/account/login') ?>';
+					}
+							$('#thisimggg-'+id+' #previewing').attr('src', data.url);
+							$('#thisimggg-'+id+' .image-placeholder-text').css('display', 'none');
+		$('#thisimggg-'+id+' #media_gallery_content_Uploader').append('<button class="removethisimg" data-img-id="'+id+'" id="removethisimg-'+id+'">Remove</button>');
+		var checked ='';
+		if ($('.purpletree-image .image-placeholder1:first-child .item-roles').length) {
+			checked = '';
+		} else {
+			checked = 'checked="checked"';
+		}
+		$('#thisimggg-'+id).append('<ul class="item-roles" ><li data-role-code="image" class="item-role item-role-image"><input '+checked+' value="'+data.file+'" name="image" type="radio"/><label>Base</label></li><li data-role-code="small_image" class="item-role item-role-small_image"><input '+checked+' value="'+data.file+'" name="small_image" type="radio"/><label>Small</label></li><li data-role-code="swatch_image" class="item-role item-role-swatch_image"><input '+checked+' value="'+data.file+'" type="radio" name="swatch_image"/><label>Swatch</label></li><li data-role-code="thumbnail" class="item-role item-role-thumbnail"><input '+checked+' value="'+data.file+'" name="thumbnail" type="radio"/><label>Thumbnail</label></li></ul><input type="hidden" name="images[tmpimage'+id+'][file]" value="'+data.file+'"/>');
+		
+		$('.field.purpletree-image').append('<div id="thisimggg-'+newidid+'" class="image-placeholder1"><div id="thisimgg-'+newidid+'" class="image image-placeholder"><div id="media_gallery_content_Uploader" class="uploader"><div class="fileinput-button form-buttons button"><span>Browse Files...</span><input data-img-id="'+newidid+'" class="fileupload" name="image[]" data-url="" multiple="multiple" type="file"></div><div class="clear"></div></div><img id="previewing" src="<?php echo $noimage; ?>"><p class="image-placeholder-text" style="display: none;">Click here to add images.</p></div></div>');
+						
+					}
+		});
+
+	}
+});
+
+function process(attr, nextattr)
+{  
+    strarr = [];
+    for(var i=0;i<attr.length;i++){
+
+        for(var j=0;j<nextattr.length; j++){
+            strarr.push(attr[i]+'-'+nextattr[j]);
+        }
+    }
+
+    return strarr;
+}
+	$(document).ready(function(){
+		$(document).on('click','#product-variations-matrix .action-select',function(event){
+			event.preventDefault();
+			$(this).parentsUntil('tr').parent().remove();
+		});
+		//$(".action-cancel.action-tertiary").click(function(){ 
+			$('.action-cancel.action-tertiary').on('click', function() {
+			
+				$("#popup-config").modal("closeModal"); 
+		});
+		//$(".action-back-step").click(function(){
+			$('.action-back-step').on('click', function() {
+			if($(this).attr('data-bind') == '2ndstep') {
+				$(this).addClass('disabled');
+				$('#variation-steps-wizard_step1').show();
+				$('#variation-steps-wizard_step2').hide();
+				$(".action-next-step").attr('data-bind','1ststep');
+				$(".action-back-step").attr('disabled','true');
+				$(".action-back-step").attr('data-bind','1ststep');
+				$(".1stli").addClass('active');
+				$(".2ndli").removeClass('active');
+			}
+			if($(this).attr('data-bind') == '3rdstep') {
+				$('#variation-steps-wizard_step2').show();
+				$('#variation-steps-wizard_step3').hide();
+				$(".action-next-step").attr('data-bind','2ndstep');
+				$(".action-back-step").attr('data-bind','2ndstep');
+				$(".2ndli").addClass('active');
+				$(".3rdli").removeClass('active');
+			}
+			if($(this).attr('data-bind') == '4thstep') {
+				$('#variation-steps-wizard_step3').show();
+				$('#variation-steps-wizard_step4').hide();
+				$(".action-next-step").attr('data-bind','3rdstep');
+				$(".action-back-step").attr('data-bind','3rdstep');
+				$(".action-next-step span").text('Next');
+				$(".3rdli").addClass('active');
+				$(".4thli").removeClass('active');
+			}
+		});
+		//$(".action-next-step").click(function(){
+			$('.action-next-step').on('click', function() {
+			if($(this).attr('data-bind') == '4thstep') {
+				$('#variation-steps-wizard_step4').hide();
+				$('#createconfigbtn span').text('Edit Configuration');
+			
+				$('.purpletree-variations > #product-variations-matrix').remove();
+				$('.purpletree-variations').append('<div id="product-variations-matrix"><div style="clear:both"></div><div><h3 class="">Current Variations</h3><div class="field"><div class="admin__data-grid-wrap admin__data-grid-wrap-static"><table class="data-grid"><thead><tr><th class="data-grid-th col-name" data-column="name">Name</th><th class="data-grid-th col-sku" data-column="sku">SKU</th><th class="data-grid-th col-price" data-column="price">Price</th><th class="data-grid-th col-qty" data-column="qty">Quantity</th><th class="data-grid-th col-weight" data-column="weight">Weight</th>');
+						
+				$('#variation-steps-wizard_step2 .ui-sortable').each(function(index4,item41){
+				  $('.purpletree-variations table thead tr').append('<th class="data-grid-th col-th-'+($(item41).attr('data-label'))+'">'+ ($(item41).attr('data-label')) +'</th>');
+				});
+						
+				$('.purpletree-variations table thead tr').append('<th class="data-grid-th">Actions</th></tr>');
+					
+				$('.purpletree-variations table').append('<tbody>');
+
+	arrrfin = [];
+	arrrfin1 = [];
+	
+				$('#variation-steps-wizard_step2 .ui-sortable').each(function(index4,item41){
+				
+				  arrrval = [];
+				  arrrval1 = [];
+					var dtalabel11;
+					 var dtalabelattrib;
+					 var dtalabelvalue;
+					 var attrbname = $(item41).attr('data-label')
+				  $(this).find('input.admin__control-checkbox11:checked').each(function(ind,ite){
+				
+					  dtalabel11 = $(ite).attr('data-label');
+					  dtalabelattrib = $(ite).attr('data-attrib');
+					  dtalabelvalue = $(ite).attr('data-value');
+					 arrrval1.push(dtalabelattrib+'|'+dtalabelvalue+'|'+dtalabel11+'|'+attrbname);
+					 arrrval.push(dtalabel11);
+				  });
+				  
+					 arrrfin.push(arrrval);
+					 arrrfin1.push(arrrval1);
+				  });
+	countattrs = arrrfin.length;
+				result = [];
+				for(var i=0;i<countattrs;i++){
+					next = i+1;
+					if(i==0){
+						result = arrrfin[i];
+					}
+					if(next<countattrs){
+						result = process(result, arrrfin[next]);
+					}
+				}
+				countattrs1 = arrrfin1.length;
+				result1 = [];
+				for(var i=0;i<countattrs1;i++){
+					next1 = i+1;
+					if(i==0){
+						result1 = arrrfin1[i];
+					}
+					if(next1<countattrs1){
+						result1 = process(result1, arrrfin1[next1]);
+					}
+				}
+				//
+					var productsku = $('#generateticket-form input#sku').val();
+		var productprice = $('#generateticket-form input#price').val();
+				
+				$.each(result,function(index4,item4){
+					var vv4 = '';
+					var dd ='';
+					var dd1 ='';
+					vv3 = result1[index4].split('-');
+					$.each(vv3,function(kk2,vv2){
+					vv24 = vv2.split('|');
+
+					dd = dd+'<input  id="variations-matrix-' + item4 +  '-configurable_attribute-' + vv24[0] + '-' + vv24[1] + '" name="variations-matrix[' + item4 +  '][configurable_attribute][' + vv24[0] + ']" value="' + vv24[1] + '" type="hidden"/>';
+				
+					dd1 = dd1+'<input  id="variations-matrix-' + item4 +  '-configurable_attribute1-' + vv24[0] + '-' + vv24[1] + '" name="configurable_attribute1[' + vv24[0] + ']['+ vv24[1] +'][' + vv24[3] + ']" value="' + vv24[2] + '" type="hidden"/>';
+					});
+			
+				configdat = dd+dd1;
+				var qtttty = $('.purpletree-lblryt #quantity').val();
+				var weighttt = $('.purpletree-lblryt #weight').val();
+				$('.purpletree-variations tbody').append('<tr class="trvariation-'+ index4 +'"><td class="col-name"><input class="required-entry" id="variations-matrix-' + item4 +  '-name" name="variations-matrix[' + item4 +  '][name]" value="' + productsku +'-' + item4 + '" type="text"><input data-role="status" name="variations-matrix[' + item4 +  '][status]" value="1" type="hidden">'+configdat+'</td><td class="col-sku"><input class="required-entry" id="variations-matrix-' + item4 +  '-sku" name="variations-matrix[' + item4 +  '][sku]" value="' + productsku +'-' + item4 + '" type="text"></td><td class="col-price"><div class="currency-addon"><input id="variations-matrix-' + item4 +  '-price" class="required-entry validate-zero-or-greater" name="variations-matrix[' + item4 +  '][price]" value="'+ productprice +'" type="text"><label class="addafter"><strong><?php echo $this->getCurrentCurrencySymbol() ?></strong></label></div></td><td class="col-qty"><input class="validate-zero-or-greater" id="variations-matrix-' + item4 +  '-qty" name="variations-matrix[' + item4 +  '][quantity]" value="'+qtttty+'" type="text"></td><td class="col-weight"><input class="validate-zero-or-greater" id="variations-matrix-' + item4 +  '-weight" name="variations-matrix[' + item4 +  '][weight]" value="'+weighttt+'" type="text"></td>');
+				itemall11 = item4.split('-');
+				$.each(itemall11,function(kk,vv){
+					vv1 = vv.split('|');
+				$('.purpletree-variations tbody tr.trvariation-' + index4).append('<td>'+ vv1[0] + '</td>');
+					});
+				$('.purpletree-variations tbody tr.trvariation-' + index4).append('<td class=""><button class="action-select"><span>Remove</span></button></td></tr>');
+				});
+				$('.purpletree-variations tbody').append('</tbody></table></div></div></div></div>');
+				$("#popup-config").modal("closeModal"); 
+
+			}
+			
+			if($(this).attr('data-bind') == '3rdstep') {
+				
+				$('#variation-steps-wizard_step3').hide();
+				$('#variation-steps-wizard_step4').show();
+				$(".action-next-step").attr('data-bind','4thstep');
+				$(".action-next-step span").text('Generate Products');
+				$(".action-back-step").attr('data-bind','4thstep');
+				$(".3rdli").removeClass('active');
+				$(".4thli").addClass('active');
+				var productsku = $('#generateticket-form input#sku').val();
+				var productprice = $('#generateticket-form input#price').val();
+				$('#variation-steps-wizard_step4 #grid_4 table').remove();
+				$('#variation-steps-wizard_step4 #grid_4').append('<table class="data-grid data-grid-configurable"><thead><tr><th class="data-grid-th">SKU</th><th class="data-grid-th">Quantity</th>');
+				$('#variation-steps-wizard_step2 .ui-sortable').each(function(index4,item41){
+				  $('#variation-steps-wizard_step4 #grid_4 table thead tr').append('<th class="data-grid-th">'+ ($(item41).attr('data-label')) +'</th>');
+				});
+				  arrrfin = [];
+				$('#variation-steps-wizard_step2 .ui-sortable').each(function(index4,item41){
+				  var dtalabel = $(item41).attr('data-label');
+				  arrrval = [];
+				  $(this).find('input.admin__control-checkbox11:checked').each(function(ind,ite){
+					 var dtalabel11 = $(ite).attr('data-label');
+					 arrrval.push(dtalabel11);
+				  });
+				  
+					 arrrfin.push(arrrval);
+				});
+				countattrs = arrrfin.length;
+				result = [];
+
+				for(var i=0;i<countattrs;i++){
+					next = i+1;
+					if(i==0){
+						result = arrrfin[i];
+					}
+					if(next<countattrs){
+						result = process(result, arrrfin[next]);
+					}
+				}
+
+				
+				$('#variation-steps-wizard_step4 #grid_4 table thead tr').append('<th class="data-grid-th">Price</th>');
+				$('#variation-steps-wizard_step4 #grid_4 table').append('<tbody>');
+var qttty = $('.purpletree-lblryt #quantity').val();
+				$.each(result,function(index4,item4){
+				$('#variation-steps-wizard_step4 tbody').append('<tr class="tr-' + index4 +'" ><td><span>' + productsku + '-' + item4 + '</span></td><td><span>'+qttty+'</span></td>');
+					itemall = item4.split('-');
+				$.each(itemall,function(kk,vv){
+				$('#variation-steps-wizard_step4 tbody tr.tr-' + index4).append('<td><span>' + vv + '</span></td>');
+				});
+				$('#variation-steps-wizard_step4 tbody tr.tr-' + index4).append('<td><span><?php echo $this->getCurrentCurrencySymbol() ?> '+ productprice +'</span></td></tr>');
+				});
+				$('#variation-steps-wizard_step4 tbody').append('</tbody></table>');
+				
+			}
+			if($(this).attr('data-bind') == '2ndstep') {
+				var checkedatt1;
+				$('#variation-steps-wizard_step2 .ui-sortable').each(function(index4,item41){
+				   checkedatt1 = '0';
+				 
+				  $(this).find('input.admin__control-checkbox11:checked').each(function(ind,ite){
+					 
+					  checkedatt1 = '1'; 
+				  });
+				  });
+			if(checkedatt1 == '1') {
+				$('.steps-wizard > .messages > #messages > .messages > .message').remove();
+				$('#variation-steps-wizard_step2').hide();
+				$('#variation-steps-wizard_step3').show();
+				$(".action-next-step").attr('data-bind','3rdstep');
+				$(".action-next-step span").text('Next');
+				$(".action-back-step").attr('data-bind','3rdstep');
+				$(".2ndli").removeClass('active');
+				$(".3rdli").addClass('active');
+				$('#variation-steps-wizard_step3 .attribute-image-selector .admin__field-control select').remove();
+				$('#variation-steps-wizard_step3 .attribute-image-selector .admin__field-control').append('<select id="apply-images-attributes" class="admin__control-select"><option value="">Select</option><option value=""><option value="">Select</option>');
+				$('#variation-steps-wizard_step3 .attribute-price-selector .admin__field-control').append('<select id="apply-price-attributes" class="admin__control-select"><option value="">Select</option><option value=""><option value="">Select</option>');
+				$('#variation-steps-wizard_step3 .attribute-quantity-selector .admin__field-control').append('<select id="apply-quantity-attributes" class="admin__control-select"><option value="">Select</option><option value=""><option value="">Select</option>');
+				$('#variation-steps-wizard_step2 .ui-sortable input.admin__control-checkbox11:checked').each(function(index,item){
+					$('#variation-steps-wizard_step3 .attribute-image-selector select').append('<option value="' + $(this).attr('data-value') + '">' + $(this).attr('data-label') + '</option>');
+					$('#variation-steps-wizard_step3 .attribute-price-selector select').append('<option value="' + $(this).attr('data-value') + '">' + $(this).attr('data-label') + '</option>');
+					$('#variation-steps-wizard_step3 .attribute-quantity-selector select').append('<option value="' + $(this).attr('data-value') + '">' + $(this).attr('data-label') + '</option>');
+					
+				});
+				$('#variation-steps-wizard_step3 .attribute-image-selector .admin__field-control').append('</select>');
+				$('#variation-steps-wizard_step3 .attribute-price-selector .admin__field-control').append('</select>');
+				$('#variation-steps-wizard_step3 .attribute-quantity-selector .admin__field-control').append('</select>');
+			}
+			else {
+				$('.steps-wizard > .messages > #messages > .messages > .message').remove();
+				$('.steps-wizard > .messages > #messages > .messages').append('<div class="message message-error error"><div>Select options for all attributes or remove unused attributes.</div></div>');
+			}
+			}
+			if($(this).attr('data-bind') == '1ststep') {
+			//Post Data
+			attributeid = [];
+			var checkedatt = 0;
+			$('.data-grid-checkbox-cell input.admin__control-checkbox11:checked').each(function(index,item){
+				checkedatt = 1;
+				attributeid.push($(item).val());
+			});
+			if(checkedatt == 1) {
+				$('.steps-wizard > .messages > #messages > .messages > .message').remove();
+					$.ajax({
+					type 	 : 'POST',
+					url 	 : '<?php echo $this->getBaseUrl(); ?>marketplace/index/attributevalues',
+					data: 'attributeid='+attributeid ,
+					showLoader: true, //use for display loader 
+					dataType: "json",
+						success: function( data ){
+					if(data.status == 'notlogged') {
+					window.location.href= '<?php echo $this->getUrl('customer/account/login') ?>';
+				}
+				$('#variation-steps-wizard_step1').hide();
+				$('#variation-steps-wizard_step2').show();
+				$(".action-next-step").attr('data-bind','2ndstep');
+				$(".action-back-step").attr('data-bind','2ndstep');
+				$(".action-back-step").removeClass('disabled');
+				$(".action-back-step").removeAttr('disabled');
+				$(".2ndli").addClass('active');
+				$(".1stli").removeClass('active');
+				$('.ui-sortable').each(function(index,item1){
+				$(item1).remove();
+				});
+							$.each(data,function(k1,v1){
+								if($.isArray(v1)) {
+									 $.each(v1,function(k,v){
+										 $.each(v,function(k3,v3){
+											$('#variation-steps-wizard_step2 > div').append('<div data-label="' + k3 + '" class="ui-sortable attt' + k3 + '"><div class="attribute-entity"><div class="attribute-entity-top"><div class="attribute-entity-title-block"><span class="" title="Sort Variations"></span><div class="attribute-entity-title">' + k3 + '</div></div></div> <fieldset class="admin__fieldset admin__fieldset-options"><ul class="attribute-options attulcl' + k3 + '"> </ul> </fieldset></div></div>')
+											$.each(v3,function(k5,v5){
+											
+											$.each(v5,function(k4,v4){
+												$('.attulcl' + k3).append('<li class="attribute-option"><div class="admin__field admin__field-option"><input class="admin__control-checkbox11" data-attrib="'+k5+'" data-value="' + v4.value + '" data-label="' + v4.label + '" value="' + v4.value + '" id="' + v4.value + '" type="checkbox"><label class="admin__field-label" for="' + v4.value + '">' + v4.label + '</label></div> </li>');
+											 });
+											 });
+										 });
+									});
+								}
+							});
+						}
+					});
+			}
+			else {
+				$('.steps-wizard > .messages > #messages > .messages > .message').remove();
+				$('.steps-wizard > .messages > #messages > .messages').append('<div class="message message-error error"><div>Please select attribute(s).</div></div>');
+			}
+			}
+			
+		});
+		
+	//$("#createconfigbtn").click(function(){
+			$('#createconfigbtn').on('click', function() {
+		var productsku = $('#generateticket-form input#sku').val();
+		var productprice = $('#generateticket-form input#price').val();
+		if(productsku != '' && productprice != '') {
+			$(".1stli").addClass('active');
+			$(".2ndli").removeClass('active');
+			$(".3rdli").removeClass('active');
+			$(".4thli").removeClass('active');
+			$(".action-next-step").attr('data-bind','1ststep');
+			$(".action-next-step span").text('Next');
+			$(".action-back-step").attr('data-bind','1ststep');
+			$(".action-back-step").attr('disabled','true');
+		$('#popup-config').modal('openModal');
+		$('#popup-config').show();
+		$('#variation-steps-wizard_step1').show();
+		$('#variation-steps-wizard_step2').hide();
+		$('#variation-steps-wizard_step3').hide();
+		$('#variation-steps-wizard_step4').hide();
+		}
+			else {
+				alert('Enter SKU and Price');
+			}
+	});
+	});
+	});
+	</script>
+	
+	
+	
+	
+	<script type="text/javascript">
+	require(['jquery', 'jquery/ui'], function($){ 
+	$(document).ready(function(){
+	var id=0;
+	var sid=0;
+	//$("#sepratorcontent").click(function(){
+		$('#sepratorcontent').on('click', function() {
+		$(".purpletree-content").toggle('display');
+	});
+	
+	//$("#seocontent").click(function(){
+		$('#seocontent').on('click', function() {
+		$(".purpletree-seo").toggle('display');
+	});
+	//$("#sepratorconfig").click(function(){
+		$('#sepratorconfig').on('click', function() {
+		$(".purpletree-config").toggle('display');
+	});
+	//$("#downloadable").click(function(){
+		$('#downloadable').on('click', function() {
+		$(".purpletree-downloadable").toggle('display');
+	});
+	
+	//$("#websitecontent").click(function(){
+		$('#websitecontent').on('click', function() {
+		$(".purpletree-websiteoption").toggle('display');
+	});
+	//$("#imagecontent").click(function(){
+		$('#imagecontent').on('click', function() {
+		$(".purpletree-image").toggle('display');
+	});
+		$('#addionalattribut').on('click', function() {
+		$(".purpletree-addionalattribut").toggle('display');
+	});
+	$("#name").keyup(function(){
+		$("#sku").val($("#name").val());
+	});
+	//$("#weightoptn").change(function(){
+		$(document).on('change','#weightoptn',function(){
+		
+		if($("#weightoptn").val()==1)
+		{
+			$("#weight").removeAttr('disabled');
+		}
+		else
+		{
+			$("#weight").attr('disabled',true);
+		}
+	});
+		//$("#addproductlink").click(function(){
+			$('#addproductlink').on('click', function() {
+		$("#downloadablebody").append('<tr class="main'+id+'"><td> <input name="downloadable[link]['+id+'][record_id]" value="'+id+'"  type="hidden"><input required name="downloadable[link]['+id+'][title]" id="downloadabletitle'+id+'" title="downloadabletitle" class="input-text" type="text"></td><td> <span style="position:absolute;padding: 6px;"><?php echo $this->getCurrentCurrencySymbol() ?></span><input class="downloadableprice validate-number" style="padding-left:18px;" disabled="true" name="downloadable[link]['+id+'][price]" id="downloadableprice'+id+'" title="downloadableprice" class="input-text" type="text"></td><td><select class="fileoption"  removid="'+id+'" name="downloadable[link]['+id+'][type]" id="downloadablefile'+id+'" title="file"><option data-title="Upload File" value="file">Upload File</option><option data-title="URL" value="url">URL</option></select></br><div id="addoption'+id+'" class="addoption"><input class="links" required name="dwnfile[]" id="dwnfile'+id+'" title="Downloadable File" type="file"  removid="'+id+'"></div></td><td><select class="sampleoption"   removid="'+id+'" name="downloadable[link]['+id+'][sample][type]" id="downloadablesamplefile'+id+'" title="file"><option data-title="Upload File" value="file">Upload File</option><option data-title="URL" value="url">URL</option></select></br><div class="addsampleoption" id="addsampleoption'+id+'"><input  class="link_samples" name="dwnsmpfile[]" id="dwnsmpfile'+id+'" title="Downloadable File" type="file"  removid="'+id+'"><input name="link_samples[]" id="link_samples'+id+'"  type="hidden"></div></td><td><select class="" name="downloadable[link]['+id+'][is_shareable]" id="shareablefile'+id+'" title="Shareable"><option data-title="Yes" value="1">Yes</option><option data-title="No" value="0">No</option><option data-title="Use config" value="2">Use config</option></select></td><td> <input removid="'+id+'" name="downloadable[link]['+id+'][number_of_downloadsfield]" id="maxdownload'+id+'" title="maxdownload" class="input-text maxdownloadfile validate-number" type="text" value="0"> <input  name="downloadable[link]['+id+'][number_of_downloads]" id="maxdownloadhide'+id+'" title="maxdownloadhide" class="input-text" type="hidden" value="0"></br><input type="checkbox" class="dwnchk" removid="'+id+'" name="limitchk[]" id="limitchk'+id+'" value="1" ><span>Unlimited</span></td><td><span class="purpletree-rmv" removid="'+id+'" id="del'+id+'"><b>Delete</b></span><input name="downloadable[link]['+id+'][sort_order]" value="1" type="hidden"><input name="downloadable[link]['+id+'][is_unlimited]" id="unlimiteddwn'+id+'" value="" type="hidden"></td></td></tr>');
+		id++;
+		;});
+	$(document).on('click','.purpletree-rmv',function(){
+		var id = $(this).attr('removid');
+		$('.main'+id).remove();
+	});
+	$(document).on('change','.fileoption',function(){
+		var id = $(this).attr('removid');
+		var data = $(this).val();
+		if(data=='file'){
+			$("#dwnfile"+id).remove();
+			$("#dwnurl"+id).remove();
+			$("#addoption"+id).append('<input name="dwnfile[]"  removid="'+id+'" class="links" id="dwnfile'+id+'" title="Downloadable File" type="file"><input name="links[]" id="links'+id+'"  required type="hidden">');
+		}
+		else{
+			$("#dwnfile"+id).remove();
+			$("#addoption"+id).append('<input required class="validate-url" name="downloadable[link]['+id+'][link_url]" id="dwnurl'+id+'" placeholder="URL" title="Url" type="text">');
+		}
+	});
+	$(document).on('blur','.maxdownloadfile',function(){
+		var id = $(this).attr('removid');
+		var data = $(this).val();
+		$("#maxdownloadhide"+id).val(data);
+	});
+	$(document).on('change','.sampleoption',function(){
+		var id = $(this).attr('removid');
+		var data = $(this).val();
+		if(data=='file'){
+			$("#dwnsmpfile"+id).remove();
+			$("#dwnsmpurl"+id).remove();
+			$("#addsampleoption"+id).append('<input name="dwnsmpfile[]"  removid="'+id+'" class="link_samples" id="dwnsmpfile'+id+'" title="Downloadable File" type="file"><input name="link_samples[]" id="link_samples'+id+'"  type="hidden">');
+		}
+		else{
+			$("#dwnsmpfile"+id).remove();
+			$("#addsampleoption"+id).append('<input name="downloadable[link]['+id+'][sample][url]" id="dwnsmpurl'+id+'" placeholder="URL" title="Url" type="text">');
+		}
+	});
+	//$("#addproductsample").click(function(){
+		$('#addproductsample').on('click', function() {
+	$("#sampleproduct").append('<tr class="samplemain'+sid+'"><td> <input name="downloadable[sample]['+sid+'][record_id]" value="'+sid+'"  type="hidden"><input required name="downloadable[sample]['+sid+'][title]" id="sampledownloadabletitle'+sid+'" title="sampledownloadabletitle" class="input-text" type="text"></td><td><select class="samplefileoption"  removid="'+sid+'" name="downloadable[sample]['+sid+'][type]" id="sampledownloadablefile'+sid+'" title="file"><option data-title="Upload File" value="file">Upload File</option><option data-title="URL" value="url">URL</option></select></br><div id="sampleaddoption'+sid+'" class="addoption"><input class="samples" required name="sampledwnfile[]" id="sampledwnfile'+sid+'" title="Downloadable File" type="file"  removid="'+sid+'"><input name="samples[]" id="samples'+sid+'"  type="hidden"></div></td><td><span class="purpletree-del" removid="'+sid+'" id="del'+sid+'"><b>Delete</b></span><input name="downloadable[sample]['+sid+'][sort_order]" value="1" type="hidden"></td></tr>');
+	sid++;
+	});
+	});
+	$(document).on('click','.dwnchk',function(){
+		var id = $(this).attr('removid');
+		if($(this).is(":checked")){
+			$("#maxdownload"+id).attr('disabled',true);
+			$("#maxdownloadhide"+id).val(0);
+			$("#unlimiteddwn"+id).val(1);
+		}
+		else{
+			$("#maxdownload"+id).attr('disabled',false);
+			var data = $("#maxdownload"+id).val();
+			$("#maxdownloadhide"+id).val(data);
+			$("#unlimiteddwn"+id).val(0);
+		}
+	});
+	$(document).on('click','.linkchkbox',function(){
+		var id = $(this).attr('removid');
+		if($('.linkchkbox').is(":checked")){
+			$(".downloadableprice").attr('disabled',false);
+		}
+		else{
+			$(".downloadableprice").attr('disabled',true);
+			
+		}
+	});
+
+	$(document).on('click','.purpletree-del',function(){
+		var id = $(this).attr('removid');
+		$('.samplemain'+id).remove();
+		});
+	$(document).on('change','.samplefileoption',function(){
+		var id = $(this).attr('removid');
+		var data = $(this).val();
+		if(data=='file'){
+			$("#sampledwnfile"+id).remove();
+			$("#sampledwnurl"+id).remove();
+			$("#sampleaddoption"+id).append('<input class="samples"  removid="'+id+'" name="sampledwnfile[]" id="sampledwnfile'+id+'" title="Downloadable File" required type="file"><input name="samples[]" id="samples'+id+'"  type="hidden">');
+		}
+		else{
+			$("#sampledwnfile"+id).remove();
+			$("#sampleaddoption"+id).append('<input required class="validate-url" name="downloadable[sample]['+id+'][sample_url]" id="sampledwnurl'+id+'" placeholder="URL" title="Url" type="text">');
+		}
+	});
+	$(document).on('change','.samples',function(){
+		var id = $(this).attr('removid');
+		var form_data = new FormData();
+		$("#links"+id).remove();
+		$("#linksname"+id).remove();
+		$("#linksize"+id).remove();
+		$("#linkstatus"+id).remove();
+		form_data.append('samples', this.files[0]);
+		form_data.append('type', 'samples');
+		$.ajax({
+			type 	 : 'POST',
+			url 	 : '<?php echo $this->getBaseUrl(); ?>marketplace/index/uploaddownloadable/',
+			data	 : form_data,   
+			cache: false,
+			contentType: false,
+			processData: false,
+			showLoader: true, //use for display loader 
+			dataType: "json",
+			success: function( data ){
+						$("#sampleaddoption"+id).append('<input name="downloadable[sample]['+id+'][file][0][file]" id="links'+id+'" value="'+data.file+'" type="hidden"><input value="'+data.name+'"  name="downloadable[sample]['+id+'][file][0][name]" id="linksname'+id+'"  type="hidden"><input name="downloadable[sample]['+id+'][file][0][size]" id="linksize'+id+'" value="'+data.size+'"  type="hidden"><input name="downloadable[sample]['+id+'][file][0][status]" value="new" id="linkstatus'+id+'"  type="hidden">');
+					
+		}
+		});
+	});
+	$(document).on('change','.links',function(){
+		var id = $(this).attr('removid');
+		$("#samplelinks"+id).remove();
+		$("#samplelinksname"+id).remove();
+		$("#samplelinkstatus"+id).remove();
+		$("#samplelinksize"+id).remove();
+		var form_data = new FormData();         
+		form_data.append('links', this.files[0]);
+		form_data.append('type', 'links');
+			$.ajax({
+			type 	 : 'POST',
+			url 	 : '<?php echo $this->getBaseUrl(); ?>marketplace/index/uploaddownloadable/',
+			data	 : form_data,   
+			cache: false,
+			contentType: false,
+			processData: false,
+			showLoader: true, //use for display loader 
+			dataType: "json",
+			success: function(data){
+				
+				$("#addoption"+id).append('<input name="downloadable[link]['+id+'][file]['+id+'][file]" id="samplelinks'+id+'" value="'+data.file+'" type="hidden"><input value="'+data.name+'"  name="downloadable[link]['+id+'][file][0][name]" id="samplelinksname'+id+'"  type="hidden"><input name="downloadable[link]['+id+'][file][0][size]" id="samplelinksize'+id+'" value="'+data.size+'"  type="hidden"><input name="downloadable[link]['+id+'][file][0][status]" value="new" id="samplelinkstatus'+id+'"  type="hidden">');
+			}
+		});
+	});
+	$(document).on('change','.link_samples',function(){
+		var id = $(this).attr('removid');
+		$("#slinks"+id).remove();
+		$("#slinksname"+id).remove();
+		$("#slinksize"+id).remove();
+		$("#slinkstatus"+id).remove();
+		var form_data = new FormData();     
+		
+		form_data.append('link_samples', this.files[0]);
+		form_data.append('type', 'link_samples');
+		$.ajax({
+			type 	 : 'POST',
+			url 	 : '<?php echo $this->getBaseUrl(); ?>marketplace/index/uploaddownloadable/',
+			data	 : form_data,   
+			cache: false,
+			contentType: false,
+			processData: false,
+			showLoader: true, //use for display loader 
+			dataType: "json",
+			success: function(data){
+		
+					$("#addoption"+id).append('<input name="downloadable[link]['+id+'][sample][file][0][file]" id="slinks'+id+'" value="'+data.file+'" type="hidden"><input value="'+data.name+'"  name="downloadable[link]['+id+'][sample][file][0][name]" id="slinksname'+id+'"  type="hidden"><input name="downloadable[link]['+id+'][sample][file][0][size]" id="slinksize'+id+'" value="'+data.size+'"  type="hidden"><input name="downloadable[link]['+id+'][sample][file][0][status]" value="new" id="slinkstatus'+id+'"  type="hidden">');
+		}
+		});
+	});
+	
+});
+
+ </script>
+<script type="text/javascript">
+	require([
+		"jquery",
+		"mage/calendar"
+		], function($){
+		 $('#datepickerfrom,#datepickerto,#specialpricefrom,#specialpriceto').datepicker({ dateFormat: 'mm/dd/yy' });
+		});
+</script>
+
+<div id="popup-config" style="display:none">
+<div class="">
+
+<div class="admin__scope-old"><div class="steps-wizard productFormConfigurable">
+    <div data-role="messages" class="messages">
+	<div data-role="messages" id="messages">
+	<div class="messages">
+	<!--Populate data-->
+	</div></div></div>
+
+    <div class="steps-wizard-navigation">
+        <ul class="nav-bar">
+                            <li class="active 1stli">
+                    <a href="#variation-steps-wizard_step1">
+                        <?php echo __('Select Attributes')?>                    </a>
+                </li>
+                            <li class="2ndli">
+                    <a href="#variation-steps-wizard_step2">
+                        <?php echo __('Attribute Values')?>                    </a>
+                </li>
+                            <li class="3rdli">
+                    <a href="#variation-steps-wizard_step3">
+                        <?php echo __('Bulk Images &amp; Price')?>                    </a>
+                </li>
+                            <li class="4thtli">
+                    <a href="#variation-steps-wizard_step4">
+                        <?php echo __('Summary')?>                    </a>
+                </li>
+                    </ul>
+        <div class="nav-bar-outer-actions">
+            <div class="action-wrap">
+                <button type="button" class="action-cancel action-tertiary">
+                    <span><?php echo __('Cancel')?></span>
+                </button>
+            </div>
+            <div class="action-wrap action-wrap-prev">
+                <button data-bind="1ststep" type="button" class="action-default action-back-step disabled">
+                    <span><?php echo __('Back')?></span>
+                </button>
+            </div>
+            <div class="action-wrap action-wrap-next">
+                <button type="button" class="action-default action-primary action-next-step pts-newbtn" data-bind="1ststep">
+                    <span><?php echo __('Next')?></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div data-role="steps-wizard-tab">
+	<!--1ststep start-->
+                    <div class="content" id="variation-steps-wizard_step1" style="">
+                <div class="select-attributes-block productFormConfigurable">
+    
+    <h2 class="steps-wizard-title"><?php echo __('Step 1: Select Attributes')?></h2>
+    <div class="selected-attributes">
+        <?php echo __('Selected Attributes:')?>        <span>--</span>
+    </div>
+</div>
+<div class="admin__data-grid-outer-wrap">
+    
+   
+<div class="admin__data-grid-wrap">
+    <table class="data-grid data-grid-draggable">
+       <thead>
+            <tr>
+
+<th class="data-grid-multicheck-cell">
+    <div class="action-multicheck-wrap">
+        <input class="admin__control-checkbox11" id="2" type="checkbox">
+        <label for="2"></label>
+        
+        
+    </div>
+</th>
+<th class="data-grid-th _sortable _draggable _ascend">
+    <span class="data-grid-cell-content"><?php echo __('Attribute Code')?></span>
+</th>
+<th class="data-grid-th _sortable _draggable">
+    <span class="data-grid-cell-content"><?php echo __('Attribute Label')?></span>
+</th>
+<th class="data-grid-th _sortable _draggable">
+    <span class="data-grid-cell-content"><?php echo __('Required')?></span>
+</th>
+<th class="data-grid-th _sortable _draggable">
+    <span class="data-grid-cell-content"><?php echo __('System')?></span>
+</th>
+<th class="data-grid-th _sortable _draggable">
+    <span class="data-grid-cell-content"><?php echo __('Visible')?></span>
+</th>
+<th class="data-grid-th _sortable _draggable">
+    <span class="data-grid-cell-content"><?php echo __('Scope')?></span>
+</th>
+<th class="data-grid-th _sortable _draggable">
+    <span class="data-grid-cell-content"><?php echo __('Searchable')?></span>
+</th>
+<th class="data-grid-th _sortable _draggable">
+    <span class="data-grid-cell-content"><?php echo __('Comparable')?></span>
+</th>
+         </tr>
+        </thead>
+        <tbody>
+	
+		<?php foreach($this->getAllAttributes($attributeType) as $attributeitem): ?>
+          <tr class="data-row">
+            <td class="data-grid-checkbox-cell">
+<label class="data-grid-checkbox-cell-inner">
+    <input class="admin__control-checkbox11" id="idscheck<?php echo $attributeitem['id']; ?>" value="<?php echo $attributeitem['id']; ?>" type="checkbox">
+    <label for="idscheck<?php echo $attributeitem['id']; ?>"></label>
+</label>
+</td>
+<td>
+<div class="data-grid-cell-content"><?php echo $attributeitem['code']; ?></div>
+</td><td>
+<div class="data-grid-cell-content"><?php echo $attributeitem['label']; ?></div>
+</td><td>
+<div class="data-grid-cell-content"><?php echo $attributeitem['IsRequired']; ?></div>
+</td><td>
+<div class="data-grid-cell-content"><?php echo $attributeitem['IsSystemDefined']; ?></div>
+</td><td>
+<div class="data-grid-cell-content"><?php echo $attributeitem['IsVisible']; ?></div>
+</td><td>
+<div class="data-grid-cell-content"><?php echo $attributeitem['scope']; ?></div>
+</td><td>
+<div class="data-grid-cell-content"><?php echo $attributeitem['IsSearchable']; ?></div>
+</td><td>
+<div class="data-grid-cell-content"><?php echo $attributeitem['IsComparable']; ?></div>
+</td>
+            </tr>
+			<?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+<!--1ststep end-->
+<!--2ndstep start-->
+<div class="content" id="variation-steps-wizard_step2" style="display:none">
+                <div>
+    <h2 class="steps-wizard-title"><?php echo __('Step 2: Attribute Values')?></h2>
+    <div class="steps-wizard-info">
+        <span><?php echo __('Select values from each attribute to include in this product. Each unique combination of values creates a unigue product SKU.')?></span>
+    </div>
+</div>
+
+            </div>
+<!--2ndstep end-->
+<!--3rdstep start-->
+<div class="content" id="variation-steps-wizard_step3" style="display:none">
+                
+<div>
+    <h2 class="steps-wizard-title"><?php echo __('Step 3: Bulk Images, Price and Quantity')?></h2>
+    <div class="steps-wizard-info">
+        <?php echo __('Based on your selections')?> <span class="new-products-count">9</span> <?php echo __('new products will be created. Use this step to customize images and price for your new products.')?>    </div>
+
+    <div class="steps-wizard-section">
+        <div>
+            <div class="steps-wizard-section-title">
+            <span><?php echo __('Images')?></span>
+            </div>
+
+            <ul class="steps-wizard-section-list">
+              
+                <li>
+                    <div class="admin__field admin__field-option">
+                        <input id="skip-images-uploading-radio" class="admin__control-radio1" value="none" checked="" name="ko_unique_1" type="radio">
+                        <label for="skip-images-uploading-radio" class="admin__field-label">
+                            <span><?php echo __('Skip image uploading at this time')?></span>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="steps-wizard-section">
+        <div data-role="section">
+            <div class="steps-wizard-section-title">
+                <span><?php echo __('Price')?></span>
+            </div>
+            <ul class="steps-wizard-section-list">
+                
+                <li>
+                    <div class="admin__field admin__field-option">
+                        <input id="skip-pricing-radio" class="admin__control-radio1" value="none" checked="" name="ko_unique_2" type="radio">
+                        <label for="skip-pricing-radio" class="admin__field-label">
+                            <span><?php echo __('Skip price at this time')?></span>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="steps-wizard-section">
+        <div data-role="section">
+            <div class="steps-wizard-section-title">
+                <span><?php echo __('Quantity')?></span>
+            </div>
+            <ul class="steps-wizard-section-list">
+                
+                <li>
+                    <div class="admin__field admin__field-option">
+                        <input id="skip-inventory-radio" class="admin__control-radio1" value="none" checked="" name="ko_unique_3" type="radio">
+                        <label for="skip-inventory-radio" class="admin__field-label">
+                            <span><?php echo __('Skip quantity at this time')?></span>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+</div>
+
+
+            </div>
+<!--3rdstep end-->
+<!--4thstep end-->
+<div class="content" id="variation-steps-wizard_step4" style="display:none">
+                <div>
+    <h2 class="steps-wizard-title"><?php echo __('Step 4: Summary')?></h2>
+
+    <div class="admin__data-grid-wrap admin__data-grid-wrap-static">
+
+<div class="admin__collapsible-block-wrapper opened">
+    <div class="fieldset-wrapper-title">
+        <strong class="conftitlle">
+            <span><?php echo __('New Product Review')?></span>
+        </strong>
+    </div>
+
+    <div class="fieldset-wrapper-content in collapse" id="grid_4">
+
+        <div class="note"><?php echo __('Here are the products you are about to create.')?></div>
+
+    </div>
+</div>
+
+    </div>
+</div> </div>
+<!--4thstep end-->
+</div>
+</div>
+</div>
+</div>
+</div>
+<style>
+.modal-slide .modal-header > .page-main-actions {
+	display:none;
+}
+.image.image-placeholder::before {
+	content:"" !important;
+}
+.removethisimg {
+	position: absolute; 
+	right: 0px; 
+	bottom: 0px;
+	padding: 3px;
+	z-index:100;
+}
+</style>
+<?php if(version_compare($this->getVersion(),  "2.3.0") == -1) { ?>
+<script type="text/javascript">
+require(['jquery','mage/adminhtml/wysiwyg/tiny_mce/setup'], function($) {
+	$(document).ready(function($) {
+	tinyMCE.init({
+    mode : "exact",
+    elements: "productdescription,productshortdescription<?php echo $editorwysiwug; ?>",
+    theme : "advanced",
+    plugins : "inlinepopups,style,layer,table,save,advhr,advlink,emotions,iespell,insertdatetime,preview,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras",
+    theme_advanced_buttons1 : "newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+    theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,|,undo,redo,|,link,unlink,anchor,cleanup,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+    theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,advhr,|,print,|,ltr,rtl,|,fullscreen",
+    theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,|,visualchars,nonbreaking",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left",
+    theme_advanced_path_location : "bottom",
+    extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
+    theme_advanced_resize_horizontal : 'true',
+    theme_advanced_resizing : 'true',
+    apply_source_formatting : 'true',
+    convert_urls : 'false',
+    force_br_newlines : 'true',
+    doctype : '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
+  });
+});
+});
+</script>
+<?php } else { ?>
+<script type="text/javascript">
+require(['jquery','mage/adminhtml/wysiwyg/tiny_mce/setup'], function($) {
+	$(document).ready(function($) {
+	tinyMCE.init({
+    mode : "exact",
+	elements: "productdescription,productshortdescription<?php echo $editorwysiwug; ?>",
+	 plugins: "image",
+	 menubar: "",
+	toolbar: "image | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | fontsizeselect forecolor backcolor | preview fullscreen | template | formatselect | fontselect |fontsizeselect",
+	removed_menuitems: 'newdocument',
+    extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
+    apply_source_formatting : 'true',
+    convert_urls : 'false',
+    force_br_newlines : 'true',
+    doctype : '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
+  });
+});
+});
+</script>
+<?php } ?>

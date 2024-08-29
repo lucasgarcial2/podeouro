@@ -1,0 +1,28 @@
+<!--
+/**
+* Purpletree_Marketplace storeviewright
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<?php 
+	$storeData=$this->getStoreDetails(); 
+	$imageUrl=$this->getImageUrl();
+?>
+<div class="pts-container_right">
+	<div class="pts-right">
+			<?php if($storeData['store_banner']!=''){?> 
+				<img class="pts-store-banner" src="<?php echo $imageUrl.$storeData['store_banner'];?>" />
+			<?php } else {?>
+				<img class="pts-store-banner" src="<?php echo $this->getViewFileUrl('Purpletree_Marketplace::images/purpletree_banner.jpg'); ?>">
+			<?php }?>
+	</div>
+</div>

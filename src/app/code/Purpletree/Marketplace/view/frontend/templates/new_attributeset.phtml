@@ -1,0 +1,71 @@
+<!--
+/**
+* Purpletree_Marketplace new_attribute
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+ 
+<form data-mage-init='{"validation": {}}' class="form generateticket" action="<?php echo $this->getUrl('*/*/attributesetsave') ?>" id="generateticket-form" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data" >
+ <?php echo $block->getBlockHtml('formkey') ?>
+  <fieldset class="fieldset" id="associate-product">
+			<legend class="legend">
+				<span>
+				<?php if(null !== $this->attributesetname()) { ?>
+				<?php echo __('Edit Attribute Set for Products :')?>
+				<?php } else { ?>
+				<?php echo __('Create Attribute Set for Products :')?>
+				<?php } ?>
+				
+				</span>
+			</legend>	
+		<div class="field">
+			<div class="purpletree-lbl">
+				<label class="label" for="status"><span><?php echo __('Attribute Set Name:')?> </span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<input value="<?php if(null !== $this->attributesetname()) { echo $this->attributesetname(); } ?>" class="purpletree-lgwidth validate-length maximum-length-30 input-text required-entry" name="attribute_set_name" id="" aria-required="true" type="text"/>
+			</div>
+		</div>	
+		<?php if(null !== $this->attributesetname()) { ?>
+		<input type="hidden" name="attributeid" value="<?php echo $this->attributesetid(); ?>" />
+		<?php } else {?>
+		<div class="field">
+			<div class="purpletree-lbl">
+				<label class="label" for="status"><span><?php echo __('Based On :')?></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<select id="val_required" class="purpletree-lgwidth select val_required" title="Values Required" name="defaultSetId">
+					<?php  foreach($this->attributesetlist() as $attributes) { ?>
+						<?php $attri = explode('_seller_',$attributes['label']); ?>
+						<?php if(isset($attri[1])){ ?>
+						<?php if(end($attri) == $this->sellerid()) { ?>
+								<option value="<?php echo $attributes['value']; ?>">
+									<?php echo $attributes['label'];  ?>
+								</option>
+					<?php  } } else { ?>
+					<option value="<?php echo $attributes['value']; ?>">
+									<?php echo $attributes['label'];  ?>
+								</option>
+					<?php  } } ?>
+				</select>
+			</div>
+		</div>	
+		<?php } ?>
+		</fieldset>
+<div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" title="Submit" class="action submit primary pts-newbtn-next">
+                <span><?php echo __('Submit')?></span>
+            </button>
+        </div>
+    </div>
+</form>

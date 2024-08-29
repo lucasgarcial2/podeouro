@@ -1,0 +1,87 @@
+<!--
+/**
+* Purpletree_Marketplace storeview
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+
+<?php 
+	$storeData=$this->getStoreDetails(); 
+
+	$getDataHelper = $this->getDataHelper();
+	$values = array();
+	if($getDataHelper != '') {
+		$values = explode(',',$getDataHelper);
+	}
+	$imageUrl=$this->getImageUrl();
+	$custId=$this->getSellerId();
+	  $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                        $customerObj = $objectManager->create('Magento\Customer\Model\Customer')->load($custId);
+                        $customerEmail = $customerObj->getEmail();
+	$reviewsavg=$this->getReviewsAvg();
+	$isReviewVisible=$this->getReviewsVisible();
+?>
+<div class="pts-container_left">
+	<div class="pts-left">
+		<?php if($storeData['store_logo']!=''){?> 
+			<img class="pts-store-logo" src="<?php echo $imageUrl.$storeData['store_logo'];?>">
+		<?php } else {?>
+			<img class="pts-store-logo" src="<?php echo $this->getViewFileUrl('Purpletree_Marketplace::images/small_image.jpg'); ?>">
+			
+		<?php }?>
+		<?php if($isReviewVisible){?>
+		<div class="pts-rating-box">
+			<div class="pts-rating" style="width:<?php echo $reviewsavg*20;?>%;"></div>
+		</div>
+		<div class="pts-clear"></div>
+		<p><a target="_blank" class="product-item-link" href="<?php echo $this->getUrl('*/*/sellerreview').'sellerid/'.$storeData['seller_id']; ?>"> <?php echo __('Store Review');?> <?php echo ' ('.$this->getReviewsCount().')';?></a></p>
+		<?php } ?>
+		<p>
+			<?php if(in_array('email',$values)): ?>
+			<b><?php echo __('Store Email Id');?></b><?php echo ' : '.$customerEmail;?><br> 
+			<?php endif; ?>
+			<?php if(in_array('phone',$values)): ?>
+			<b><?php echo __('Store Contact Number');?></b><?php echo ' : '.$storeData['store_phone'];?><br>
+			<?php endif; ?>
+			<?php if(in_array('address',$values)): ?>
+			<b><?php echo __('Store Address');?></b><?php echo ' : '.$storeData['store_address'];?>
+			<br><?php echo $storeData['store_city'];?></b><?php echo ' , ';
+			if($storeData['store_region_id']==0){echo $storeData['store_region'];}else{echo $this->getStateByCode($storeData['store_region_id']);}?>
+			<br><?php echo $this->getCountryByCode($storeData['store_country']);?><?php echo ' , '.$storeData['store_zipcode'];?>
+			<?php endif; ?>
+		</p>
+		<p>
+			<a target="_blank" class="product-item-link" href="<?php echo $this->getUrl('*/*/aboutus').'sellerid/'.$storeData['seller_id'];?>"> <?php echo __('Store Description');?> </a><br>
+			<a target="_blank" class="product-item-link" href="<?php echo $this->getUrl('*/*/shippingpolicy').'sellerid/'.$storeData['seller_id'];?>"> <?php echo __('Store Shipping Policy');?> </a><br>
+			<a target="_blank" class="product-item-link" href="<?php echo $this->getUrl('*/*/returnpolicy').'sellerid/'.$storeData['seller_id'];?>"> <?php echo __('Store Return Policy');?> </a><br>
+						<form id="my_form" method="post" action="<?php echo $this->getUrl('marketplace/index/vendorcontact') ?>">		
+						<?php echo $this->getBlockHtml('formkey')?> 
+						<input type="hidden" name="referral" value="<?php echo $this->getUrl().$storeData['store_url']; ?>"/>		
+						<input type="hidden" name="sellerId" value="<?php echo $storeData['seller_id'];?>"/>
+						<a href="javascript:{}" onclick="document.getElementById('my_form').submit(); return false;">
+							<b><?php echo __('Contact Seller');?></b>
+						</a>	
+						</form>		
+		</p>
+	</div>
+</div>
+<style>
+.toolbar.toolbar-products {
+	margin-top:15px;
+}
+.toolbar.toolbar-products .field.limiter {
+	display: inline-block;
+}
+.products-grid .product-item-inner {
+	margin-top:9px;
+}
+</style>

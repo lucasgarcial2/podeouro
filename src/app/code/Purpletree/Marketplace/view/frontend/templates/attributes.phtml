@@ -1,0 +1,46 @@
+<!--
+/**
+* Purpletree_Marketplace attributes
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<div class="newattribute">
+<a class="action primary add newattributebtn pts-newbtn" href="<?php echo $this->getUrl('*/*/newattribute') ?>"><?php echo __("Create New Attributes"); ?></a>
+
+	<?php $allattributes = $this->getAllAttributes(); ?>
+	<?php if(!empty($allattributes)) {?>
+<table class="data-grid" id="attributeGrid_table">
+	<thead> 
+		<tr>
+			<th class="data-grid-th _sortable _ascend col-attr-code col-attribute_code"><span><?php echo __('Attribute Code'); ?></span></th>
+			<th class="data-grid-th _sortable not-sort col-label col-frontend_label"><span><?php echo __('Default Label'); ?></span></th>
+			<th class="data-grid-th _sortable not-sort col-required col-is_required"><span><?php echo __('Required'); ?></span></th>
+			<th class="data-grid-th _sortable not-sort col-system col-is_user_defined"><span><?php echo __('System'); ?></span></th> 
+			<th class="data-grid-th _sortable not-sort col-action"><span><?php echo __('Action'); ?></span></th> 
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach($allattributes as $attribute) { ?>
+		<tr class="even _clickable">
+			<td class="col-attr-code col-attribute_code"><?php echo $attribute['code'] ?></td>
+			<td class="col-label col-frontend_label"><?php echo $attribute['label'] ?></td>
+			<td class="col-required col-is_required"><?php echo $attribute['IsRequired'] ?></td>
+			<td class="col-system col-is_user_defined"><?php echo $attribute['IsSystemDefined'] ?></td>
+			<td class="col-system col-edit"><?php if($attribute['isadmin'] == 0) { ?><a href="<?php echo $this->getUrl('*/*/editattribute',['id' =>$attribute['id']]) ?>"><?php echo __('Edit'); ?></a> | <a href="<?php echo $this->getUrl('*/*/deleteattribute',['id' =>$attribute['id']]) ?>"><?php echo __('Delete'); ?></a><?php } ?></td>
+		</tr>
+	<?php } ?>
+	</tbody>
+</table>
+	<?php } else {?>
+    <div class="message info empty notickets"><span><?php echo __('No Attributes Found'); ?></span></div>
+	<?php } ?>
+</div>

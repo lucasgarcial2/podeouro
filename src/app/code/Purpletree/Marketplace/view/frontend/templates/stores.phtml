@@ -1,0 +1,257 @@
+<?php
+$sellerCollection = $this->getAllStores();
+$imageHelper = $this->helper(\Magento\Catalog\Helper\Image::class);
+$placeholderImageUrl = $imageHelper->getDefaultPlaceholderUrl('image');
+$imageUrl = $this->getImageUrl();
+$group_filter = $block->getGroupFilter();
+
+$customerGroups = $block->getCustomerGroups();
+$productCollection = $block->getCustomersCollection();
+	$group_ids=array();
+	$groups=array();
+	$labels=array();
+             foreach($productCollection as $val){
+	            $group_ids[]= $val['group_id'];
+                }
+				foreach($group_ids as $value){
+				    foreach($customerGroups as $key=>$val){ 
+				    if($value===$val['value']){
+						$groups[]=$val['label'];
+					}
+				}
+			}		
+	
+			$labels=array_unique($groups);
+			$getVars=$this->getRequest()->getParams(); 
+			$seller_filter=false;
+			$store_filter='';
+			if(isset($getVars['seller_filter']) && $getVars['seller_filter']=='true'){
+			$seller_filter=$getVars['seller_filter'];
+			}
+			
+			
+			if(!empty($labels) && isset($getVars['searchseller']) && $getVars['searchseller']!=''){
+			if(isset($getVars['searchseller']) && in_array($getVars['searchseller'],$labels)){
+			$store_filter=$getVars['searchseller'];
+			}
+			}
+			
+			if(!empty($labels) && isset($getVars['searchseller']) && $getVars['searchseller']!=''){
+			if(isset($getVars['searchseller']) && in_array($getVars['searchseller'],$labels) &&$seller_filter ){
+			$removed_group=array_search($store_filter,$labels);
+			unset($labels[$removed_group]);
+			}
+			}
+
+?>
+	
+		<?php if($group_filter == 1){ ?>
+		<div class="pts-row">
+		<form  action="" name="searchseller" id="searchseller" method="get" >
+			<div class="pts-col-md-4 pts-col-sm-4">
+			<div class="search_seller">
+				<div class="pts-input-group" id="pts-search"  style="display:flex;">
+					<input type="text" class="pts-form-control pts-input-lg search" placeholder="Search" value="<?php echo $this->getsellersearchpost(); ?>" name="searchseller">
+					<div class="actions">
+                <button type="submit" title="Search" class="action search">
+                    <span><?php echo __('Search'); ?></span>
+                </button>
+            </div>
+				</div>
+			</div>
+			</div>        
+		  <div class="pts-col-md-5 pts-col-sm-5">
+		</div>
+		</form>
+        </div>
+        <div class="pts-clear"></div>
+		<div class="row-browes-pts">
+<div class="column1">
+<?php if($seller_filter){ ?>
+    <div class="pts-group-filter">
+	<div class="pts-filter-content">
+       <div class="pts-filter-current">
+	    <div class="pts-content-head">
+		<?php echo __('Now Stores by'); ?>
+		</div>
+				<ol class="pts-items">
+                    <li class="pts-item">
+						<span class="pts-filter-label"><?php echo __('SELLERS:'); ?></span>
+							<span class="pts-filter-value"><?php echo $store_filter; ?></span>
+                                <a class="pts-action pts-remove" href="<?php echo $this->getBaseUrl().'marketplacesellers'; ?>" title="Remove <?php echo $store_filter; ?> group">
+								</a>
+                    </li>
+				</ol>
+			</div>
+			
+			
+     
+    <div>
+         <a href="<?php echo $this->getBaseUrl().'marketplacesellers'; ?>" class="action clear filter-clear">
+         <span><?php echo __('Clear All'); ?></span>
+         </a>
+    </div>
+    </div>
+</div>
+<?php } ?>
+				<div class="group22"><span class="seller_groups2"><?php echo __('SELLERS'); ?></span></div>
+			<?php foreach($labels as $label){	?>
+ <a href="<?php echo $this->getBaseUrl(); ?>marketplacesellers?searchseller=<?php echo $label.'&seller_filter=true'; ?>"><?php echo $label; ?></a><br>
+		<?php	} ?>
+				
+			</div>
+			
+			<div class="column2">
+		<?php if($sellerCollection && count($sellerCollection)): ?>
+	   <?php foreach ($sellerCollection as $seller){ ?>
+	<div class="purpletree_seller">
+		<div class="pts-col-sm-2 pts-col-md-2 pts-col-xs-6">
+			<a href="<?php echo ($seller->getStoreUrl())?$this->getUrl().$seller->getStoreUrl():$this->getUrl('marketplace/index/storeview',['store'=>$seller->getEntityIdpts()]); ?>"><img style="max-width: 180px;"src="<?php echo ($seller->getStoreLogo())?$imageUrl.$seller->getStoreLogo():$placeholderImageUrl; ?>" alt="" title="" class="img-thumbnail"></a>
+		</div>
+
+		<div class="pts-col-sm-3 pts-col-md-3 pts-col-xs-6">
+		<div class="pts-padding-left">
+			<h3><a href="<?php echo ($seller->getStoreUrl())?$this->getUrl().$seller->getStoreUrl():$this->getUrl('marketplace/index/storeview',['store'=>$seller->getEntityIdpts()]); ?>"><strong> <?php echo $seller->getStoreName(); ?></strong></a></h3><p></p>
+			<p><?php echo ($seller->getStoreAddress())?$seller->getStoreAddress().', ':''.$seller->getStoreCity(); ?></p>
+			<p><?php echo ($seller->getStoreCity())?$seller->getStoreCity().', ':''.$seller->getStoreRegionId(); ?></p>
+			<p><?php echo ($seller->getStoreCountry())?$seller->getStoreCountry().', ':''.$seller->getStoreZipcode(); ?></p>
+			<p>
+			<form id="my_form" method="post" action="<?php echo $this->getUrl('marketplace/index/vendorcontact') ?>">		
+						<?php echo $this->getBlockHtml('formkey')?> 
+						<input type="hidden" name="referral" value="<?php echo $this->getUrl(); ?>"/>		
+						<input type="hidden" name="sellerId" value="<?php echo $seller->getSellerId();?>"/>
+						<a href="javascript:{}" onclick="document.getElementById('my_form').submit(); return false;">
+							<b><?php echo __('Contact Seller');?></b>
+						</a>	
+						</form>	
+			</p>
+			</div>
+		</div>
+			<?php $sellerProducts = $this->getSellerProducts($seller->getSellerId()); ?>
+		<div class="pts-col-sm-6 pts-col-md-6 pts-col-xs-12">
+			<div class="seller_product ml-2">
+				<div class="product_count pts-text-center">
+					<h3 class="pts-text-center"><a href="<?php echo ($seller->getStoreUrl())?$this->getUrl().$seller->getStoreUrl():$this->getUrl('marketplace/index/storeview',['store'=>$seller->getEntityIdpts()]); ?>"><?php echo (($sellerProducts && count($sellerProducts))?count($sellerProducts):"0"); ?></a></h3>
+					<div class="pts-text-center"><?php echo __('Products'); ?></div>
+				</div>
+			</div>
+			<div class="seller_products">
+			<?php if($sellerProducts && count($sellerProducts)) { ?>
+			<?php $counmtt = 0; ?>
+			<?php foreach($sellerProducts as $sellerProduct) { ?>
+			<?php if($counmtt == 4) { break; } ?>
+			<?php
+			if($sellerProduct->getImage() != '') {
+				$image = $imageUrl.'catalog/product'.$sellerProduct->getImage();
+			} else {
+				$image = $placeholderImageUrl; 
+			}
+			 ?>
+			<div class="seller_product">
+				<a href="<?php echo $sellerProduct->getProductUrl(); ?>"><img style="max-height: 68px;"src="<?php echo $image; ?>" alt="<?php echo $sellerProduct->getProductName(); ?>" title="<?php echo $sellerProduct->getProductName(); ?>" class="img-thumbnail"></a>
+			</div>
+			<?php $counmtt++; ?>
+			<?php } } ?>
+			</div>
+		</div>
+		
+		</div>
+	   <?php } ?>
+		<?php if ($this->getPagerHtml()): ?>
+			<div class="order-products-toolbar toolbar bottom pts-pagination"><?php echo $this->getPagerHtml(); ?></div>
+		<?php endif ?>
+		<?php else: ?>
+    <div class="message info empty notickets" style="margin-top:20px;"><span><?php echo __('No Seller Found'); ?></span></div>
+<?php endif ?></div><br>
+		
+		</div><?php }else{ ?>
+		<div class="pts-row">
+		<form  action="" name="searchsellers" id="searchsellers" method="get" >
+			<div class="pts-col-md-4 pts-col-sm-4">
+			<div class="search_seller">
+				<div class="pts-input-group" id="pts-search"  style="display:flex;">
+					<input type="text" class="pts-form-control pts-input-lg search" placeholder="Search" value="<?php echo $this->getsellersearchpostgroup(); ?>" name="searchsellers">
+					<div class="actions">
+                <button type="submit" title="Search" class="action search">
+                    <span><?php echo __('Search'); ?></span>
+                </button>
+            </div>
+				</div>
+			</div>
+			</div>
+        
+		  <div class="pts-col-md-5 pts-col-sm-5">
+		</div>
+		</form>
+        </div>
+        <div class="pts-clear"></div>
+		<?php if($sellerCollection && count($sellerCollection)): ?>
+	   <?php foreach ($sellerCollection as $seller){ ?>
+	<div class="purpletree_seller">
+		<div class="pts-col-sm-2 pts-col-md-2 pts-col-xs-6">
+			<a href="<?php echo ($seller->getStoreUrl())?$this->getUrl().$seller->getStoreUrl():$this->getUrl('marketplace/index/storeview',['store'=>$seller->getEntityIdpts()]); ?>"><img style="max-width: 180px;"src="<?php echo ($seller->getStoreLogo())?$imageUrl.$seller->getStoreLogo():$placeholderImageUrl; ?>" alt="" title="" class="img-thumbnail"></a>
+		</div>
+
+		<div class="pts-col-sm-3 pts-col-md-3 pts-col-xs-6">
+			<h3><a href="<?php echo ($seller->getStoreUrl())?$this->getUrl().$seller->getStoreUrl():$this->getUrl('marketplace/index/storeview',['store'=>$seller->getEntityIdpts()]); ?>"><strong> <?php echo $seller->getStoreName(); ?></strong></a></h3><p></p>
+			<p><?php echo ($seller->getStoreAddress())?$seller->getStoreAddress().', ':''.$seller->getStoreCity(); ?></p>
+			<p><?php echo ($seller->getStoreCity())?$seller->getStoreCity().', ':''.$seller->getStoreRegionId(); ?></p>
+			<p><?php echo ($seller->getStoreCountry())?$seller->getStoreCountry().', ':''.$seller->getStoreZipcode(); ?></p>
+			<p>
+			<form id="my_form" method="post" action="<?php echo $this->getUrl('marketplace/index/vendorcontact') ?>">		
+						<?php echo $this->getBlockHtml('formkey')?> 
+						<input type="hidden" name="referral" value="<?php echo $this->getUrl(); ?>"/>		
+						<input type="hidden" name="sellerId" value="<?php echo $seller->getSellerId();?>"/>
+						<a href="javascript:{}" onclick="document.getElementById('my_form').submit(); return false;">
+							<b><?php echo __('Contact Seller');?></b>
+						</a>	
+						</form>	
+			</p>
+		</div>
+			<?php $sellerProducts = $this->getSellerProducts($seller->getSellerId()); ?>
+		<div class="pts-col-sm-6 pts-col-md-6 pts-col-xs-12">
+			<div class="seller_product ml-2">
+				<div class="product_count pts-text-center">
+					<h3 class="pts-text-center"><a href="<?php echo ($seller->getStoreUrl())?$this->getUrl().$seller->getStoreUrl():$this->getUrl('marketplace/index/storeview',['store'=>$seller->getEntityIdpts()]); ?>"><?php echo (($sellerProducts && count($sellerProducts))?count($sellerProducts):"0"); ?></a></h3>
+					<div class="pts-text-center"><?php echo __('Products'); ?></div>
+				</div>
+			</div>
+			<div class="seller_products">
+			<?php if($sellerProducts && count($sellerProducts)) { ?>
+			<?php $counmtt = 0; ?>
+			<?php foreach($sellerProducts as $sellerProduct) { ?>
+			<?php if($counmtt == 4) { break; } ?>
+			<?php
+			if($sellerProduct->getImage() != '') {
+				$image = $imageUrl.'catalog/product'.$sellerProduct->getImage();
+			} else {
+				$image = $placeholderImageUrl; 
+			}
+			 ?>
+			<div class="seller_product">
+				<a href="<?php echo $sellerProduct->getProductUrl(); ?>"><img style="max-height: 68px;"src="<?php echo $image; ?>" alt="<?php echo $sellerProduct->getProductName(); ?>" title="<?php echo $sellerProduct->getProductName(); ?>" class="img-thumbnail"></a>
+			</div>
+			<?php $counmtt++; ?>
+			<?php } } ?>
+			</div>
+		</div>
+		
+		</div>
+	   <?php } ?>
+		<?php if ($this->getPagerHtml()): ?>
+			<div class="order-products-toolbar toolbar bottom pts-pagination"><?php echo $this->getPagerHtml(); ?></div>
+		<?php endif ?>
+		<?php else: ?>
+    <div class="message info empty notickets" style="margin-top:20px;"><span><?php echo __('No Seller Found'); ?></span></div>
+<?php endif ?>
+		<?php } ?>
+
+<script type="text/javascript">
+require(['jquery'], function($,modal){ 
+	$(document).ready(function() {
+	  $('#cars').on('change', function() {
+		 document.forms[myFormName].submit();
+	  });
+	});
+});
+</script>

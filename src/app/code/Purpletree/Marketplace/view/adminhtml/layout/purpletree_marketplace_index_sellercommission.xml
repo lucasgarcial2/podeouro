@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Purpletree_Marketplace purpletree_marketplace_index_sellercommission
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/layout_generic.xsd">
+    <container name="root" label="Root">
+        <block class="Purpletree\Marketplace\Block\Adminhtml\Edit\Tab\View\SellerCommission" name="purpletree.edit.tab.SellerCommission"/>
+    </container>
+</layout>

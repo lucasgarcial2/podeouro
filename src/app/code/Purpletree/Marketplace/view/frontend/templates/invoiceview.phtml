@@ -1,0 +1,189 @@
+<!--
+/**
+* Purpletree_Marketplace invoiceview
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<?php 
+	$orderCollection 		= $this->getOrderCollection();
+	$productCollection 		= $this->getProductCollection();
+	$invoiceId 				= $this->geInvoice()['entity_id'];
+	$billingAddress			= $this->getBillingAddress();
+	$shippingAddress		= $this->getShippingAddress();
+	$paymentMethod			= $this->getPaymentMethod();
+	$cursymbol 				= $this->getCurrentCurrencySymbol();
+	$getSellerShipping 				= $this->getSellerShipping();
+	$pathOrder				= $this->getOrderUrl($orderCollection['entity_id']);
+
+?>
+<div class="order-date datechng">
+    <p id="orderdate"><b><?php echo __("Order Number :"). $this->getOrderIncrementId(); ?></b></p>
+    <p id="orderdate"><b><?php echo __("Invoice Created Date :").' '.date('M d, Y',strtotime($this->geInvoice()['created_at']));?></b></p>
+	<p>
+</div>
+<ul class="items order-links">
+	<li class="nav item"><a href="<?php echo $pathOrder; ?>"><?php echo __('Items Ordered') ?></a></li>
+	<li class="nav item current"><strong><?php echo __('Invoice') ?></strong></li>
+</ul>
+<div class="dataprint" id="dataprint">
+	<div class="order-details-items invoice">
+		<div class="table-wrapper table-order-items invoice" >
+			<table id="my-invoice-table-5" class="data table table-order-items invoice" >
+				<caption class="table-caption"><?php echo __('Items Invoiced') ?></caption>
+				<thead>
+					<tr>
+						<th class="col name"><?php echo __('Product Name') ?></th>
+						<th class="col sku"><?php echo __('SKU') ?></th>
+						<th class="col price"><?php echo __('Price') ?></th>
+						<th class="col qty"><?php echo __('Qty Invoiced') ?></th>
+							<th class="col tax"><?php echo __('Tax') ?></th>
+					<th class="col amounnt"><?php echo __('Discount Amount') ?></th>
+						<th class="col subtotal"><?php echo __('Subtotal') ?></th>
+					</tr>
+				</thead>
+				<?php foreach ($productCollection as $productData) { ?>
+					<tbody>
+						<tr  id="order-item-row-36">
+							<td class="col name" data-th="Product Name"><strong class="product name product-item-name"><?php echo $productData['name']; ?></strong></td>
+							<td class="col sku" data-th="SKU"><?php echo $productData['sku']; ?></td>
+							<td class="col" data-th="Price">
+								<span class="cart">
+									<span class=""><?php echo $this->getCurrencyData($productData['price']); ?></span>
+								</span>
+							</td>
+							<td class="col qty" data-th="Qty Invoiced">
+								<span class="qty summary"><?php echo intval($productData['qty_ordered']);  ?></span>
+							</td>
+							<td class="col tax" data-th="Tax">
+						
+								<span class="tax"><?php echo  $this->getCurrencyData($productData['tax_amount']); ?></span>
+						
+						</td>
+						<td class="col discount" data-th="Discount">
+							
+								<span class="discount"><?php echo $this->getCurrencyData($productData['discount_amount']); ?></span>
+						
+						</td>
+							<td class="col subtotal" data-th="Subtotal">
+								<span class="cart">
+									<span class=""><?php echo $this->getCurrencyData($productData['base_row_total_incl_tax']); ?></span>
+								</span>
+							</td>
+						</tr>
+					</tbody>
+				<?php } ?>
+				<tfoot>
+				<?php if($getSellerShipping) { ?>
+				<tr class="grand_total">
+						<th class="mark" colspan="6" scope="row">
+							<strong><?php echo __('Subtotal') ?></strong>
+						</th>
+						<td class="amount" data-th="Sub Total">
+							<strong>
+								<span class=""><?php echo $this->getCurrencyData($this->getSellerOrderTotals()); ?></span>
+							</strong>
+						</td>
+					</tr><tr class="grand_total">
+						<th class="mark" colspan="6" scope="row">
+							<strong><?php echo __('Seller Shipping') ?></strong>
+						</th>
+						<td class="amount" data-th="Seller Shipping">
+							<strong>
+								<span class=""><?php echo $this->getCurrencyData($this->getSellerShipping()); ?></span>
+							</strong>
+						</td>
+					</tr><tr class="grand_total">
+						<th class="mark" colspan="6" scope="row">
+							<strong><?php echo __('Grand Total') ?></strong>
+						</th>
+						<td class="amount" data-th="Grand Total">
+							<strong>
+								<span class=""><?php echo $this->getCurrencyData($this->getSellerOrderTotals() + $getSellerShipping); ?></span>
+							</strong>
+						</td>
+					</tr>
+				<?php } else { ?>
+					<tr class="grand_total">
+						<th class="mark" colspan="6" scope="row">
+							<strong><?php echo __('Grand Total') ?></strong>
+						</th>
+						<td class="amount" data-th="Grand Total">
+							<strong>
+								<span class=""><?php echo $this->getCurrencyData($this->getSellerOrderTotals()); ?></span>
+							</strong>
+						</td>
+					</tr>
+				<?php } ?>
+				</tfoot>
+			</table>
+		</div>
+		<div class="block-title">
+			<strong><?php echo __('Comment') ?></strong>
+		</div>
+		<div class="block-content">
+		<?php echo $this->geInvoice()['comment']; ?>
+		</div>
+	</div>
+	<div class="block block-order-details-view">
+		<div class="block-title">
+			<strong><?php echo __('Order Information') ?></strong>
+		</div>
+		<div class="block-content">
+		<?php if($shippingAddress) { ?>
+			<div class="box box-order-shipping-address">
+				<strong class="box-title">
+					<span><?php echo __('Shipping Address') ?></span>
+				</strong>
+				<div class="box-content">
+					<address>
+						<?php echo $shippingAddress['firstname']." "; ?><?php echo $shippingAddress['lastname']; ?>
+						<?php if($shippingAddress['street']!=''){echo '</br>'.$shippingAddress['street'];} ?></br>
+						<?php echo $shippingAddress['city'].", "; ?><?php if($shippingAddress['region']!=''){echo $shippingAddress['region'].',';} ?><?php echo $shippingAddress['postcode']; ?></br>
+						<?php echo $this->getCountryByCode($shippingAddress['country_id']); ?></br>
+						<?php echo 'T: '.$shippingAddress['telephone']; ?>
+					</address>
+				</div>
+			</div>
+		<?php } ?>
+			<div class="box box-order-shipping-address">
+				<strong class="box-title">
+					<span><?php echo __('Shipping Method') ?></span>
+				</strong>
+				<div class="box-content"><?php echo $orderCollection['shipping_description']; ?></div>
+			</div>
+			<div class="box box-order-billing-address">
+				<strong class="box-title">
+					<span><?php echo __('Billing Address') ?></span>
+				</strong>
+				<div class="box-content">
+					<address>
+						<?php echo $billingAddress['firstname']." "; ?><?php echo $billingAddress['lastname']; ?>
+						<?php if($billingAddress['street']!=''){echo '</br>'.$billingAddress['street'];} ?></br>
+						<?php echo $billingAddress['city'].", "; ?><?php if($billingAddress['region']!=''){echo $billingAddress['region'].',';} ?><?php echo $billingAddress['postcode']; ?></br>
+						<?php echo $this->getCountryByCode($billingAddress['country_id']); ?></br>
+						<?php echo 'T: '.$billingAddress['telephone']; ?></br>
+					</address>
+				</div>
+			</div>
+			<div class="box box-order-billing-method">
+				<strong class="box-title">
+					<span><?php echo __('Payment Method') ?></span>
+				</strong>
+				<div class="box-content">
+					<dl class="payment-method checkmemo">
+						<dt class="title"><?php echo $paymentMethod; ?></dt>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

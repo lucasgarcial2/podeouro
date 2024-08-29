@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Purpletree_Marketplace marketplace_index_success
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Success Page</title>
+    </head>
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">We received your order!</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block cacheable="false" class="Purpletree\Marketplace\Block\Checkout\Success" name="purpletree_checkout_success" template="checkout/success.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

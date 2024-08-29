@@ -1,0 +1,113 @@
+<!--
+/**
+* Purpletree_Marketplace vendor_order
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Software
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+
+<!--@subject Seller Order  @-->
+<!--@vars {
+"var formattedBillingAddress|raw":"Billing Address",
+"var order.getEmailCustomerNote()":"Email Order Note",
+"var order.increment_id":"Order Id",
+"var payment_html|raw":"Payment Details",
+"var formattedShippingAddress|raw":"Shipping Address",
+"var order.getShippingDescription()":"Shipping Description",
+"var shipping_msg":"Shipping message"
+} @-->
+{{template config_path="design/email/header_template"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{trans "%seller_name," seller_name=$seller_name}}</p>
+            <p>
+                {{trans "Received New Order from Customer on %store_name." store_name=$store.getFrontendName()}}
+                {{trans 'You can check and manage the status of the order by <a href="%account_url">logging into your seller account</a>.' account_url=$this.getUrl($store,'marketplace/index/orders/',[_nosid:1]) |raw}}
+            </p>
+        </td>
+    </tr>
+    <tr class="email-summary">
+        <td>
+            <h1>{{trans 'Customer Order <span class="no-link">#%increment_id</span>' increment_id=$order.increment_id |raw}}</h1>
+            <p>{{trans 'Placed on <span class="no-link">%created_at</span>' created_at=$order.getCreatedAtFormatted(2) |raw}}</p>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            {{depend order.getEmailCustomerNote()}}
+            <table class="message-info">
+                <tr>
+                    <td>
+                        {{var order.getEmailCustomerNote()|escape|nl2br}}
+                    </td>
+                </tr>
+            </table>
+            {{/depend}}
+            <table class="order-details">
+                <tr>
+                    <td class="address-details">
+                        <h3>{{trans "Billing Info"}}</h3>
+                        <p>{{var formattedBillingAddress|raw}}</p>
+                    </td>
+                    {{depend order.getIsNotVirtual()}}
+                    <td class="address-details">
+                        <h3>{{trans "Shipping Info"}}</h3>
+                        <p>{{var formattedShippingAddress|raw}}</p>
+                    </td>
+                    {{/depend}}
+                </tr>
+                <tr>
+                    <td class="method-info">
+                        <h3>{{trans "Payment Method"}}</h3>
+                        {{var payment_html|raw}}
+                    </td>
+                    {{depend order.getIsNotVirtual()}}
+                    <td class="method-info">
+                        <h3>{{trans "Shipping Method"}}</h3>
+                        <p>{{var order.getShippingDescription()}}</p>
+                        {{if shipping_msg}}
+                        <p>{{var shipping_msg}}</p>
+                        {{/if}}
+                    </td>
+                    {{/depend}}
+                </tr>
+            </table>
+			<table class="email-items" style="border-collapse:collapse;width:100%;border-spacing:0;max-width:100%">
+        <thead>
+            <tr>
+                <th class="item-info" style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;text-align:left;vertical-align:bottom;padding:10px">
+                    Items                </th>
+                <th class="item-qty" style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;text-align:center;vertical-align:bottom;padding:10px">
+                    Qty                </th>
+                <th class="item-price" style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;text-align:right;vertical-align:bottom;padding:10px">
+                    Price                </th>
+            </tr>
+		
+        </thead>
+		{{var productshtml|raw}}
+		    <tfoot class="order-totals">
+            <tr class="grand_total">
+				<th colspan="2" scope="row" style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;text-align:right;vertical-align:top;padding:10px;background-color:#f5f5f5;font-weight:400">
+								<strong style="font-weight:700">Grand Total</strong>
+							</th>
+				<td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;vertical-align:top;padding:10px;background-color:#f5f5f5;text-align:right">
+				<strong style="font-weight:700"><span class="price" style="white-space:nowrap">{{var productstotalhtml}}</span></strong>
+				</td>
+			</tr>
+            </tfoot>
+		</table>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

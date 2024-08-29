@@ -1,0 +1,271 @@
+<!--
+/**
+* Purpletree_Marketplace seller
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<?php
+	$storeData=$this->getStoreDetails(); 
+	$imageUrl=$this->getImageUrl();
+?>
+<form class="form seller" data-mage-init='{"validation": {}}' action="<?php echo $this->getUrl('*/*/storesave') ?>" id="seller-form" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data" >
+    <fieldset class="fieldset" >
+		<div class="fields">
+			<div class="field storename">
+				<label class="label" for="store_url"><span><?php echo __('Store URL');?></span></label>
+				<label>  - <a href="<?php echo $this->getUrl().$this->getStoreDetails()['store_url']; ?>"><?php echo __('View Store') ?></a>
+							</label>
+				<div class="control">
+					<input disabled name="store_url" id="store_url" title="Store URL" value="<?php echo $storeData['store_url']!='' ? $storeData['store_url']:'';?>" class="input-text" required type="text" data-validate="{required:true}">
+				</div>
+			</div>
+			<div class="field storename required">
+				<label class="label" for="store_name"><span><?php echo __('Store Name');?></span></label>
+				<div class="control">
+					<input name="store_name" id="store_name" title="Store Name" value="<?php echo $storeData['store_name']!='' ? $storeData['store_name']:'';?>" class="input-text" required type="text" data-validate="{required:true}">
+				</div>
+			</div>
+			<div class="field storephone required">
+				<label class="label" for="store_phone"><span><?php echo __('Store Phone Number');?></span></label>
+				<div class="control">
+					 <input name="store_phone" id="store_phone" title="storephone" value="<?php echo $storeData['store_phone']!='' ? $storeData['store_phone']:'';?>" class="validate-number input-text" required type="text" data-validate="{required:true, 'validate-number':true}">
+				</div>
+			</div>
+			<div class="field storetin">
+				<label class="label" for="store_tin_number"><span><?php echo __('Store Tax Identification Number');?></span></label>
+				<div class="control">
+					 <input name="store_tin_number" id="store_tin_number" title="storetin" value="<?php echo $storeData['store_tin_number']!='' ? $storeData['store_tin_number']:'';?>" class="input-text" type="text">
+				</div>
+			</div>
+			<div class="field storeaccount">
+				<label class="label" for="store_bank_account"><span><?php echo __('Store Bank Details');?></span></label>
+				<div class="control">
+					 <textarea name="store_bank_account" id="store_bank_account" title="storeaccount" class="input-text" type="text" rows="3" ><?php echo $storeData['store_bank_account']!='' ? $storeData['store_bank_account']:'';?></textarea>
+				</div>
+			</div>
+			<div class="field storeaddress required">
+				<label class="label" for="store_address"><span><?php echo __('Store Address');?></span></label>
+				<div class="control">
+					   <textarea name="store_address" id="store_address" title="store address" class="input-text" rows="3" data-validate="{required:true}" ><?php echo $storeData['store_address']!='' ? $storeData['store_address']:'';?></textarea>
+				</div>
+			</div>
+			<div class="field countryselect required">
+				<label class="label" for="countryselect"><span><?php echo __('Store Country');?></span></label>
+				<div class="control">
+					<select name="store_country" class="" id="countryselect" title="manufacture" data-validate="{required:true}">
+						 <?php  foreach($this->getCountry() as $country) { ?>
+							<option value="<?php echo $country['value'] ?>" <?php if($country['value']==$storeData['store_country']){echo 'selected';} ?>><?php echo $country['label']; ?></option>
+						 <?php }  ?>
+					</select> 
+				</div>
+			</div>
+			<div class="field state required">			
+				<label class="label" for="state"><span><?php echo __('Store State/Province');?></span></label>
+				<div class="control">	
+					<input <?php  echo $storeData['store_region_id']==0 ? 'style="display:block"':'style="display:none"'; ?> value="<?php echo $storeData['store_region']!='' ? $storeData['store_region']:'';?>" type="text" name="store_region" id="region_name" data-validate="{required:true}" />
+				
+					<select <?php  echo $storeData['store_region_id']!=0 ? 'style="display:block"':'style="display:none"'; ?> class="select" name="store_region" id="region_id" data-validate="{required:true}">
+						<?php $stateArrayData=$this->getRegionByCountry($storeData['store_country']);
+							foreach($stateArrayData as $stateArray) { ?>
+							
+								<option value="<?php echo $stateArray['value'] ?>" <?php if($stateArray['value']==$storeData['store_region_id']){echo 'selected';} ?> ><?php echo $stateArray['label']; ?></option>
+						
+						 <?php }  ?>
+					</select>
+				</div>
+			</div>
+			<div class="field storecity required">
+				<label class="label" for="store_city"><span><?php echo __('Store City');?></span></label>
+				<div class="control">
+					<input  type="text" name="store_city" value="<?php echo $storeData['store_city']!='' ? $storeData['store_city']:'';?>" id="store_city" data-validate="{required:true}"/>
+				</div>
+			</div>
+			<div class="field storezip required">
+				<label class="label" for="store_zipcode"><span><?php echo __('Store Zipcode');?></span></label>
+				<div class="control">
+					<input type="text" value="<?php echo $storeData['store_zipcode']!='' ? $storeData['store_zipcode']:'';?>" name="store_zipcode" id="store_zipcode" class="input-text" required data-validate="{required:true}"/>
+				</div>
+			</div>
+			<?php if($block->getMarketplaceHelper()->isSplitPaymentMethodEnabled('stripe')) :?>
+			<div class="field stripe_account_id required">
+				<label class="label" for="stripe_account_id"><span><?= __('Stripe Account ID');?></span></label>
+				<div class="control">
+					<input type="text" value="<?= $storeData['stripe_account_id'];?>" name="stripe_account_id" id="stripe_account_id" class="input-text" required data-validate="{required:true}"/>
+				</div>
+			</div>
+			<?php endif;?>
+			<?php if($block->getMarketplaceHelper()->isSplitPaymentMethodEnabled('paypal')) :?>
+			<?php endif;?>
+			<div class="field storedescription required">
+				<label class="label" for="store_description"><span><?php echo __('Store Description');?></span></label>
+				<div class="control">
+				   <textarea name="store_description" id="store_description" title="Description" class="input-text" rows="3" data-validate="{required:true}" ><?php echo $storeData['store_description']!='' ? $storeData['store_description']:'';?></textarea>
+				</div>
+			</div>
+			<div class="field shippingpolicy">
+				<label class="label" for="store_shipping_policy"><span><?php echo __('Store Shipping Policy');?></span></label>
+				<div class="control">
+					<textarea name="store_shipping_policy" id="store_shipping_policy" title="shippingpolicy" class="input-text" rows="3"><?php echo $storeData['store_shipping_policy']!='' ? $storeData['store_shipping_policy']:'';?></textarea>
+				</div>
+			</div>
+			<div class="field returnpolicy">
+				<label class="label" for="store_return_policy"><span><?php echo __('Store Return Policy');?></span></label>
+				<div class="control">
+					<textarea name="store_return_policy" id="store_return_policy" title="returnpolicy" class="input-text" rows="3"><?php echo $storeData['store_return_policy']!='' ? $storeData['store_return_policy']:'';?></textarea>
+				</div>
+			</div>
+			<div class="field keywords">
+				<label class="label" for="store_meta_keywords"><span><?php echo __('Store Meta Keywords');?></span></label>
+				<div class="control">
+				   <textarea name="store_meta_keywords" id="store_meta_keywords" title="Keywords" class="input-text" rows="3"><?php echo $storeData['store_meta_keywords']!='' ? $storeData['store_meta_keywords']:'';?></textarea>
+				</div>
+			</div>
+			<div class="field metadescription">
+				<label class="label" for="store_meta_descriptions"><span><?php echo __('Store Meta Description');?></span></label>
+				<div class="control control">
+				   <textarea name="store_meta_descriptions" id="store_meta_descriptions" title="Description" class="input-text" rows="3"><?php echo $storeData['store_meta_descriptions']!='' ? $storeData['store_meta_descriptions']:'';?></textarea>
+				</div>
+			</div>
+			<div class="field keywords">
+				<label class="label" for="keywords"><span><?php echo __('Store Logo');?></span></label>
+				<div class="control">
+				<p>
+				<input name="logo" id="logo" title="Logo" class="input-text" type="file">
+				</p>
+				<?php if($storeData['store_logo']!=''){?>
+				<p>
+					<img class="pts-store-logo" src="<?php echo $imageUrl.$storeData['store_logo'];?>" height="150px" width="150px;">
+				</p>
+				<?php }?>
+				<input name="store_old_logo" id="store_old_logo" value="<?php echo $storeData['store_logo']!='' ? $storeData['store_logo']:'';?>" type="hidden">
+				<p style="font-size: 10px;"><?php echo __('Recomended Dimensions are 200 X 200');?></p>
+				</div>
+			</div>
+			<div class="field description">
+				<label class="label" for="metadescription"><span><?php echo __('Store Banner');?></span></label>
+				<div class="control">
+					<p>
+					<input name="banner" id="banner" title="banner" class="input-text" type="file">
+					</p>
+					<?php if($storeData['store_banner']!=''){?>
+					<p>
+					<img class="pts-store-logo" src="<?php echo $imageUrl.$storeData['store_banner'];?>" height="300px" width="300px;">
+					</p>
+					<?php }?>
+				   
+				   <input name="store_old_banner" id="store_old_banner" value="<?php echo $storeData['store_banner']!='' ? $storeData['store_banner']:'';?>" type="hidden">
+			<p style="font-size: 10px;"><?php echo __('Recomended Dimensions are 900 X 300(W X H)');?></p>
+				</div>
+			</div>
+		</div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary pts-review-box">
+            <input name="hideit" id="hideit" value="" type="hidden">
+            <button type="submit" title="Submit" class="action submit primary pts-newbtn-next">
+                <span><?php echo __('Submit');?></span>
+            </button>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+require(['jquery','mage/mage'], function($) {
+	$(document).ready(function($) {
+		//$( "#countryselect" ).change(function(event) {
+					$('#countryselect').on('change', function() {
+			var country_id =$(this).val();
+			$('[data-role="pannel"]').trigger('show.loader');
+			$.ajax({
+			type 	 : "POST",
+			url 	 : "<?php echo $this->getUrl('marketplace/index/getstate'); ?>",
+			data: "country_id="+country_id ,
+			showLoader: true,
+			dataType: "json",
+			success: function( data ){
+				$('#region_id').empty();
+				$.each(data,function(k1,v1){
+					if(v1.status == 'true') {
+						$('#region_name').css('display','none');
+						$('#region_id').css('display','block');
+						$('#region_name').val('');
+					}
+					if(v1.status == 'false') {
+						$('#region_name').css('display','block');
+						$('#region_id').css('display','none');
+						$('#region_name').val('');
+					}
+					if($.isArray(v1)) {
+						 $.each(v1,function(k,v){
+							$('#region_id').append('<option id="stat'+ v.value +'" value="'+ v.value +'">'+ v.label +'</option>');
+							$('#region_name').val('');
+						});
+					}
+				});
+				$('[data-role="pannel"]').trigger('hide.loader');
+			},
+			error: function(){
+				alert('something went wrong');
+			}
+			});
+		});
+	});
+});
+</script>
+<?php if(version_compare($this->getVersion(),  "2.3.0") == -1) { ?>
+<script type="text/javascript">
+require(['jquery','mage/adminhtml/wysiwyg/tiny_mce/setup'], function($) {
+	$(document).ready(function($) {
+	tinyMCE.init({
+    mode : "exact",
+    elements: "store_description,store_shipping_policy,store_return_policy",
+    theme : "advanced",
+    plugins : "inlinepopups,style,layer,table,save,advhr,advlink,emotions,iespell,insertdatetime,preview,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras",
+    theme_advanced_buttons1 : "newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+    theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,|,undo,redo,|,link,unlink,anchor,cleanup,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+    theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,advhr,|,print,|,ltr,rtl,|,fullscreen",
+    theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,|,visualchars,nonbreaking",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left",
+    theme_advanced_path_location : "bottom",
+    extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
+    theme_advanced_resize_horizontal : 'true',
+    theme_advanced_resizing : 'true',
+    apply_source_formatting : 'true',
+    convert_urls : 'false',
+    force_br_newlines : 'true',
+    doctype : '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
+  });
+});
+});
+</script>
+<?php } else { ?>
+<script type="text/javascript">
+require(['jquery','mage/adminhtml/wysiwyg/tiny_mce/setup'], function($) {
+	$(document).ready(function($) {
+	tinyMCE.init({
+    mode : "exact",
+    elements: "store_description,store_shipping_policy,store_return_policy",
+	 plugins: "image",
+	 menubar: "",
+	toolbar: "image | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | fontsizeselect forecolor backcolor | preview fullscreen | template | formatselect | fontselect |fontsizeselect",
+	removed_menuitems: 'newdocument',
+    extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
+    apply_source_formatting : 'true',
+    convert_urls : 'false',
+    force_br_newlines : 'true',
+    doctype : '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
+  });
+});
+});
+</script>
+<?php } ?>

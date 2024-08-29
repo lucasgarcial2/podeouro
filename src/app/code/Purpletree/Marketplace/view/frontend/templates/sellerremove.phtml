@@ -1,0 +1,45 @@
+<!--
+/**
+* Purpletree_Marketplace sellerremove
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<?php
+	$storeData=$this->getStoreDetails(); 
+?>
+<form class="form sellerremove" data-mage-init='{"validation": {}}' action="<?php echo $this->getUrl('*/*/removeseller') ?>" id="sellerremove-form" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data" >
+	<?php echo $this->getBlockHtml('formkey')?> 
+    <fieldset class="fieldset" >
+		<div class="fields">
+			<div class="removeseller">
+				<div class="removesellerchk">
+					<label for="seller-check" name="seller_label_remove" class="label"><span><?php echo __('You really want to remove as seller ?') ?></span></label><br>
+					<input checked type="radio" data-validate="{'validate-one-required-by-name':true}" name="remvseller" value="1" ><?php echo __('Yes') ?>. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+					<input type="radio" data-validate="{'validate-one-required-by-name':true}"  name="remvseller" value="0"><?php echo __('No') ?>. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+				</div>
+				<input name="seller_id" id="seller_id" value="<?php echo $storeData['seller_id'];?>" type="hidden">
+			</div>
+		</div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <input name="hideit" id="hideit" value="" type="hidden">
+            <button type="submit" title="Submit" class="action submit primary pts-seller-submit pts-newbtn-next">
+                <span><?php echo __('Submit') ?></span>
+            </button>
+        </div>
+    </div>
+	
+	
+</form>
+
+

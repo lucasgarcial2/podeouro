@@ -1,0 +1,60 @@
+<!--
+/**
+* Purpletree_Marketplace vendorcontact
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+
+<?php 
+$sellerId = $block->getSellerId();
+$refferal= $block->getReferralId();
+?>
+<div class="pts-container_review">
+	<h2><?php echo __('Submit Your Query');?></h2>
+	<div class="pts-review-box">
+		<form class="form seller" data-mage-init='{"validation": {}}' action="<?php echo $this->getUrl('*/*/saveenquire') ?>" id="seller-form" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data" >
+			<?php echo $this->getBlockHtml('formkey')?> 
+			<fieldset class="fieldset" >
+				<div class="fields">
+					<div class="field review_description required">
+						<label class="label" for="customer_name"><span><?php echo __('Name');?></span></label>
+						<div class="control">
+							<input name="customer_name" id="customer_name"  value="" class="input-text" required type="text" data-validate="{required:true}">
+						</div>
+					</div>
+					<div class="field review_description required">
+						<label class="label" for="customer_email"><span><?php echo __('Email');?></span></label>
+						<div class="control">
+							<input name="customer_email" id="customer_email"  value="" class="input-text validate-email" required type="text" data-validate="{required:true}">
+						</div>
+					</div>
+					<div class="field review_description required">
+						<label class="label" for="customer_enquire"><span><?php echo __('Enquiry');?></span></label>
+						<div class="control">
+							 <textarea name="customer_enquire" id="customer_enquire" value="" class="input-text" type="text" data-validate="{required:true}" rows="3"></textarea>
+							<input type="hidden" name="customer_referral_url" value="<?php echo $refferal;?>">
+							<input type="hidden" name="seller_id" value="<?php echo $sellerId;?>">
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<div class="actions-toolbar">
+				<div class="primary">
+					<input name="hideit" id="hideit" value="" type="hidden">
+					<button type="submit" title="<?php echo __('Submit Enquiry');?>" class="action submit primary pts-newbtn-next">
+						<span><?php echo __('Submit Enquiry');?></span>
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Purpletree_Marketplace system
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Software
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+  <group id="split_payments" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0">
+    <label>Split Payments</label>
+    <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1">
+        <label>Enable</label>
+        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+    </field>
+    <field id="payment_methods" translate="label" type="multiselect" sortOrder="2" showInDefault="1">
+        <label>Payment Methods</label>
+        <depends>
+            <field id="enable">1</field>
+        </depends>
+        <source_model>Purpletree\Marketplace\Model\Config\Source\SplitPayment\PaymentMethods</source_model>
+        <comment>
+            <![CDATA[Use <a target="_blank" rel="noopener noreferrer" href="https://marketplace.magento.com/stripe-stripe-payments.html">Stripe Extension</a> For Enabling Stripe Payment methods.]]>
+        </comment>
+        <validate>required-entry</validate>
+    </field>
+ </group>
+</include>

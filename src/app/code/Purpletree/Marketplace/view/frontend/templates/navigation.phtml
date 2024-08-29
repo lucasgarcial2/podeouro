@@ -1,0 +1,141 @@
+<!--
+/**
+* Purpletree_Marketplace navigation
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+
+<?php
+$currentUrl = $this->getCurrentUrl();
+$customerId = $this->getCustomerId();
+$moduleEnabled = $this->isModuleEnabled();
+$seller = $this->isSeller();
+?>
+<?php
+if($moduleEnabled){
+?>
+<div class="block account-nav block-collapsible-nav pts-main">
+    <div class="title block-collapsible-nav-title" data-mage-init='{"toggleAdvanced": {"toggleContainers": "#block-collapsible-nav-seller", "selectorsToggleClass": "active"}}'>
+        <strong><?php echo __('Seller Menu'); ?></strong>
+    </div>
+    <div class="content block-collapsible-nav-content" id="block-collapsible-nav-seller">
+        <nav class="account-nav">
+            <ul class="nav items">
+			
+				<?php if($seller==''){?>
+					<li class="nav item <?php echo strpos($currentUrl,'marketplace/index/becomeseller')? "current":"";?>">
+						<?php 
+						if(strpos($currentUrl,'marketplace/index/becomeseller') !== false){ ?>      
+							<strong><?php echo __('Become Seller') ?></strong>              
+						<?php
+						} else{ ?>        
+							<a href="<?php echo $this->getUrl('marketplace/index/becomeseller'); ?>">
+								<?php echo __('Become Seller') ?>
+							</a>                    
+						<?php 
+						} ?>
+					</li>
+				<?php }
+				else {?>
+					<li class="nav item <?php echo strpos($currentUrl,'marketplace/index/sellers')? "current":"";?>">
+						<?php 
+						if(strpos($currentUrl,'marketplace/index/sellers') !== false){ ?>      
+							<strong><?php echo __('My Store') ?></strong>              
+						<?php
+						} else{ ?>        
+							<a href="<?php echo $this->getUrl('marketplace/index/sellers'); ?>">
+								<?php echo __('My Store') ?>
+							</a>                    
+						<?php 
+						} ?>
+					</li>
+					<li class="nav item <?php echo strpos($currentUrl,'marketplace/index/products')? "current":"";?>">
+						<?php 
+						if(strpos($currentUrl,'marketplace/index/products') !== false){ ?>      
+							<strong><?php echo __('Products') ?></strong>              
+						<?php
+						} else{ ?>        
+							<a href="<?php echo $this->getUrl('marketplace/index/products'); ?>">
+								<?php echo __('Products') ?>
+							</a>                    
+						<?php 
+						} ?>
+					</li>
+					<li class="nav item <?php echo strpos($currentUrl,'marketplace/index/attributes')? "current":"";?>">
+						<?php 
+						if(strpos($currentUrl,'marketplace/index/attributes') !== false){ ?>      
+							<strong><?php echo __('Attributes') ?></strong>              
+						<?php
+						} else{ ?>        
+							<a href="<?php echo $this->getUrl('marketplace/index/attributes'); ?>">
+								<?php echo __('Attributes') ?>
+							</a>                    
+						<?php 
+						} ?>
+					</li>
+					<li class="nav item <?php echo strpos($currentUrl,'marketplace/index/orders')? "current":"";?>">
+						<?php 
+						if(strpos($currentUrl,'marketplace/index/orders') !== false){ ?>      
+							<strong><?php echo __('Vendor Orders') ?></strong>              
+						<?php
+						} else{ ?>        
+							<a href="<?php echo $this->getUrl('marketplace/index/orders'); ?>">
+								<?php echo __('Vendor Orders') ?>
+							</a>                    
+						<?php 
+						} ?>
+					</li>
+					<li class="nav item <?php echo strpos($currentUrl,'marketplace/index/sellercommission')? "current":"";?>">
+						<?php 
+						if(strpos($currentUrl,'marketplace/index/sellercommission') !== false){ ?>      
+							<strong><?php echo __('Admin Commissions') ?></strong>              
+						<?php
+						} else{ ?>        
+							<a href="<?php echo $this->getUrl('marketplace/index/sellercommission'); ?>">
+								<?php echo __('Admin Commissions') ?>
+							</a>                    
+						<?php 
+						} ?>
+					</li>
+					<li class="nav item <?php echo strpos($currentUrl,'marketplace/index/sellerpayment')? "current":"";?>">
+						<?php 
+						if(strpos($currentUrl,'marketplace/index/sellerpayment') !== false){ ?>      
+							<strong><?php echo __('Payments') ?></strong>              
+						<?php
+						} else{ ?>        
+							<a href="<?php echo $this->getUrl('marketplace/index/sellerpayment'); ?>">
+								<?php echo __('Payments') ?>
+							</a>                    
+						<?php 
+						} ?>
+					</li>
+					<li class="nav item <?php echo strpos($currentUrl,'marketplace/index/sellerremove')? "current":"";?>">
+						<?php 
+						if(strpos($currentUrl,'marketplace/index/sellerremove') !== false){ ?>      
+							<strong><?php echo __('Remove as Seller') ?></strong>              
+						<?php
+						} else{ ?>        
+							<a href="<?php echo $this->getUrl('marketplace/index/sellerremove'); ?>">
+								<?php echo __('Remove as Seller') ?>
+							</a>                    
+						<?php 
+						} ?>
+					</li>
+				<?php 
+				} ?>
+            </ul>
+        </nav>
+    </div>
+</div>
+<?php
+}
+?>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Purpletree_Marketplace marketplace_index_attributes
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	 <update handle="customer_account"/>
+	   <head>
+		<script src="Purpletree_Marketplace::css/purpletree.css"/>
+		<script src="Purpletree_Marketplace::css/purpletree_marketplace_admin_design.css"/>
+	</head>
+    <body>
+        <referenceContainer name="content">
+            <block cacheable="false" class="Purpletree\Marketplace\Block\Brandmanagement" name="Marketplace.Brandmanagement" template="Purpletree_Marketplace::brandmanagementlist.phtml" />
+        </referenceContainer>
+    </body>
+</page>

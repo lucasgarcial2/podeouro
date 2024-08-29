@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Purpletree_Marketplace customer_account
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Software
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+       <script src="Purpletree_Marketplace::css/purpletree.css"/>
+    </head>
+   <body>
+       <attribute name="class" value="account"/>
+        <referenceContainer name="sidebar.main">
+            <block cacheable="false" class="Purpletree\Marketplace\Block\SellerMenu" name="seller_menu"  before="-" template="Purpletree_Marketplace::sellermenu.phtml">
+            </block>
+        </referenceContainer>
+   </body>
+</page>

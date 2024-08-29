@@ -1,0 +1,96 @@
+<!--
+/**
+* Purpletree_Marketplace attributes
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2020
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<div class="newattribute">
+
+	<?php $brands = $this->getAllBrands(); ?>
+	<?php if(!empty($brands)) { ?>
+	<div class="table-wrapper orders-history">
+<table class="data-grid" id="attributeGrid_table">
+	<thead> 
+		<tr>
+		
+			<!--<th class="data-grid-th _sortable _ascend col-attr-code col-attribute_code"><span></span></th>-->
+			<?php
+			$orderd = 'DESC';
+			if ($this->getRequest()->getParam('sort') && $this->getRequest()->getParam('sort') == 'title' && $this->getRequest()->getParam('order') && $this->getRequest()->getParam('order') == 'DESC') { 
+				$orderd = 'ASC';
+			}
+			?>
+			<th class="data-grid-th _sortable <?php if($orderd == 'DESC') { ?>_ascend <?php } else { ?> _descend  <?php } ?> col-attr-code col-attribute_code"><span><a href="<?php echo $this->getUrl('*/*/brandmanagement',['sort' =>'title','order' =>$orderd]) ?>"><?php echo __('Title'); ?></a></span></th>
+			<th class="data-grid-th _sortable not-sort col-label col-frontend_label"><span><?php echo __('Slider Image'); ?></span></th>
+				<?php
+			$orderd1 = 'DESC';
+			if ($this->getRequest()->getParam('sort') && $this->getRequest()->getParam('sort') == 'is_show_in_slider' && $this->getRequest()->getParam('order') && $this->getRequest()->getParam('order') == 'DESC') { 
+				$orderd1 = 'ASC';
+			}
+			?>
+			<th class=" <?php if($orderd1 == 'DESC') { ?>_ascend <?php } else { ?> _descend  <?php } ?> data-grid-th _sortable not-sort col-required col-is_required"><span><a href="<?php echo $this->getUrl('*/*/brandmanagement',['sort' =>'is_show_in_slider','order' =>$orderd1]) ?>"><?php echo __('Show in Slider'); ?></a></span></th>
+			<?php
+			$orderd2 = 'DESC';
+			if ($this->getRequest()->getParam('sort') && $this->getRequest()->getParam('sort') == 'slider_position' && $this->getRequest()->getParam('order') && $this->getRequest()->getParam('order') == 'DESC') { 
+				$orderd2 = 'ASC';
+			}
+			?>
+			<th class=" <?php if($orderd2 == 'DESC') { ?>_ascend <?php } else { ?> _descend  <?php } ?> data-grid-th _sortable not-sort col-system col-is_user_defined"><span><a href="<?php echo $this->getUrl('*/*/brandmanagement',['sort' =>'slider_position','order' =>$orderd2]) ?>"><?php echo __('Position in Slider'); ?></a></span></th> 
+			<?php
+			$orderd3 = 'DESC';
+			if ($this->getRequest()->getParam('sort') && $this->getRequest()->getParam('sort') == 'url_alias' && $this->getRequest()->getParam('order') && $this->getRequest()->getParam('order') == 'DESC') { 
+				$orderd3 = 'ASC';
+			}
+			?>
+			<th class="<?php if($orderd3 == 'DESC') { ?>_ascend <?php } else { ?> _descend  <?php } ?>  data-grid-th _sortable not-sort col-system col-is_user_defined"><span><a href="<?php echo $this->getUrl('*/*/brandmanagement',['sort' =>'url_alias','order' =>$orderd3]) ?>"><?php echo __('URL alias'); ?></a></span></th> 
+			<th class="data-grid-th _sortable not-sort col-system col-is_user_defined"><span><?php echo __('Image'); ?></span></th> 
+				<?php
+			$orderd4 = 'DESC';
+			if ($this->getRequest()->getParam('sort') && $this->getRequest()->getParam('sort') == 'description' && $this->getRequest()->getParam('order') && $this->getRequest()->getParam('order') == 'DESC') { 
+				$orderd4 = 'ASC';
+			}
+			?>
+			<th class="<?php if($orderd4 == 'DESC') { ?>_ascend <?php } else { ?> _descend  <?php } ?>  data-grid-th _sortable not-sort col-system col-is_user_defined"><span><a href="<?php echo $this->getUrl('*/*/brandmanagement',['sort' =>'description','order' =>$orderd4]) ?>"><?php echo __('Description'); ?></a></span></th> 
+			<th class="data-grid-th _sortable not-sort col-action"><span><?php echo __('Action'); ?></span></th> 
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach($brands as $brand) { ?>
+	<?php if($brand['value']){ ?>
+		<tr class="even _clickable">
+			<!--<td class="col-attr-code col-attribute_code"><?php //echo $brand['option_setting_id'].'-'.$this->getstoreId().'-'.$brand['store_id']; ?></td> -->
+			<td class="col-attr-code col-attribute_code"><?php  echo $brand['title'];  ?></td>
+			<td class="col-label col-frontend_label"><img style="height: auto;width: 60px;" class="admin__control-thumbnail" src="<?php echo $this->getImageUrl().'amasty/shopby/option_images/slider/'.$brand['slider_image']; ?>" alt="<?php echo $brand['title']; ?>"></td>
+			<td class="col-required col-is_required"><?php echo ($brand['is_show_in_slider']== 1)?'Yes':'No'; ?></td>
+			<td class="col-system col-is_user_defined"><?php echo $brand['slider_position']; ?></td>
+			<td class="col-system col-is_user_defined"><?php echo $brand['url_alias']; ?></td>
+			<td class="col-label col-frontend_label"><img class="admin__control-thumbnail" style="height: auto;width: 60px;" src="<?php echo $this->getImageUrl().'amasty/shopby/option_images/'.$brand['image']; ?>" alt="<?php echo $brand['title']; ?>"></td>
+			<td class="col-system col-is_user_defined"><?php echo $brand['description']; ?></td>
+			<td class="col-system col-edit"><a href="<?php echo $this->getUrl('*/*/editbrandmanagement',['id' =>$brand['option_setting_id']]); ?>"><?php echo __('Edit'); ?></a></td>
+		</tr>
+	<?php } } ?>
+	</tbody>
+</table>
+</div>
+	<?php if ($this->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom"><?php echo $this->getPagerHtml(); ?></div>
+    <?php endif; ?>
+
+	<?php } else {?>
+    <div class="message info empty notickets"><span><?php echo __('No Brands Found'); ?></span></div>
+	<?php } ?>
+</div>
+<style>
+#attributeGrid_table th a {
+	color:#fff;
+}
+</style>

@@ -1,0 +1,85 @@
+
+/**
+* Purpletree_Marketplace purpletree_marketplace_admin_design
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+
+
+ul.productcategorytree {
+    padding: 0 0 0 30px;
+    width: 300px;
+}
+.productcategorytree li {
+    position: relative;
+    list-style: none;
+    margin-left: -1px;
+}
+.productcategorytree li input {
+    position: absolute;
+    left: 0;
+    margin-left: 16px;
+    z-index: 5;
+    cursor: pointer;
+    height: 1em;
+    width: 1em;
+    top: 0;
+}
+.productcategorytree li input.catnoselect {
+    position: absolute;
+    left: 0;
+    margin-left: 0;
+    z-index: 2;
+    cursor: pointer;
+    height: 1.3em;
+    width: 4em;
+    top: 0;
+    opacity: 0;
+}
+.productcategorytree li input.catnoselect + ul {
+    background: url(../images/toggle-small-expand.png) 40px -2px no-repeat;
+    margin: -0.938em 0 0 -44px;
+    
+    height: 1em;
+}
+.productcategorytree li input.catnoselect + ul > li {
+    display: none;
+    margin-left: -14px !important;
+    padding-left: 1px;
+}
+.productcategorytree .catnoselect {
+    float:left;
+}
+.productcategorytree .catselect {
+      float: left;
+    margin-left: 13px !important;
+    margin-top: 3px !important;
+}
+.productcategorytree li label {
+    cursor: pointer;
+    display: initial;
+    padding-left: 4px;
+}
+.productcategorytree li input.catnoselect:checked + ul {
+    background: url(../images/toggle-small.png) 40px -2px no-repeat;
+    padding: 1.563em 0 0 80px;
+    height: auto;
+}
+.productcategorytree li input.catnoselect:checked + ul > li {
+    display: block;
+    margin: 0 0 0.125em;
+}
+.productcategorytree li input.catnoselect:checked + ul > li:last-child {
+    margin: 0 0 0.063em;
+}
+.productcategorytree ul:empty {
+    display:none !important;
+}

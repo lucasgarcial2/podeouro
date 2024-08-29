@@ -1,0 +1,48 @@
+<!--
+/**
+* Purpletree_Marketplace productview
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+
+<?php  	
+	$currentProduct = $block->getCurrentProduct();
+	$sellerId=$currentProduct->getSellerId();
+	$isSeller = $currentProduct->getIsSellerProduct();
+	$storeData=$this->getStoreDetails($sellerId); 
+	$reviewsavg=$this->getReviewsAvg($sellerId);
+	$review=$this->getReviewsCount($sellerId);
+	$isReviewVisible=$this->getReviewsVisible();
+?>
+<?php if($this->isEnabled() ==1){ ?>
+<?php if($isSeller && $sellerId != '' && $sellerId != 0){?>
+	<?php //if($isReviewVisible){?>
+	<div class="pts-rating-box">
+		<div class="pts-rating" style="width:<?php echo $reviewsavg*20;?>%;"></div>
+	</div>
+	<span class='pts-review-txt'>&nbsp;<a target="_blank" class="product-item-link" href="<?php echo $this->getUrl('marketplace/index/sellerreview').'sellerid/'.$sellerId; ?>"> <?php echo __('Store Review');?> <?php echo ' ('.$review.')';?></a></span>
+	<div class="pts-clear"></div>
+	<p>
+	<?php //} ?>
+	<b><?php echo __('SOLD BY : ');?></b><a target="_blank" class="product-item-link" href="<?php echo $this->getUrl().$storeData['store_url']; ?>"> <?php echo $storeData['store_name'];?> </a></p>		
+	<p>		
+	<form id="my_form" method="post" action="<?php echo $this->getUrl('marketplace/index/vendorcontact') ?>">
+		<?php echo $this->getBlockHtml('formkey')?> 
+		<input type="hidden" name="referral" value="<?php echo $currentProduct->getProductUrl();?>"/>
+		<input type="hidden" name="sellerId" value="<?php echo $sellerId;?>"/>	
+		<a href="javascript:{}" onclick="document.getElementById('my_form').submit(); return false;">
+		<b><?php echo __('Contact Seller');?></b>
+		</a>		
+	</form>	
+	</p>
+<?php } ?>
+<?php } ?>

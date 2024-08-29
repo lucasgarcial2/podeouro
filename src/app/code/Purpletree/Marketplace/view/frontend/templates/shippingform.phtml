@@ -1,0 +1,143 @@
+<!--
+/**
+* Purpletree_Marketplace editattribute
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<form data-mage-init='{"validation": {}}' class="form shippingform" action="<?php echo $this->getUrl('*/*/saveshippingrate') ?>" id="shippingform" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data" >
+ <?php echo $block->getBlockHtml('formkey') ?>
+  <fieldset class="fieldset" id="associate-product">
+			<legend class="legend">
+				<span><?php if($this->getShipping()) { echo __('Edit Shipping Rate'); } else { echo __('New Shipping Rate'); } ?></span>
+				<?php if($this->getShipping()) {  ?>
+				<input type="hidden" name="pk" value="<?php echo $this->getShipping()->getPk(); ?>"/>
+				<?php } ?>
+			</legend>	
+		
+		<div class="field">
+			<div class="purpletree-lbl">
+				<label class="label" for="status"><span><?php echo __('Country')?> : </span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<select id="countryselect" class="purpletree-lgwidth select val_required" title="Values Required" name="dest_country_id">
+				<option <?php  if($this->getShipping()) { if($this->getShipping()->getDestCountryId() == '') { echo "selected=selected"; } } ?> value="0"><?php echo __('All Countries'); ?></option>
+				<?php if(!empty($this->getCountryCollection())) { ?>
+				<?php foreach($this->getCountryCollection() as $key => $country) { ?>
+							<option <?php  if($this->getShipping()) { if($this->getShipping()->getDestCountryId() == $key) { echo "selected=selected"; } } ?> value="<?php echo $key; ?>"><?php echo $country; ?></option>
+				<?php } } ?>
+						</select>
+			</div>
+		</div>	
+		<div class="field">
+			<div class="purpletree-lbl">
+				<label class="label" for="status"><span><?php echo __('Region')?> : </span></label>
+			</div>
+			<div class="purpletree-lblryt">
+			<?php  if($this->getShipping()) { ?>
+			<input type="hidden" value="<?php echo $this->getShipping()->getDestRegionId(); ?>" id="destregionid" />
+			<?php } ?>
+					<select class="purpletree-lgwidth select val_required" class="select" name="dest_region_id" id="region_id" data-validate="{required:true}">
+					<option id="stat0" value="0"><?php echo __('All Regions'); ?></option>
+					</select>
+			</div>
+		</div>	 
+		<div class="field">
+			<div class="purpletree-lbl">
+				<label class="label" for="status"><span><?php echo __('Zip/Postal Code')?> : </span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<input class="purpletree-lgwidth widthinput input-text" name="dest_zip" value="<?php  if($this->getShipping()) { if($this->getShipping()->getDestZip() == '*') { } else { echo $this->getShipping()->getDestZip(); } } ?>" id="" type="text"/>
+				<div  class="purpletree-lgwidth widthinput input-text">
+				<small style="float:left;"><?php echo __('Leave blank or use * for All Zipcodes.'); ?></small>
+				</div>
+			</div>
+		</div>	
+		<div class="field">
+			<div class="purpletree-lbl">
+				<label class="label" for="status"><span><?php if($this->getConditionName() == 'package_weight') { echo __('Weight (and above)'); } elseif($this->getConditionName() == 'package_value_with_discount') { echo __('Order Subtotal (and above)'); } elseif($this->getConditionName() == 'package_qty') {  echo __('# of Items (and above)'); }  ?></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+			<?php if($this->getConditionName() == 'package_value_with_discount') { ?>
+			<span><?php echo $this->getCurrentCurrencySymbol(); ?></span>
+			<?php } ?>
+				<input class="purpletree-lgwidth required-entry widthinput input-text" name="condition_value" value="<?php if($this->getShipping()) {  if($this->getConditionName() == 'package_weight') { echo (int)$this->getShipping()->getConditionValue();  } elseif($this->getConditionName() == 'package_value_with_discount') { echo (float)$this->getShipping()->getConditionValue(); } elseif($this->getConditionName() == 'package_qty') { echo (int)$this->getShipping()->getConditionValue(); }  } ?>" id="" aria-required="true" type="text"/>
+			</div>
+		</div>	
+		<div class="field">
+			<div class="purpletree-lbl">
+				<label class="label" for="status"><span><?php echo __('Shipping Price : ')?></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<input class="purpletree-lgwidth required-entry widthinput input-text" name="price" value="<?php if($this->getShipping()) { echo (float)$this->getShipping()->getPrice(); } ?>" id="" aria-required="true" type="text"/>
+			</div>
+		</div>	
+		</fieldset>
+<div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" title="Submit" class="action submit primary pts-newbtn-next">
+                <span><?php echo __('Submit')?></span>
+            </button>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+require(['jquery','mage/mage'], function($) {
+	$(window).load(function() {
+		   var dataForm = $('#shippingform');   
+   dataForm.mage('validation', {});
+			$( "#countryselect" ).trigger("change");
+	});
+	$(document).ready(function($) {
+		//$( "#countryselect" ).change(function(event) {
+					$('#countryselect').on('change', function() {
+			var country_id = $(this).val();
+			$('[data-role="pannel"]').trigger('show.loader');
+			$.ajax({
+			type 	 : "POST",
+			url 	 : "<?php echo $this->getUrl('marketplace/index/getstate'); ?>",
+			data: "country_id="+country_id ,
+			showLoader: true,
+			dataType: "json",
+			success: function( data ){
+				var nonee = 0;
+				$('#region_id').empty();
+				$.each(data,function(k1,v1){
+					if($.isArray(v1)) {
+						 $.each(v1,function(k,v){
+							 nonee = 1;
+							  if(v.value == '') {
+								 v.label = "<?php echo __('All Regions'); ?>";
+								 v.value = '0';
+							 }  
+							 var sell = '';
+							 if($('#destregionid').val() == v.value) {
+								 sell = 'selected="selected"';
+							 }
+							$('#region_id').append('<option '+ sell +' id="stat'+ v.value +'" value="'+ v.value +'">'+ v.label +'</option>');
+						});
+					}
+				});
+				if(nonee == 0) {
+					$('#region_id').append('<option id="stat0" value="0"><?php echo __("All Regions"); ?></option>');
+				}
+				$('[data-role="pannel"]').trigger('hide.loader');
+			},
+			error: function(){
+				alert('something went wrong');
+				$('[data-role="pannel"]').trigger('hide.loader');
+			}
+			});
+		});
+	});
+});
+</script>

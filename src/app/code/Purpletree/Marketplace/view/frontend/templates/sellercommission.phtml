@@ -1,0 +1,150 @@
+<!--
+/**
+* Purpletree_Marketplace sellercommission
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<?php 
+$commissions=$this->getCommission();
+//$sellerId=$this->getSellerId();
+?>
+<div class="pts-container_review custom-pager">
+<div class="message info empty notickets"><span><?php echo __('Commissions will update after order completion.'); ?></span></div>
+	
+		<form class="form seller" data-mage-init='{"validation": {}}' action="#" id="seller-form" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data" >
+			<?php echo $this->getBlockHtml('formkey')?> 
+			<fieldset class="fieldset" >
+				<div class="fields overview " data-role="filter-form" id="date_range">
+					<span class="field field-row ">
+						<label class="label" for="date_from">
+						<span><?php echo __('From') ?>:</span>
+						</label>
+						<input class="input-text" type="text" id="date_from" name="from" />
+						<span id="date_from_advice"></span>
+					</span>
+					<span class="field  field-row">
+						<label for="date_to" class="label">
+						<span><?php echo __('To') ?>:</span>
+						</label>
+						<input class="input-text" type="text" id="date_to" name="report_to" />
+						<span id="date_to_advice"></span>
+					</span>
+					<span class="field-row">
+						&nbsp;&nbsp;<button type="submit" id="com_filter" title="<?php echo __('Filter');?>" class="action submit primary pts-newbtn-next">
+						<span><?php echo __('Filter');?></span>
+						</button>
+					</span>
+					<!--<input class="input-text" type="hidden" name="seller_id" value="<?php //echo $sellerId;?>"/>-->
+				</div>
+			</fieldset>
+		</form>
+		<div class="commissionlist">
+		<?php if($commissions && count($commissions)): ?>
+		<div class="table-wrapper orders-history">
+			<table class="data table table-order-items history" id="my-orders-table">
+				<caption class="table-caption"><?php echo __('Commission Record') ?></caption>
+				<thead>
+					<tr>
+						<th class="col id" scope="col"><?php echo __('Order ID') ?></th>
+						<th class="col price"><?php echo __('Total Price') ?></th>
+						<th class="col commission" scope="col"><?php echo __('Order Commission') ?></th>
+						<th class="col total" scope="col"><?php echo __('Status') ?></th>
+						<th class="col date" scope="col"><?php echo __('Date') ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($commissions as $commission){
+					?>
+						<tr>
+							<td class="col id" data-th="Order #"><?php echo $commission->getOrderId(); ?></td>
+							<td class="col productprice" data-th="Product Price"><?php echo $this->getFormattedPrice($commission->getProductPrice()*$commission->getProductQuantity()); ?></td>
+							<td class="col commission" data-th="Commission"><?php echo $this->getFormattedPrice($commission->getcommission()); ?></td>
+							<td class="col status" data-th="Status"><?php echo $commission->getStatus(); ?></td>
+							<td class="col date" data-th="Date"><?php $dateReview=strtotime($commission->getCreatedAt()); echo date('d-M-y',$dateReview); ?></td>
+						</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+			</div>
+		<?php if ($this->getPagerHtml()): ?>
+		<div class="pts-pagination">
+			<div class="order-products-toolbar toolbar bottom"><?php echo $this->getPagerHtml(); ?></div>
+		</div>
+		<?php endif ?>
+	<?php else: ?>
+		<div class="message info empty notickets" style="margin-top:20px;"><span><?php echo __('No Commission Added Yet'); ?></span></div>
+	<?php endif ?>
+	<script type="text/javascript">
+	require(['jquery', 'jquery/ui'], function($){ 
+		$(document).ready(function(){
+			 $("#limiter").on('click', function(event) {
+				event.preventDefault();
+			 });
+			 $("#limiter").on('change', function(event) {
+				event.preventDefault();
+				url1 = $(this).val();
+				$.ajax({
+					 type:"get", 
+					 url:url1, 
+					 showLoader: true,
+					 success: function(data) {
+						  $('.commissionlist').html($(data).find('.commissionlist').html());
+					 }
+				});
+			 });
+			 });
+			 });
+</script>
+</div>
+
+<script>
+	require([
+		"jquery",
+		"mage/calendar"
+	], function($){
+
+	   $("#date_range").dateRange({
+		 buttonText:"<?php echo __('Select Date') ?>",
+		 from:{
+			id:"date_from"
+		 },
+		 to:{
+			id:"date_to"
+		 }
+	   });
+	});
+</script>
+
+<script type="text/javascript">
+	require(['jquery', 'jquery/ui'], function($){ 
+		$(document).ready(function(){
+			$("#seller-form").submit(function(e){
+				e.preventDefault();
+			});
+			//$('#com_filter').click(function(){
+				$('#com_filter').on('click', function() {
+				var datefrom=$("#date_from").val();
+				var dateto=$("#date_to").val();
+					$.ajax({
+						dataType: "html",
+						showLoader: true,
+						data: $("#seller-form").serialize(),                   
+						type: 'POST',
+						success: function (result) { 
+						 $('.commissionlist').html($(result).find('.commissionlist').html());
+						}
+					});
+			});
+		});
+	});
+</script>	
+</div>

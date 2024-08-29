@@ -1,0 +1,88 @@
+<!--
+/**
+* Purpletree_Marketplace beseller
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<?php 
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$dataHelper = $objectManager->create('Purpletree\Marketplace\Helper\Data');
+$sellerReq=$dataHelper->getGeneralConfig('manage_links/seller_on_signup_page');
+$moduleEnable=$dataHelper->getGeneralConfig('general/enabled');
+?>
+<?php if($sellerReq && $moduleEnable){ ?>
+<div class="beseller">
+	<div class="besellerchk">
+		<input type="checkbox" id="seller-check" class="seller-check" name="is_seller" title="<?php echo __('Become a Seller') ?>" value="1" >
+		<label for="seller-check" name="seller_label" class="label"><span><?php /* @escapeNotVerified */ echo __('Become a Seller') ?></span></label>
+	</div>
+	<br/>
+	<div class="besellerurl required" style="display:none;">
+		<label for="store-url" name="seller_label" class="label"><span><?php /* @escapeNotVerified */ echo __('Store URL') ?></span><span style="color:red"><?php  echo __('*') ?></span></label>
+		<br/>
+		<input type="text" id="store-url" class="store-url validate-code" name="store_url" data-validate="{'required':true, 'no-whitespace':true}" />
+		<p style="font-size: 11px;padding-top: 3px;"><?php  echo __('Enter Unique Alphanumeric Storeurl to be used as your URL.') ?></p>
+	</div>	
+	<div class="errormsg"  style=" color: #e02b27;font-size: 12px;">
+	</div>
+</div>
+<?php } ?>
+<script type="text/javascript">
+	require(['jquery', 'jquery/ui'], function($){ 
+	$(document).ready(function(){
+	        //$('.seller-check').click(function(){
+					$('.seller-check').on('click', function() {
+            if($(this).is(":checked")){
+                $('.besellerurl').css('display', 'block');
+            }
+            else if($(this).is(":not(:checked)")){
+                $('.besellerurl').css('display', 'none');
+            }
+        });
+        });
+	$(document).ready(function(){
+			 $('form.create.account.form-create-account button.submit').on('click', function() {
+			var testing = true;
+			if($('.seller-check').is(":checked")){
+			var testing = false;
+				var storeurl = $("#store-url").val();	
+				if(storeurl != '') {
+					$.ajax({
+							url: "<?php echo $this->getUrl('marketplace/index/sellerunique'); ?>",
+							dataType: "json",
+							showLoader: true,
+							data:'store_url='+storeurl,                   
+							type: 'POST',
+							success: function (result) { 
+								if(result!=0)
+								{
+									$('.errormsg').css('display', 'block');
+									$('.errormsg').html('<span><?php echo __("Enter Unique Store URL"); ?></span>');
+								}
+								else
+								{
+									 testing = true;
+									$('form.create.account.form-create-account').submit();
+									$('.errormsg').css('display', 'none');
+								}
+							}
+						});
+				} else {
+									$('.errormsg').css('display', 'block');
+									$('.errormsg').html('<span><?php echo __("Store URL Required"); ?></span>');
+				}
+			}
+			 return testing;
+		 });
+        });
+});
+</script>	

@@ -1,0 +1,265 @@
+<!--
+/**
+* Purpletree_Marketplace editattribute
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2020
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<form id="edit_form" class="admin__scope-old" action="<?php echo $this->getUrl('*/*/brandsave'); ?>" method="post" enctype="multipart/form-data" novalidate="novalidate">
+ <?php echo $block->getBlockHtml('formkey') ?>
+<fieldset class="fieldset admin__fieldset form-inline" id="featured_fieldset">
+<legend class="admin__legend legend">
+<span><?php echo __('Slider Options'); ?></span>
+</legend><br>
+<style>
+    .admin__scope-old label.addafter {
+        display: block;
+    }
+</style>
+<div class="admin__field field field-is_featured  with-note">
+<label class="label admin__field-label" for="is_featured" ><span><?php echo __('Is Featured'); ?></span></label>
+<div class="admin__field-control control">
+	<select id="is_featured" name="is_featured" title="<?php echo __('Is Featured'); ?>" class=" select admin__control-select">
+		<option value="1" <?php if ($this->getAttribute()->getIsFeatured() == 1) { echo "Selected"; } ?> id=""><?php echo __('Yes'); ?></option>
+		<option value="0" <?php if ($this->getAttribute()->getIsFeatured() == 0) { echo "Selected"; } ?> id="" ><?php echo __('No'); ?></option>
+	</select>
+	<div class="note" id="is_featured-note"><?php echo __('Not featured options will be hidden under ‘show more’ element (if at least one attributes option is marked as Is Featured).'); ?> 
+	</div>
+</div>
+</div>
+<div class="admin__field field field-is_show_in_slider " >
+<label class="label admin__field-label" for="is_show_in_slider" ><span><?php echo __('Show in Brand Slider'); ?></span></label>
+<div class="admin__field-control control">
+<select id="is_show_in_slider" name="is_show_in_slider" title="<?php echo __('Show in Brand Slider'); ?>" class=" select admin__control-select">
+<option value="1" <?php if ($this->getAttribute()->getIsShowInSlider() == 1) { echo "Selected"; } ?> id=""><?php echo __('Yes'); ?></option>
+<option value="0" <?php if ($this->getAttribute()->getIsShowInSlider() == 0) { echo "selected"; } ?> id="" ><?php echo __('No'); ?></option>
+</select>
+</div>
+</div>
+<div class="admin__field field field-slider_position  with-note" >
+<label class="label admin__field-label" for="slider_position" ><span><?php echo __("Position in Slider"); ?></span></label>
+<div class="admin__field-control control">
+<input id="slider_position" name="slider_position" value="<?php echo $this->getAttribute()->getSliderPosition(); ?>" title="<?php echo __('Position in Slider'); ?>" type="text" class=" input-text admin__control-text" /> <div class="note" id="slider_position-note"><?php echo __("Please make sure Sort By Position is selected in the following setting group:STORES -&gt; Configuration -&gt; Improved Layered Navigation: Brands -&gt; Brand Slider"); ?></div> </div>
+</div>
+
+</fieldset>
+<fieldset class="fieldset admin__fieldset form-inline" id="seo_fieldset">
+<legend class="admin__legend legend">
+<span><?php echo __('SEO'); ?></span>
+</legend><br>
+<div class="admin__field field field-url_alias " >
+<label class="label admin__field-label" for="url_alias" ><span><?php echo __('URL alias'); ?></span></label>
+<div class="admin__field-control control">
+<input id="url_alias" name="url_alias" value="<?php echo $this->getAttribute()->getUrlAlias(); ?>" title="<?php echo __('URL alias'); ?>" type="text" class=" input-text admin__control-text" /> </div>
+</div>
+</fieldset>
+<fieldset class="fieldset admin__fieldset form-inline" id="meta_data_fieldset">
+<legend class="admin__legend legend">
+<span><?php echo __('Meta Data'); ?></span>
+</legend><br>
+<div class="admin__field field field-meta_title " >
+<label class="label admin__field-label" for="meta_title" ><span><?php echo __('Meta Title'); ?></span></label>
+<div class="admin__field-control control">
+<input id="meta_title" name="meta_title" value="<?php if($this->getAttribute()->getMetaTitle() == '')  {  echo $this->getBrandName($this->getAttribute()->getValue()); } else { echo $this->getAttribute()->getMetaTitle();  } ?>" title="<?php echo __('Meta Title'); ?>" type="text" <?php if($this->getAttribute()->getMetaTitle() == '') { echo "Disabled"; } ?> class=" input-text admin__control-text"  /> </div>
+<input type="hidden" value="<?php echo $this->getAttribute()->getOptionSettingId() ?>" name="option_setting_id" />
+<div class="field-service" >
+<label style="margin-left: 10px;" for="meta_title_default" class="choice use-default">
+<input type="checkbox" name="use_default[]" class="use-default-control" id="meta_title_default" <?php if($this->getAttribute()->getMetaTitle() == '') { ?> checked="checked" <?php } ?> onclick="toggleValueElementspagetitlemeta()" value="meta_title">
+<span class="use-default-label"><?php echo __('Use Default Value'); ?></span>
+</label>
+</div>
+</div>
+<div class="admin__field field field-meta_description " >
+<label class="label admin__field-label" for="meta_description" ><span><?php echo __('Meta Description'); ?></span></label>
+<div class="admin__field-control control">
+<textarea id="meta_description" name="meta_description" title="<?php echo __('Meta Description'); ?>" rows="2" cols="15" class=" textarea admin__control-textarea" ><?php echo $this->getAttribute()->getMetaDescription(); ?></textarea> </div>
+</div>
+<div class="admin__field field field-meta_keywords ">
+<label class="label admin__field-label" for="meta_keywords" ><span><?php echo __('Meta Keywords'); ?></span></label>
+<div class="admin__field-control control">
+<textarea id="meta_keywords" name="meta_keywords" title="<?php echo __('Meta Keywords'); ?>" rows="2" cols="15" class=" textarea admin__control-textarea" ><?php echo $this->getAttribute()->getMetaKeywords(); ?></textarea> </div>
+</div>
+</fieldset>
+<fieldset class="fieldset admin__fieldset form-inline" id="product_list_fieldset">
+<legend class="admin__legend legend">
+<span><?php echo __('Page Content'); ?></span>
+</legend><br>
+<div class="admin__field field field-title " >
+<label class="label admin__field-label" for="title" ><span><?php echo __('Page Title'); ?></span></label>
+<div class="admin__field-control control">
+<input <?php if($this->getAttribute()->getTitle() == '') { echo "Disabled"; } ?> id="pagetitle" name="title" value="<?php if($this->getAttribute()->getTitle() == '') { echo $this->getBrandName($this->getAttribute()->getValue()); } else { echo $this->getAttribute()->getTitle(); } ?>" title="<?php echo __('Title'); ?>" type="text" class=" input-text admin__control-text" /> </div>
+<div class="field-service">
+<label style="margin-left: 10px;" for="title_default_page" class="choice use-default">
+<input type="checkbox" name="use_default[]" class="use-default-control" id="title_default_page"  <?php if($this->getAttribute()->getTitle() == '') {  ?> checked="checked" <?php } ?> onclick="toggleValueElementspagetitle()" value="title">
+<span class="use-default-label"><?php echo __('Use Default Value'); ?></span>
+</label>
+</div>
+</div>
+<div class="admin__field field field-description " >
+<label class="label admin__field-label" for="description" ><span><?php echo __('Description'); ?></span></label>
+<div style="width:calc(100% * 0.66 - 30px) !important;" class="admin__field-control control">
+<textarea id="description" name="description" title="<?php echo __('Description'); ?>" class="input-text purpletree-lgwidth" rows="5"  ><?php echo $this->getAttribute()->getDescription(); ?> </textarea>
+ </div>
+</div>
+<div class="admin__field field field-short_description " >
+<label class="label admin__field-label" for="short_description" ><span><?php echo __('Short Description'); ?></span></label>
+<div class="admin__field-control control">
+<textarea id="short_description" name="short_description" title="<?php echo __('Short Description'); ?>" rows="2" cols="15" class=" textarea admin__control-textarea" ><?php echo $this->getAttribute()->getShortDescription(); ?></textarea> </div> 
+</div>
+<div class="admin__field field field-image " >
+<label class="label admin__field-label" for="image"><span><?php echo __('Image'); ?></span></label>
+<div class="admin__field-control control">
+<input id="image" name="image" value="" title="<?php echo __('Image'); ?>" type="file" />
+<?php if($this->getAttribute()->getImage()) { ?>
+<input  name="image" value="<?php echo $this->getAttribute()->getImage(); ?>" type="hidden" />
+<label class="addafter" for="image">
+<div>
+<br>
+<input type="checkbox" id="image_delete" name="image_delete" value="1">
+<label for="image_delete"><?php echo __('Delete Image'); ?></label>
+<br>
+<br><img src="<?php echo $this->getImageUrl().'amasty/shopby/option_images/'.$this->getAttribute()->getImage(); ?>">
+</div></label>
+<?php } ?>
+ </div>
+</div>
+<div class="admin__field field field-top_cms_block_id " >
+<label class="label admin__field-label" for="top_cms_block_id" ><span><?php echo __('Top CMS Block'); ?></span></label>
+<div class="admin__field-control control">
+<select id="top_cms_block_id" name="top_cms_block_id" title="<?php echo __('Top CMS Block'); ?>" class=" select admin__control-select" >
+<option value="" id="" ><?php echo __('Please select a static block.'); ?></option>
+<?php foreach($this->allCMSBlocks() as $block) { ?>
+<option <?php if ($this->getAttribute()->getTopCmsBlockId() == $block['value']) { echo 'selected'; } ?> value="<?php echo $block['value']; ?>" id=""><?php echo $block['label']; ?></option>
+<?php } ?>
+</select>
+</div>
+</div>
+<div class="admin__field field field-bottom_cms_block_id " >
+<label class="label admin__field-label" for="bottom_cms_block_id" ><span><?php echo __('Bottom CMS Block'); ?></span></label>
+<div class="admin__field-control control">
+<select id="bottom_cms_block_id" name="bottom_cms_block_id" title="<?php echo __('Bottom CMS Block'); ?>" class=" select admin__control-select" >
+<option value="" ><?php echo __('Please select a static block.'); ?></option>
+<?php foreach($this->allCMSBlocks() as $block) { ?>
+<option <?php if ($this->getAttribute()->getBottomCmsBlockId() == $block['value']) { echo "selected"; } ?> value="<?php echo $block['value']; ?>" id=""><?php echo $block['label']; ?></option>
+<?php } ?>
+</select>
+</div>
+</div>
+</fieldset>
+<fieldset class="fieldset admin__fieldset form-inline" id="other_fieldset">
+<legend class="admin__legend legend">
+<span><?php echo __('Other'); ?></span>
+</legend><br>
+<div class="admin__field field field-slider_image  with-note" >
+<label class="label admin__field-label" for="slider_image" ><span><?php echo __('Small Image'); ?></span></label>
+<div class="admin__field-control control">
+<input id="slider_image" name="slider_image" value="<?php if($this->getAttribute()->getSliderImage()) { echo $this->getAttribute()->getSliderImage(); } ?>" title="<?php echo __('Small Image'); ?>" type="file" />
+<?php if($this->getAttribute()->getSliderImage()) { ?>
+<input  name="slider_image" value="<?php echo $this->getAttribute()->getSliderImage(); ?>" type="hidden" />
+<label class="addafter" for="slider_image">
+<div><br>
+<input type="checkbox" id="slider_image_delete" name="slider_image_delete" value="1">
+<label for="slider_image_delete"><?php echo __('Delete Image'); ?></label>
+<br><br>
+<img src="<?php echo $this->getImageUrl().'amasty/shopby/option_images/slider/'.$this->getAttribute()->getSliderImage(); ?>" style="max-width:130px;"></div></label>
+<?php } ?>
+ <div class="note" id="slider_image-note"><?php echo __('Used in Brands Slider, Product Page Icon &amp; Swatch for Multiselect Attribute'); ?><br><?php echo __('Page content image is used.'); ?></div>
+ </div>
+</div>
+
+<div class="admin__field field field-small_image_alt " >
+<label class="label admin__field-label" for="small_image_alt" ><span><?php echo __('Small Image Alt'); ?></span></label>
+<div class="admin__field-control control">
+<input id="small_image_alt" name="small_image_alt" value="<?php echo $this->getAttribute()->getSmallImageAlt(); ?>" title="<?php echo __('Small Image Alt'); ?>" type="text" class=" input-text admin__control-text"/> </div>
+</div>
+</fieldset>
+<div style="margin-top: 30px;" class="actions-toolbar">
+<div class="primary">
+<button type="submit" title="Submit" class="action submit primary pts-newbtn-next">
+<span><?php echo __('Submit'); ?></span>
+</button>
+</div>
+</div>
+</form>
+<script type="text/javascript">
+	//require(['jquery'], function($){
+		function toggleValueElementspagetitle() {
+			if(jQuery('#title_default_page').is(':checked')) {
+					jQuery('#pagetitle').attr('disabled','disabled');
+				} else {
+					jQuery('#pagetitle').removeAttr('disabled');
+				}
+		}
+		function toggleValueElementspagetitlemeta() {
+			if(jQuery('#meta_title_default').is(':checked')) {
+					jQuery('#meta_title').attr('disabled','disabled');
+				} else {
+					jQuery('#meta_title').removeAttr('disabled');
+				}
+		}
+	//});
+</script>
+<?php if(version_compare($this->getVersion(),  "2.3.0") == -1) { ?>
+<script type="text/javascript">
+require(['jquery','mage/adminhtml/wysiwyg/tiny_mce/setup'], function($) {
+	$(document).ready(function($) {
+	tinyMCE.init({
+    mode : "exact",
+    elements: "description",
+    theme : "advanced",
+    plugins : "inlinepopups,style,layer,table,save,advhr,advlink,emotions,iespell,insertdatetime,preview,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras",
+    theme_advanced_buttons1 : "newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+    theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,|,undo,redo,|,link,unlink,anchor,cleanup,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+    theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,advhr,|,print,|,ltr,rtl,|,fullscreen",
+    theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,|,visualchars,nonbreaking",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left",
+    theme_advanced_path_location : "bottom",
+    extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
+    theme_advanced_resize_horizontal : 'true',
+    theme_advanced_resizing : 'true',
+    apply_source_formatting : 'true',
+    convert_urls : 'false',
+    force_br_newlines : 'true',
+    doctype : '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
+  });
+});
+});
+</script>
+<?php } else { ?>
+<script type="text/javascript">
+require(['jquery','mage/adminhtml/wysiwyg/tiny_mce/setup'], function($) {
+	$(document).ready(function($) {
+	tinyMCE.init({
+    mode : "exact",
+    elements: "description",
+	 plugins: "image",
+	 menubar: "",
+	toolbar: "image | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | fontsizeselect forecolor backcolor | preview fullscreen | template | formatselect | fontselect |fontsizeselect",
+	removed_menuitems: 'newdocument',
+    extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
+    apply_source_formatting : 'true',
+    convert_urls : 'false',
+    force_br_newlines : 'true',
+    doctype : '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
+  });
+});
+});
+</script>
+<?php } ?>
+<style>
+.fieldset .legend {
+	margin: initial !important;
+}
+.field-description button:hover{
+	border-width:0 !important;
+}
+</style>

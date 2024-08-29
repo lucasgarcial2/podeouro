@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Purpletree_Marketplace acl
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Software
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Purpletree_Marketplace::marketplace" title="Marketplace" sortOrder="40">
+					<resource id="Purpletree_Marketplace::sellerlisting" title="Seller Listing" sortOrder="10" />
+					<resource id="Purpletree_Marketplace::orderlisting" title="Order Listing" sortOrder="10" />
+					<resource id="Purpletree_Marketplace::payments" title="Payments" sortOrder="10" />
+					<resource id="Purpletree_Marketplace::commission" title="Commission" sortOrder="10" />
+					<resource id="Purpletree_Marketplace::vendorcontact" title="Vendor Contact" sortOrder="10" />
+					<resource id="Purpletree_Marketplace::reviews" title="Reviews" sortOrder="10" />
+                </resource>
+				<resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Purpletree_Marketplace::marketplace_configuration" title="Marketplace Configuration" sortOrder="50" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

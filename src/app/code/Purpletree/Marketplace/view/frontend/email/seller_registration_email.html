@@ -1,0 +1,33 @@
+<!--
+/**
+* Purpletree_Marketplace seller_registration_email
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Software
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+
+<!--@subject New Seller Register  @-->
+
+{{template config_path="design/email/header_template"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{trans "%name," name=$name}}</p>
+            <p>{{trans '%message' message=$message }}</p>
+            <p>{{trans 'Seller Name - %sellername' sellername=$sellername }}</p>
+            <p>{{trans 'Seller Email - %selleremail' selleremail=$selleremail }}</p>
+            <p>{{trans 'Seller Unique url - %store_url' store_url=$store_url }}</p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

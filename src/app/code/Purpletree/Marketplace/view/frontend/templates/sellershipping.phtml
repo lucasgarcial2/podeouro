@@ -1,0 +1,170 @@
+<!--
+/**
+* Purpletree_Marketplace sellerpayment
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<?php 
+$shippingRates=$this->getShippingRates();
+//$sellerId=$this->getSellerId();
+?>
+<div class="actions-toolbar">
+    <div class="primary">
+        <a href="<?php echo $this->getUrl('*/*/newshipping'); ?>" title="Add New Product" class="action primary add pts-newbtn-next"><span><?php echo __('Add Shipping Rate');?></span></a>
+    </div>
+
+</div>
+	<div class="pts-seller-dashboard ">
+		<table class="data table table-order-items history pts-seller-payment" id="my-pay-table" style="margin-top:20px;">
+			<tbody>
+				<tr class="pts-payment-tr">
+					<td class="value">
+						<a id="carriers_purpletreetablerate_export" href="<?php echo $this->getUrl('*/*/ExportShipping'); ?>" title="Export CSV" type="button" class="action-default scalable">
+							<span><?php echo __('Export CSV'); ?></span>
+						</a>
+					</td>
+					<td class="value">
+					<form data-mage-init='{"validation": {}}' class="form generateticket" action="<?php echo $this->getUrl('*/*/importShipping') ?>"  id="importsellershipping" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data" >
+					 <?php echo $block->getBlockHtml('formkey') ?>
+					<input id="carriers_purpletreetablerate_import" name="groups[purpletreetablerate][fields][import][value]" class="" type="file" />
+					<div class="actions-toolbar" style="margin-top:10px;">
+						<div class="primary">
+							<input name="hideit" id="hideit" value="" type="hidden">
+							<button type="submit" title="Submit" class="action submit primary pts-newbtn-next">
+								<span><?php echo __('Import'); ?></span>
+							</button>
+						</div>
+					</div>
+					</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div> 
+<div class="pts-container_review custom-pager">
+		<form class="form seller" action="#" id="seller-form" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data">
+			 <?php echo $block->getBlockHtml('formkey') ?>
+			<fieldset class="fieldset">
+				<div class="fields overview " data-role="filter-form" id="date_range">
+					<span class="field field-row ">
+						<label class="label" for="date_from">
+						<span><?php echo __('Country'); ?>:</span>
+						</label>
+						<select class="input-text _has-datepicker" type="text" id="date_from" name="countryid" />
+						<option value="0"><?php echo __('All Countries'); ?></option>
+						<?php foreach($this->getCountryCollection() as $key => $country) { ?>
+						<option value="<?php echo $key; ?>"><?php echo $country; ?></option>
+						<?php  }  ?>
+						</select>
+						<span id="date_from_advice"></span>
+					</span>
+					<span class="field  field-row">
+						<label for="date_to" class="label">
+						<span><?php echo __('Zip/Postal Code'); ?>:</span>
+						</label>
+						<input class="input-text _has-datepicker" type="text" id="date_to" name="zipcode" autocomplete="on">
+						<span id="date_to_advice"></span>
+					</span>
+					<span class="field-row">
+						&nbsp;&nbsp;<button type="submit" id="com_filter" title="Filter" class="action submit primary pts-newbtn-next">
+							<span><?php echo __('Filter'); ?></span>
+						</button>
+					</span>
+				</div>
+			</fieldset>
+		</form>
+		<div class="paymentlistt">
+			<?php if($shippingRates && count($shippingRates)):?>
+		<div class="table-wrapper orders-history">
+			<table class="data table table-order-items history" id="my-orders-table">
+				<caption class="table-caption"><?php echo __('Shipping Rates Record') ?></caption>
+				<thead>
+					<tr>
+						<th class="col id" scope="col"><?php echo __('Country') ?></th>
+						<th class="col shipping" scope="col"><?php echo __('Region') ?></th>
+						<th class="col shipping" scope="col"><?php echo __('Zip/Postal Code') ?></th>
+						<th class="col total" scope="col"><?php if($this->getConditionName() == 'package_weight') { echo __('Weight (and above)'); } elseif($this->getConditionName() == 'package_value_with_discount') { echo __('Order Subtotal (and above)'); } elseif($this->getConditionName() == 'package_qty') {  echo __('# of Items (and above)'); } ?></th>
+						<th class="col date" scope="col"><?php echo __('Shipping Price') ?></th>
+						<th class="col date" scope="col"><?php echo __('Action') ?></th>
+					</tr>
+				</thead>
+				<tbody class="paymentbody">
+					<?php foreach ($shippingRates as $shippingRate){
+					?>
+						<tr>
+							<td class="col id" ><?php echo $this->getCountryName($shippingRate->getDestCountryId()); ?></td>
+							<td class="col shipping" ><?php echo $this->getRegionName($shippingRate->getDestRegionId()); ?></td>
+							<td class="col shipping" ><?php if($shippingRate->getDestZip() == 0 || $shippingRate->getDestZip() == '0' || $shippingRate->getDestZip() == '*' || $shippingRate->getDestZip() == '') { echo __('All'); } else { echo $shippingRate->getDestZip(); } ?></td>
+							<td class="col shipping" ><?php if($this->getConditionName() == 'package_weight') { echo (float)$shippingRate->getConditionValue(); } elseif($this->getConditionName() == 'package_value_with_discount') { echo $this->getFormattedPrice($shippingRate->getConditionValue()); } elseif($this->getConditionName() == 'package_qty') {  echo (int)$shippingRate->getConditionValue(); }  ?></td>
+							<td class="col shipping" ><?php echo $this->getFormattedPrice($shippingRate->getPrice()); ?></td>
+							 <td class="col">
+						<a href="<?php echo $this->getUrl('*/*/editshipping',['id' =>$shippingRate->getPk()]) ?>"><?php echo __('Edit') ?></a>|
+							<a href="<?php echo $this->getUrl('*/*/deleteshipping',['id' =>$shippingRate->getPk()]) ?>"><?php echo __('Delete') ?></a>
+						</td>
+				
+						</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+		</div>
+		<?php if ($this->getPagerHtml()): ?>
+		<div class="pts-pagination">
+			<div class="order-products-toolbar toolbar bottom"><?php echo $this->getPagerHtml(); ?></div>
+		</div>
+		<?php endif ?> 
+	<?php else: ?>
+		<div class="message info empty notickets" style="margin-top:20px;"><span><?php echo __('No Shipping Rates Added Yet'); ?></span></div>
+	<?php endif ?>
+	<script type="text/javascript">
+	require(['jquery', 'jquery/ui'], function($){ 
+		$(document).ready(function(){
+			 $("#limiter").on('click', function(event) {
+				event.preventDefault();
+			 });
+			 $("#limiter").on('change', function(event) {
+				event.preventDefault();
+				url1 = $(this).val();
+				$.ajax({
+					 type:"get", 
+					 url:url1, 
+					 showLoader: true,
+					 success: function(data) {
+						  $('.paymentlistt').html($(data).find('.paymentlistt').html());
+					 }
+				});
+			 });
+			 });
+			 });
+</script>
+</div>
+<script type="text/javascript">
+	require(['jquery', 'jquery/ui'], function($){ 
+		$(document).ready(function(){
+			$("#seller-form").submit(function(e){
+				e.preventDefault();
+			});
+			//$('#com_filter').click(function(){
+			$('#com_filter').on('click', function() {
+					$.ajax({
+						dataType: "html",
+						showLoader: true,
+						data:$("#seller-form").serialize(),                   
+						type: 'POST',
+						success: function (result) {
+					  $('.paymentlistt').html($(result).find('.paymentlistt').html());
+						}
+					});
+			});
+		});
+	});
+</script>	
+</div>

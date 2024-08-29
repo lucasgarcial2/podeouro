@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Purpletree_Marketplace catalog_product_view
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+		<script src="Purpletree_Marketplace::css/purpletree.css"/>
+    </head>
+	<body>
+		<referenceContainer name="content">
+			<referenceBlock name="page.main.title">
+				<block class="Purpletree\Marketplace\Block\ProductView" name="product.view.extra" template="Purpletree_Marketplace::productview.phtml"
+					/>
+			</referenceBlock>
+		</referenceContainer>
+	</body>
+</page>

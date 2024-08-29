@@ -1,0 +1,324 @@
+<?php
+	$billingAddress		= $this->getBillingAddress();
+	$shippingAddress	= $this->getShippingAddress();
+	$paymentMethod		= $this->getPaymentMethod();
+	$orderCollection   	= $this->getOrderCollection();
+	$productCollection  = $this->getProductCollection();
+	$getSellerShipping  = $this->getSellerShipping();
+?>
+<main id="anchor-content" class="page-content"><div class="page-main-actions">    <div class="page-actions-placeholder" style=""></div><div class="page-actions" data-ui-id="page-actions-toolbar-content-header"><div class="page-actions-inner" data-title="#<?php echo $this->getOrderCollection()['increment_id']; ?>"><div class="page-actions-buttons">
+        <button onclick="setLocation('<?php echo $this->getUrl('purpletree_marketplace/orderlisting/index'); ?>')" id="back" title="Back" type="button" class="action-default scalable back" data-ui-id="paypal-order-view-back-button">
+    <span><?php echo __('Back'); ?></span>
+</button>
+<button onclick="setLocation('<?php echo $this->getUrl('sales/order/view', ['order_id' => $this->getOrderId()]); ?>')" id="order_view_main" title="View Main Order" type="button" class="action-default scalable order_view_main primary">
+    <span><?php echo __('View Main Order'); ?></span>
+</button>
+<!--<button id="order_invoice" title="Invoice" type="button" class="action-default scalable invoice" onclick="setLocation('')" data-ui-id="paypal-order-view-order-invoice-button">
+    <span>Invoice</span>
+</button>-->
+
+    </div></div></div>
+</div><div id="page:main-container" class="page-columns"><div id="container" class="main-col"><div class="admin__old"><div class="entry-edit order-view" id="sales_order_view"><div id="sales_order_view_tabs_order_info_content" style="" data-ui-id="sales-order-tabs-tab-content-order-info" aria-labelledby="sales_order_view_tabs_order_info" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="true" aria-hidden="false">
+<div id="order-messages">
+    </div>
+
+
+<section class="admin__page-section order-view-account-information">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo __('Order & Account Information'); ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-information">
+                                    <div class="admin__page-section-item-title">
+                <span class="title"><?php echo __('Order and Seller Information'); ?></span>
+            </div>
+            <div class="admin__page-section-item-content">
+                <table class="admin__table-secondary order-information-table">
+                <tbody>
+				<tr>
+                    <th><?php echo __('Order'); ?> #</th>
+                    <td><?php echo $this->getOrderCollection()['increment_id']; ?></td>
+                </tr>
+				<tr>
+                    <th><?php echo __('Order Date'); ?></th>
+                    <td><?php echo  __("Order Date :").' '.date('M d, Y',strtotime($orderCollection['created_at']));?></td>
+                </tr>
+				<tr>
+                    <th><?php echo __('Admin Order Status'); ?></th>
+                    <td><span id="order_status"><?php echo ' : '.$this->getStatusOptio($orderCollection['status']);?></span></td>
+                </tr>
+				<tr>
+                    <th><?php echo __('Seller Name'); ?></th>
+                    <td>
+					<a href="<?php echo $this->getUrl('customer/index/edit', ['id' => $this->getseller()->getId()]); ?>" target="_blank">
+                                    <span><?php echo $this->getseller()->getName(); ?></span>
+                                </a>
+					</td>
+                </tr>
+				<tr>
+                    <th><?php echo __('Store Name'); ?></th>
+                    <td><?php echo $this->getsellerstorename(); ?></td>
+                </tr>
+				<tr>
+                    <th><?php echo __('Seller Store Email ID'); ?></th>
+                    <td>
+					<a href="mailto:<?php echo $this->getseller()->getEmail(); ?>"><?php echo $this->getseller()->getEmail(); ?></a></td>
+                </tr>
+				
+                                <tr>
+                    <th><?php echo __('Seller Order Status'); ?></th>
+                    <td><span id="order_status"><?php echo ' : '.$this->getStatusOptio($this->getSellerOrderStatus());?></span></td>
+                </tr>
+				</tbody>
+				</table>
+				</div>
+				</div>
+				
+
+        <div class="admin__page-section-item order-account-information">
+                        <div class="admin__page-section-item-title">
+                <span class="title"><?php echo __('Customer Information'); ?></span>
+                <div class="actions">
+                                    </div>
+            </div>
+            <div class="admin__page-section-item-content">
+                <table class="admin__table-secondary order-account-information-table">
+                    <tbody><tr>
+                        <th><?php echo __('Customer Name'); ?></th>
+                        <td>
+						<?php if($this->getCustomerIsGuest()) { ?>
+						  <span><?php echo $this->getCustomer(); ?></span>
+						<?php } else { ?>
+                <a href="<?php echo $this->getUrl('customer/index/edit', ['id' => $this->getCustomerId()]); ?>" target="_blank">
+                                    <span><?php echo $this->getCustomer(); ?></span>
+                                </a>
+						<?php } ?>
+                                                    </td>
+                    </tr>
+                    <tr>
+                        <th><?php echo __('Email'); ?></th>
+						<?php if($this->getCustomerIsGuest()) { ?>
+                        <td><a href="mailto:<?php echo $billingAddress['email'] ?>"><?php echo $billingAddress['email'] ?></a></td>
+						<?php } else { ?>
+                        <td><a href="mailto:<?php echo $this->getCustomerEmail(); ?>"><?php echo $this->getCustomerEmail(); ?></a></td>
+						<?php }  ?>
+                    </tr>
+					</tbody></table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="admin__page-section order-addresses">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo __('Address Information'); ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-billing-address">
+                        <div class="admin__page-section-item-title">
+                <span class="title"><?php echo __('Billing Address'); ?></span>
+            </div>
+            <address class="admin__page-section-item-content">
+			<?php echo $billingAddress['firstname']." "; ?><?php echo $billingAddress['lastname']; ?>
+					<?php if($billingAddress['street']!=''){echo '</br>'.$billingAddress['street'];} ?></br>
+					<?php echo $billingAddress['city'].", "; ?><?php if($billingAddress['region']!=''){echo $billingAddress['region'].',';} ?><?php echo $billingAddress['postcode']; ?></br>
+					<?php echo $this->getCountryByCode($billingAddress['country_id']); ?></br>
+					<?php echo 'T: '.$billingAddress['telephone']; ?></br>
+
+</address>
+        </div>
+		<?php if($shippingAddress) { ?>
+                    <div class="admin__page-section-item order-shipping-address">
+                                <div class="admin__page-section-item-title">
+                    <span class="title"><?php echo __('Shipping Address'); ?></span>
+                    
+                </div>
+                <address class="admin__page-section-item-content">     <address class="admin__page-section-item-content"><?php echo $shippingAddress['firstname']." "; ?><?php echo $shippingAddress['lastname']; ?>
+					<?php if($shippingAddress['street']!=''){echo '</br>'.$shippingAddress['street'];} ?></br>
+					<?php echo $shippingAddress['city'].", "; ?><?php if($shippingAddress['region']!=''){echo $shippingAddress['region'].',';} ?><?php echo $shippingAddress['postcode']; ?></br>
+					<?php echo $this->getCountryByCode($shippingAddress['country_id']); ?></br>
+					T: <a href="tel:<?php echo $shippingAddress['telephone']; ?>"><?php echo $shippingAddress['telephone']; ?></a>
+
+</address>
+</address>
+            </div>
+			<?php } ?>
+            </div>
+</section>
+<input name="order_id" value="31" type="hidden">
+
+<section class="admin__page-section order-view-billing-shipping">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo __('Payment &amp; Shipping Method'); ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-payment-method">
+                        <div class="admin__page-section-item-title">
+                <span class="title"><?php echo __('Payment Information'); ?></span>
+            </div>
+            <div class="admin__page-section-item-content">
+               <?php echo $paymentMethod; ?>
+            </div>
+        </div>
+        
+<div class="admin__page-section-item order-shipping-method">
+    <div class="admin__page-section-item-title">
+        <span class="title"><?php echo __('Shipping & Handling Information'); ?></span>
+    </div>
+    <div class="admin__page-section-item-content">
+                            <strong><?php echo $orderCollection['shipping_description']; ?></strong>
+                    </div>
+</div>
+    </div>
+</section>
+
+
+
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo __('Items Ordered'); ?></span>
+    </div>
+    <div class="admin__table-wrapper">
+    <table class="data-table admin__table-primary edit-order-table">
+        <thead>
+            <tr class="headings">
+                                                                        <th class="col-product"><span><?php echo __('Product'); ?></span></th>
+                                                        <th class="col-status"><span><?php echo __('Item Status'); ?></span></th>
+                                                        <th class="col-price-original"><span><?php echo __('Original Price'); ?></span></th>
+                                                        <th class="col-price"><span><?php echo __('Price'); ?></span></th>
+                                                        <th class="col-ordered-qty"><span><?php echo __('Qty'); ?></span></th>
+                                                        <th class="col-tax-amount"><span><?php echo __('Tax Amount'); ?></span></th>
+                                                        <th class="col-tax-percent"><span><?php echo __('Tax Percent'); ?></span></th>
+                                                        <th class="col-discont"><span><?php echo __('Discount Amount'); ?></span></th>
+                                                        <th class="col-total last"><span><?php echo __('Row Total'); ?></span></th>
+                            </tr>
+        </thead>
+			<?php foreach ($productCollection as $productData){ ?>
+                                        <tbody class="even">
+                <tr>
+                        <td class="col-product"><div id="order_item_45">
+    <div id="order_item_45_title" class="product-title"><?php echo $productData['name']; ?></div>
+
+    <div class="product-sku-block">
+        <span><?php echo __('SKU'); ?>:</span><?php echo $productData['sku']; ?></div>
+
+        </div></td>
+                    <td class="col-status"><?php echo __('Ordered'); ?></td>
+                    <td class="col-price-original"><span class="price"><?php echo $this->getCurrencyData($productData['original_price']); ?></span></td>
+                    <td class="col-price">
+    <div class="price-excl-tax">
+        
+        <span class="price"><?php echo $this->getCurrencyData($productData['base_price_incl_tax']); ?></span>
+            </div>
+</td>
+                    <td class="col-ordered-qty"><table class="qty-table">
+    <tbody><tr>
+        <th><?php echo __('Ordered'); ?></th>
+        <td><?php echo intval($productData['qty_ordered']);  ?></td>
+    </tr>
+    
+</tbody></table>
+</td>
+                    <td class="col-tax-amount"><span class="price"><?php echo  $this->getCurrencyData($productData['tax_amount']); ?></span></td>
+                    <td class="col-tax-percent"><?php echo $productData['tax_percent']; ?>%</td>
+                    <td class="col-discont"><span class="price"<?php echo $this->getCurrencyData($orderCollection['discount_amount']); ?></span></td>
+                    <td class="col-total last">
+<span class="price"><?php echo $this->getCurrencyData($productData['base_row_total_incl_tax']); ?></span></td>
+    </tr>
+                
+            </tbody>
+			<?php } ?>
+            </table>
+</div>
+</section>
+
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo __('Order Total'); ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-comments-history">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?php echo __('Change Seller Order Status'); ?></span>
+            </div>
+            <div id="order_history_block" class="edit-order-comments">
+				<form method="POST" action="<?php echo $this->getUrl('purpletree_marketplace/sellerorder/changestatus', ['seller_id' => $this->getSellerId(), 'order_id' => $this->getOrderId(), 'id' => $this->getEntityId()]); ?>" class="order-history-block" id="history_form">
+				<input name="form_key" type="hidden" value="<?php /* @escapeNotVerified */ echo $block->getFormKey() ?>" />
+					<div class="admin__field">
+						<label for="history_status" class="admin__field-label"><?php echo __('Status'); ?></label>
+						<div class="admin__field-control">
+							<select name="seller_status" id="history_status" class="admin__control-select">
+							<?php foreach($this->getStatusOptions() as $status) { ?>
+								  <option value="<?php echo $status['value']; ?>" <?php if($this->getSellerOrderStatus() == $status['value']) { ?> selected="selected" <?php } ?> ><?php echo $status['label']; ?></option>
+							<?php } ?>
+						   </select>
+						</div>
+					</div>
+					<div class="admin__field">
+						<div class="order-history-comments-actions">
+							<button id="" title="Submit" type="submit" class="action-default scalable action-save action-secondary" onclick="" data-ui-id="widget-button-0">
+								<span><?php echo __('Submit'); ?></span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+   
+	
+							<a href="<?php echo $this->getUrl('purpletree_marketplace/sellerorder/calculatecommission', ['seller_id' => $this->getSellerId(), 'order_id' => $this->getOrderId(), 'id' => $this->getEntityId()]); ?>" id="" title="Submit" type="button" class="action-default scalable action-save action-secondary" onclick="" data-ui-id="widget-button-0">
+								<span><?php echo __('Calculate Commission'); ?></span>
+							</a>
+     </div>
+        <div class="admin__page-section-item order-totals">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?php echo __('Order Totals'); ?></span>
+            </div>
+            <table class="data-table admin__table-secondary order-subtotal-table">
+    
+             <tbody>
+			 <?php if($getSellerShipping) { ?>
+			   <tr class="col-0">
+                    <td class="label">
+                        <strong><?php echo __('Subtotal'); ?></strong>
+                    </td>
+                    <td>
+                        <strong><span class="price"><?php echo  $this->getCurrencyData($this->getSellerOrderTotals()); ?></span></strong>
+                    </td>
+                </tr>
+			   <tr class="col-0">
+                    <td class="label">
+                        <strong><?php echo __('Seller Shipping'); ?></strong>
+                    </td>
+                    <td>
+                        <strong><span class="price"><?php echo  $this->getCurrencyData($this->getSellerShipping()); ?></span></strong>
+                    </td>
+                </tr>
+				<tr class="col-0">
+                    <td class="label">
+                        <strong><?php echo __('Grand Total'); ?></strong>
+                    </td>
+                    <td>
+                        <strong><span class="price"><?php echo  $this->getCurrencyData($this->getSellerOrderTotals() + $this->getSellerShipping()); ?></span></strong>
+                    </td>
+                </tr>
+			 <?php } else { ?>
+                                            <tr class="col-0">
+                    <td class="label">
+                        <strong><?php echo __('Grand Total'); ?></strong>
+                    </td>
+                    <td>
+                        <strong><span class="price"><?php echo  $this->getCurrencyData($this->getSellerOrderTotals()); ?></span></strong>
+                    </td>
+                </tr>
+			 <?php } ?>
+                                    </tbody>
+    </table>
+        </div>
+    </div>
+</section>
+
+</div>
+</div>
+
+</div></div>
+</div></main>

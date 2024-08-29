@@ -1,0 +1,54 @@
+<!--
+/**
+* Purpletree_Marketplace customerenquire
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<?php 
+$enquires=$this->getEnquire();
+?>
+<div class="pts-container_review custom-pager">
+	<?php if($enquires && count($enquires)): ?>
+		<div class="table-wrapper orders-history">
+			<table class="data table table-order-items history" id="my-orders-table">
+				<caption class="table-caption"><?php echo __('Customer Enquiry') ?></caption>
+				<thead>
+					<tr>
+						<th class="col id" scope="col"><?php echo __('Customer Name') ?></th>
+						<th class="col price"><?php echo __('Customer Email') ?></th>
+						<th class="col total" scope="col"><?php echo __('Customer Enquiry') ?></th>
+						<th class="col date" scope="col"><?php echo __('Date') ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($enquires as $enquire){
+					?>
+						<tr>
+							<td class="col id" data-th="Order #"><?php echo $enquire->getCustomerName(); ?></td>
+							<td class="col status" data-th="Status"><?php echo $enquire->getCustomerEmail(); ?></td>
+							<td class="col commission" data-th="Commission"><?php echo $enquire->getCustomerEnquire(); ?></td>
+							<td class="col date" data-th="Date"><?php $dateReview=strtotime($enquire->getCreatedAt()); echo date('d-M-y',$dateReview); ?>
+						</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+			</div>
+		<?php if ($this->getPagerHtml()): ?>
+		<div class="pts-pagination">
+			<div class="order-products-toolbar toolbar bottom"><?php echo $this->getPagerHtml(); ?></div>
+		</div>
+		<?php endif ?>
+	<?php else: ?>
+		<div class="message info empty notickets"><span><?php echo __('No Customer Enquiries Added Yet'); ?></span></div>
+	<?php endif ?>
+</div>
+

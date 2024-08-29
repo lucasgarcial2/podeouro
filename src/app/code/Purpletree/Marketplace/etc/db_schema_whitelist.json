@@ -1,0 +1,197 @@
+{
+    "purpletree_marketplace_categories": {
+        "column": {
+            "entity_id": true,
+            "seller_id": true,
+            "category_id": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "purpletree_marketplace_vendorcontact": {
+        "column": {
+            "entity_id": true,
+            "seller_id": true,
+            "customer_id": true,
+            "customer_name": true,
+            "customer_email": true,
+            "customer_enquire": true,
+            "customer_referral_url": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "purpletree_marketplace_stores": {
+        "column": {
+            "entity_idpts": true,
+            "seller_id": true,
+            "store_name": true,
+            "store_url": true,
+            "store_logo": true,
+            "store_phone": true,
+            "store_email": true,
+            "store_banner": true,
+            "store_commission": true,
+            "store_description": true,
+            "store_shipping_policy": true,
+            "store_return_policy": true,
+            "store_meta_keywords": true,
+            "store_meta_descriptions": true,
+            "store_address": true,
+            "store_city": true,
+            "store_region": true,
+            "store_region_id": true,
+            "store_country": true,
+            "store_zipcode": true,
+            "store_tin_number": true,
+            "store_bank_account": true,
+            "status_id": true,
+            "updated_at": true,
+            "created_at": true,
+            "stripe_account_id": true
+        },
+        "index": {
+            "PURPLETREE_MARKETPLACE_STORES_STORE_NAME": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "purpletree_marketplace_reviews": {
+        "column": {
+            "entity_id": true,
+            "seller_id": true,
+            "customer_id": true,
+            "review_title": true,
+            "review_description": true,
+            "rating": true,
+            "status": true,
+            "updated_at": true,
+            "created_at": true
+        },
+        "index": {
+            "PURPLETREE_MARKETPLACE_REVIEWS_SELLER_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "purpletree_marketplace_commissions": {
+        "column": {
+            "entity_id": true,
+            "seller_id": true,
+            "order_id": true,
+            "product_id": true,
+            "product_name": true,
+            "product_price": true,
+            "product_quantity": true,
+            "commission": true,
+            "status": true,
+            "updated_at": true,
+            "created_at": true
+        },
+        "index": {
+            "PURPLETREE_MARKETPLACE_COMMISSIONS_SELLER_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "purpletree_marketplace_payments": {
+        "column": {
+            "entity_id": true,
+            "seller_id": true,
+            "transaction_id": true,
+            "amount": true,
+            "payment_mode": true,
+            "status": true,
+            "updated_at": true,
+            "created_at": true
+        },
+        "index": {
+            "PURPLETREE_MARKETPLACE_PAYMENTS_SELLER_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "purpletree_marketplace_categorycommission": {
+        "column": {
+            "entity_id": true,
+            "category_id": true,
+            "commission": true,
+            "updated_at": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "purpletree_marketplace_sellerorder": {
+        "column": {
+            "entity_id": true,
+            "order_id": true,
+            "seller_id": true,
+            "product_id": true,
+            "shipping": true,
+            "order_status": true,
+            "updated_at": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "purpletree_marketplace_sellerorderinvoice": {
+        "column": {
+            "entity_id": true,
+            "order_id": true,
+            "seller_id": true,
+            "comment": true,
+            "updated_at": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "pts_shipping_tablerate": {
+        "column": {
+            "pk": true,
+            "seller_id": true,
+            "website_id": true,
+            "dest_country_id": true,
+            "dest_region_id": true,
+            "dest_zip": true,
+            "condition_name": true,
+            "condition_value": true,
+            "price": true,
+            "cost": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "UNQ_69DCF5CD0445D0CFA39B3710EF9ECADE": true
+        }
+    },
+    "sales_order": {
+        "column": {
+            "seller_id": true,
+            "is_seller": true
+        }
+    },
+    "sales_order_grid": {
+        "column": {
+            "seller_id": true,
+            "is_seller": true
+        }
+    },
+    "customer_entity": {
+        "column": {
+            "is_seller": true
+        }
+    }
+}

@@ -1,0 +1,35 @@
+<!--
+/**
+* Purpletree_Marketplace vendor_contact
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Software
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+
+<!--@subject Customer Enquiry  @-->
+
+{{template config_path="design/email/header_template"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{trans "%seller_name," seller_name=$seller_name}}</p>
+            <p>
+			{{trans 'Customer Name : %customer_name' customer_name=$customer_name }}</p>
+			<p>
+			{{trans 'Customer Enquiry : %customer_enquire' customer_enquire=$customer_enquire }}
+			</p>			
+			<p>	{{trans '%customer_referral_url' customer_referral_url=$customer_referral_url }}</p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

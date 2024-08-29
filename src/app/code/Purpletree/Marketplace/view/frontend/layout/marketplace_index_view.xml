@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Purpletree_Marketplace marketplace_index_view
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <update handle="sales_order_item_renderers"/>
+    <update handle="sales_order_item_price"/>
+    <!-- <update handle="sales_order_info_links"/> -->
+    <body>
+        <referenceContainer name="page.main.title">
+            <block cacheable="false" class="Purpletree\Marketplace\Block\Frontend\Order\Info" name="order.status" template="order/order_status.phtml"/>
+            <block cacheable="false" class="Purpletree\Marketplace\Block\Frontend\Order\Info" name="order.date" template="order/order_date.phtml"/>
+            <container name="order.actions.container" htmlTag="div" htmlClass="actions-toolbar order-actions-toolbar">
+                <block cacheable="false" class="Purpletree\Marketplace\Block\Frontend\Order\Info\Buttons" as="buttons" name="frontend.order.info.buttons"/>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="frontend.order.info.buttons">
+            <block cacheable="false" class="Purpletree\Marketplace\Block\Frontend\Order\Info\Buttons\Rss" as="buttons.rss" name="frontend.order.info.buttons.rss"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block cacheable="false" class="Purpletree\Marketplace\Block\Frontend\Order\View" name="order.comments" template="order/order_comments.phtml" before="frontend.index.info.links"/>
+            
+                <block cacheable="false" class="Purpletree\Marketplace\Block\Frontend\Order\Items" name="order_items" template="order/items.phtml">
+                    <block class="Magento\Framework\View\Element\RendererList" name="frontend.order.items.renderers" as="renderer.list"/>
+                    <block cacheable="false" class="Purpletree\Marketplace\Block\Frontend\Order\Totals" name="order_totals" template="order/totals.phtml">
+                        <arguments>
+                            <argument name="label_properties" xsi:type="string">colspan="4" class="mark"</argument>
+                            <argument name="value_properties" xsi:type="string">class="amount"</argument>
+                        </arguments>
+                        <block class="Magento\Tax\Block\Sales\Order\Tax" name="tax" template="order/tax.phtml"/>
+                    </block>
+                </block>
+         
+            <block cacheable="false" class="Purpletree\Marketplace\Block\Frontend\Order\Info" as="info" name="frontend.order.info" after="Marketplace.index.orders"/>
+        </referenceContainer>
+        <block class="Magento\Framework\View\Element\Template" name="additional.product.info" template="Magento_Theme::template.phtml"/>
+    </body>
+</page>

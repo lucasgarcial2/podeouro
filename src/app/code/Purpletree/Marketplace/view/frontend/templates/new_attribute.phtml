@@ -1,0 +1,115 @@
+<!--
+/**
+* Purpletree_Marketplace new_attribute
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<form data-mage-init='{"validation": {}}' class="form generateticket" action="<?php echo $this->getUrl('*/*/attributesave') ?>" id="generateticket-form" method="post" data-hasrequired="* Required Fields" novalidate="novalidate" enctype="multipart/form-data" >
+ <?php echo $block->getBlockHtml('formkey') ?>
+  <fieldset class="fieldset" id="associate-product">
+			<legend class="legend">
+				<span><?php echo __('Create Attribute for Products : ')?></span>
+			</legend>	
+		<div class="field">
+			<div class="purpletree-lbl">
+				<label class="label" for="status"><span><?php echo __('Attribute Code :')?> </span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<input class="purpletree-lgwidth validate-code validate-length maximum-length-19 input-text required-entry" name="attribute_code" id="" aria-required="true" type="text"/>
+			</div>
+		</div>	
+		<div class="field">
+			<div class="purpletree-lbl">
+				<label class="label" for="status"><span><?php echo __('Attribute Label : ')?></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<input class="purpletree-lgwidth required-entry widthinput input-text" name="attribute_label" id="" aria-required="true" type="text"/>
+			</div>
+		</div>	
+		<div class="field">
+			<div class="purpletree-lbl">
+				<label class="label" for="status"><span><?php echo __('Values Required : ')?></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<select id="val_required" class="purpletree-lgwidth select val_required" title="Values Required" name="is_required">
+							<option value="1"><?php echo __('Yes')?></option>
+							<option selected="selected" value="0"><?php echo __('No')?></option>
+						</select>
+			</div>
+		</div>	
+		<div class="field">
+			<div class="purpletree-lbl">
+				<label class="label" for="attributeset"><span><?php echo __('Attribute Set :')?></span></label>
+			</div>
+			<div class="purpletree-lblryt">
+				<select id="val_required" class="purpletree-lgwidth select val_required" title="Attribute Set" name="attributeset">
+							<?php  foreach($this->attributesetlist() as $attributes) { ?>
+						<?php $attri = explode('_seller_',$attributes['label']); ?>
+						<?php if(isset($attri[1]) && end($attri) == $this->sellerid()){ ?>
+								<option value="<?php echo $attributes['value']; ?>">
+									<?php array_pop($attri); echo implode('_seller_',$attri);  ?>
+								</option>
+							<?php } } ?>
+						</select>
+			</div>
+		</div>	
+
+<div class="field">
+    <legend class="legend">
+        <span><?php echo __('Manage Options (Values of Your Attribute)')?></span>
+    </legend>
+    <div id="manage-options-panel">
+        <table class="admin__control-table">
+            <thead>
+                <tr id="attribute-options-table">
+                    <th class="_required"><span><?php echo __('Value')?></span> </th>
+                    <th class="col-delete">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody class="ignore-validate ui-sortable"></tbody>
+            <tfoot>
+            <tr>
+                <th colspan="5" class="col-actions-add">
+                <button id="add_new_option_button" title="Add Option" type="button" class="action- scalable add"> <span><?php echo __('Add Option')?></span></button>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+	
+		</fieldset>
+<div class="actions-toolbar">
+        <div class="primary">
+            <input name="hideit" id="hideit" value="" type="hidden">
+            <button type="submit" title="Submit" class="action submit primary pts-newbtn-next">
+                <span><?php echo __('Submit')?></span>
+            </button>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+	require(['jquery'], function($,modal){ 
+	$(document).on('click','.delete.delete-option',function(event){
+	event.preventDefault();
+	$('#troption-'+$(this).attr('data-id')).remove();
+	});
+	$(document).on('click','#add_new_option_button',function(event){
+	event.preventDefault();
+	var optionid = 0;
+	if($('tbody tr').length) {
+		optionid = parseInt($('tbody tr:last-child').attr('data-options'))+1;
+	}
+	$('tbody').append('<tr id="troption-'+optionid+'" data-options="'+optionid+'"><td id="col-option_'+optionid+'"><input name="options[]" value="" class="input-text required-option required-unique" type="text"></td><td id="delete_button_container_option_'+optionid+'" class="col-delete"><button id="delete_button_option_'+optionid+'" data-id="'+optionid+'" title="Delete" type="button" class="action- scalable delete delete-option"><span><?php echo __("Delete");?></span></button></td></tr>')
+	});
+	});
+</script>

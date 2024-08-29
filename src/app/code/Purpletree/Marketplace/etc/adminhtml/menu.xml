@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Purpletree_Marketplace menu
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Software
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+		<add id="Purpletree_Marketplace::marketplace" translate="title" title="Marketplace" module="Purpletree_Marketplace" sortOrder="30" resource="Purpletree_Marketplace::marketplace"/>
+		
+		<add id="Purpletree_Marketplace::elements" translate="title" title="Elements" module="Purpletree_Marketplace" sortOrder="10" resource="Purpletree_Marketplace::marketplace" parent="Purpletree_Marketplace::marketplace"/>
+		
+		<add id="Purpletree_Marketplace::sellerlisting" translate="title" title="Manage Sellers" module="Purpletree_Marketplace" sortOrder="10" action="purpletree_marketplace/sellerlisting" resource="Purpletree_Marketplace::sellerlisting" parent="Purpletree_Marketplace::elements"/>
+		
+		<add id="Purpletree_Marketplace::orderlisting" translate="title" title="Manage Orders" module="Purpletree_Marketplace" sortOrder="10" action="purpletree_marketplace/orderlisting" resource="Purpletree_Marketplace::orderlisting" parent="Purpletree_Marketplace::elements"/>
+		
+		<add id="Purpletree_Marketplace::categorycommission" translate="title" title="Category Commission" module="Purpletree_Marketplace" sortOrder="10" action="purpletree_marketplace/categorycommission" resource="Purpletree_Marketplace::commission" parent="Purpletree_Marketplace::elements"/>
+
+		<add id="Purpletree_Marketplace::payments" translate="title" title="Manage Payments" module="Purpletree_Marketplace" sortOrder="10" action="purpletree_marketplace/payments" resource="Purpletree_Marketplace::payments" parent="Purpletree_Marketplace::elements"/>
+		<add id="Purpletree_Marketplace::commission" translate="title" title="View Commission" module="Purpletree_Marketplace" sortOrder="10" action="purpletree_marketplace/commission" resource="Purpletree_Marketplace::commission" parent="Purpletree_Marketplace::elements"/>	
+		<add id="Purpletree_Marketplace::vendorcontact" translate="title" title="Customer Enquiries" module="Purpletree_Marketplace" sortOrder="10" action="purpletree_marketplace/vendorcontact" resource="Purpletree_Marketplace::vendorcontact" parent="Purpletree_Marketplace::elements"/>
+		<add id="Purpletree_Marketplace::reviews" translate="title" title="View Reviews" module="Purpletree_Marketplace" sortOrder="10" action="purpletree_marketplace/reviews" resource="Purpletree_Marketplace::reviews" parent="Purpletree_Marketplace::elements"/>
+		
+		
+		<add id="Purpletree_Marketplace::settings" translate="title" title="Settings" module="Purpletree_Marketplace" sortOrder="11" resource="Purpletree_Marketplace::marketplace" parent="Purpletree_Marketplace::marketplace"/>
+	
+		<add id="Purpletree_Marketplace::help_configuration" translate="title" title="Configuration" module="Purpletree_Marketplace" sortOrder="99" parent="Purpletree_Marketplace::settings" action="adminhtml/system_config/edit/section/purpletree_marketplace" resource="Purpletree_Marketplace::marketplace_configuration"/>
+    </menu>
+</config>

@@ -1,0 +1,62 @@
+<!--
+/**
+* Purpletree_Marketplace products
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+
+<?php  
+	$_orders = $this->getOrders();
+?>
+<?php if($_orders && count($_orders)): ?>
+	<div class="table-wrapper orders-history">
+	 <table class="data table table-order-items history" id="my-orders-table">
+            <caption class="table-caption"><?php echo __('Grid Record') ?></caption>
+            <thead>
+                <tr>
+                    <th class="col id" scope="col"><?php echo __('Order # ') ?></th>
+                    <th class="col date" scope="col"><?php echo __('Date') ?></th>
+                    <th class="col shipping" scope="col"><?php echo __('Ship To') ?></th>
+                    <th class="col total" scope="col"><?php echo __('Order Total') ?></th>
+                    <th class="col status" scope="col"><?php echo __('Status') ?></th>
+                    <th class="col actions" scope="col">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($_orders as $order1){
+				?>
+                    <tr>
+                        <td class="col id" data-th="Order #"><?php echo $order1->getRealOrderId(); ?></td>
+                        <td class="col date" data-th="Date"><?php echo $block->formatDate($order1->getCreatedAt()); ?></td>
+						<td class="col shipping" data-th="Ship To">
+						<?php if($order1->getShippingAddress()) { ?>
+						<?php echo $order1->getShippingAddress()->getName(); ?>
+						<?php } ?>
+						</td>
+                        <td class="col total" data-th="Order Total"><span class="price"><?php echo  $order1->formatPrice($order1->getGrandTotal());  ?></span></td>
+                        <td class="col status" data-th="Status"><?php echo $order1->getStatusLabel(); ?></td>
+						<td class="col actions" data-th="Actions">
+						 <a href="<?php /* @escapeNotVerified */ echo $this->getViewUrl($order1) ?>" class="action view">
+							<span><?php /* @escapeNotVerified */ echo __('View Order') ?></span>
+						</a>
+						</td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+	</div>
+	<?php if ($this->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom"><?php echo $this->getPagerHtml(); ?></div>
+    <?php endif ?>
+<?php else: ?>
+    <div class="message info empty notickets"><span><?php echo __('No Orders Yet'); ?></span></div>
+<?php endif ?>

@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Purpletree_Marketplace config
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Software
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <purpletree_marketplace>
+            <general>
+                <enabled>0</enabled>
+				<process_data_field>To be Validated  </process_data_field>
+                <orderstatus>complete</orderstatus>
+                <commission>10</commission>
+                <allow_seller_manage_order>1</allow_seller_manage_order>
+                <seller_approval_required>1</seller_approval_required>
+                <product_approval_required>1</product_approval_required>
+                <allow_category_seller>2</allow_category_seller>
+                <fieldstoshow>email,phone,address</fieldstoshow>
+            </general>
+            <manage_links>
+                <seller_on_signup_page>1</seller_on_signup_page>
+                <header_enable>1</header_enable>
+                <header_text>Become Seller</header_text>
+                <footer_enable>1</footer_enable>
+                <footer_text>Become Seller</footer_text>
+				<sellers_link_label>Browse Sellers</sellers_link_label>
+                <sellers_link_seo>marketplacesellers</sellers_link_seo>
+            </manage_links>
+            <inventry>
+                <enable_low_notification>1</enable_low_notification>
+                <low_stock_qty>2</low_stock_qty>
+            </inventry>
+			<seller_review>
+                <seller_review_enabled>1</seller_review_enabled>
+            </seller_review>
+			<split_payments>
+                <enable>0</enable>
+            </split_payments>
+        </purpletree_marketplace>
+		<carriers>
+            <purpletreetablerate>
+                <active>0</active>
+                <sallowspecific>0</sallowspecific>
+                <condition_name>package_value_with_discount</condition_name>
+                <include_virtual_price>1</include_virtual_price>
+                <model>Purpletree\Marketplace\Model\Carrier\Tablerate</model>
+                <name>Purpletree Shipping Table Rate</name>
+                <title>Purpletree Best Way</title>
+                <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
+                <handling_type>F</handling_type>
+            </purpletreetablerate>
+        </carriers>
+    </default>
+</config>
+

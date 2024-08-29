@@ -1,0 +1,123 @@
+<!--
+/**
+* Purpletree_Franchise shipmentpdf
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Franchise
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<?php 
+$shippingAddress=$this->getData('shipto'); 
+$billingAddress=$this->getData('soldto'); 
+$productCollection=$this->getData('productcollection'); 
+$orderCollection=$this->getData('ordercollection'); 
+$cursymbol=$this->getData('currency'); 
+$paymentMethod=$this->getData('paymentmethod'); 
+$sellerDetails=$this->getData('sellerDetails'); 
+$orderid=$this->getData('orderid'); 
+$logoUrl=$this->getData('logoUrl'); 
+$sellerLogoUrl=$this->getData('sellerLogoUrl');
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data');
+?>
+<html>
+	<style>
+		.pdf-container {width:100%}
+		.customer{width:100%;}
+		.adres{float:left;width:50%;}
+		.invoice-top {width:100%;display:block;}
+		
+	</style>
+	<body>
+		<h1></h1>
+		<div class="pdf-container">
+			<div class="invoice-top" >
+				<div class="adres">
+						 <img src="<?php echo $sellerLogoUrl.$sellerDetails['store_logo'];?>" height="100" width="150"> 
+						<br>
+				</div>
+				<div class="adres">
+					<span><?php echo __('Store Name : ').$sellerDetails['store_name']; ?></span><br>
+					<span><?php echo __('Contact Number : ').$sellerDetails['store_phone'];?></span><br>
+					<span><?php echo __('Store Email : ').$sellerDetails['store_email'];?></span><br>
+				</div>
+			</div>
+			<div style="clear:both"></div>
+			<div style="width:100%; border:1px solid #808080!important" >
+				<div class="invoice-top">
+					<div class="orderinfo " style="width:100%; background:#737373!important; padding:1%;color:#ffffff">
+						<span><?php echo '# '.$orderCollection['increment_id'];?></span><br>
+						<span><?php echo  __('Order Date :').date('M d, Y',strtotime($orderCollection['created_at']));?></span><br>
+					</div>
+				</div>
+				<div class="invoice-top" style="">
+						<div class="adres">
+								<br><span style=""> <b><?php echo __('Sold to :')?></b></span><br>
+								<span><?php echo $shippingAddress['firstname'].' '.$shippingAddress['lastname']; ?></span><br>
+								<span><?php if($shippingAddress['street']!=''){echo ' '.$shippingAddress['street'];} ?></span><br>
+								<span><?php echo $shippingAddress['city'].", "; ?><?php if($shippingAddress['region']!=''){echo $shippingAddress['region'].', ';} ?><?php echo $shippingAddress['postcode']; ?></span><br>
+								<span><?php echo 'India'; ?></span><br>
+								<span><?php echo 'T: '.$shippingAddress['telephone']; ?></span><br><br>
+						</div>
+						<div class="adres">
+							<br><span style=""><b><?php echo __('Ship to :')?></b></span><br>
+							<span><?php echo $billingAddress['firstname'].' '.$billingAddress['lastname']; ?></span><br>
+							<span><?php if($billingAddress['street']!=''){echo ' '.$billingAddress['street'];} ?></span><br>
+							<span><?php echo $billingAddress['city'].", "; ?><?php if($billingAddress['region']!=''){echo $billingAddress['region'].', ';} ?><?php echo $billingAddress['postcode']; ?></span><br>
+							<span><?php echo 'India'; ?></span><br>
+							<span><?php echo 'T: '.$billingAddress['telephone']; ?></span><br>
+						</div>
+				</div>
+			</div>
+
+			<div style="clear:both"></div>
+			<div>
+				<div class="invoice-top" >
+					<div class="adres">
+							<span ><b> <?php echo __('Payment Method :')?></b></span><br>
+							<span><?php echo $paymentMethod; ?></span><br><br>
+					</div>
+					<div class="adres">
+						<span><b><?php echo __('Shipping Method :')?></b></span><br>
+						<span><?php echo $orderCollection['shipping_description']; ?></span><br>
+						<span class="price"><?php echo '(Total Shipping Charges '.$priceHelper->currency($orderCollection['shipping_amount'], true, false).')'; ?></span><br><br>
+					</div>
+				</div>
+			</div>
+			<div style="clear:both"></div>
+			
+			
+			<div class="order-details-items ordered">
+				<div class="table-wrapper order-items" >
+					<table id="my-orders-table" class="data table table-order-items" width="100%">
+						<tbody>
+							<tr style="width:100%; background:#E8E8E8!important;border:1px solid #808080!important;">
+								<td class="col qty"><?php echo __('Qty') ?></td>
+								<td class="col name"><?php echo __('Products') ?></td>
+								<td class="col sku"><?php echo __('SKU') ?></td>
+							</tr>
+						</tbody>
+						<?php foreach ($productCollection as $product){ $productData=$product->getData();?>
+						<tbody>
+							<tr  id="order-item-row-36">
+								<td class="col qty" data-th="Qty">
+									<span class="content"><?php echo intval($productData['qty_ordered']);  ?></span>
+								</td>
+								<td class="col name" data-th="Product Name"><?php echo $productData['name']; ?></td>
+								<td class="col sku" data-th="SKU"><?php echo $productData['sku']; ?></td>
+							</tr>
+						</tbody>
+						<?php }?>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

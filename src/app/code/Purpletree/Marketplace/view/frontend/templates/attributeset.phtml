@@ -1,0 +1,47 @@
+<!--
+/**
+* Purpletree_Marketplace attributeset
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Purpletree License that is bundled with this package in the file license.txt.
+* It is also available through online at this URL: https://www.purpletreesoftware.com/license.html
+*
+* @category    Purpletree
+* @package     Purpletree_Marketplace
+* @author      Purpletree Infotech Private Limited
+* @copyright   Copyright (c) 2017
+* @license     https://www.purpletreesoftware.com/license.html
+*/
+-->
+<div class="newattribute">
+<a class="action primary add newattributebtn pts-newbtn" href="<?php echo $this->getUrl('*/*/newattributeset') ?>"><?php echo __('Create New Attribute Set'); ?></a>
+
+	<?php $allattributes = $this->attributesetlist(); ?>
+	<?php if(!empty($allattributes)) {?>
+<table class="data-grid" id="attributeGrid_table">
+	<thead> 
+		<tr>
+			<th class="data-grid-th col-attr-code col-attribute_code"><span><?php echo __('Attribute Set Name'); ?></span></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach($allattributes as $attribute) { ?>
+		<?php $attri = explode('_seller_',$attribute['label']); 
+		?>
+		<?php if(isset($attri[1])){ ?>
+		<?php if(end($attri) == $this->sellerid()) { ?>
+		<tr class="even _clickable">
+			<td class="col-attr-code col-attribute_code"><a href="<?php echo $this->getUrl('*/*/editattributeset',['id' =>$attribute['value']]) ?>"><?php echo $attribute['label'];  ?></a></td>
+		</tr>
+		<?php } } else { ?>
+		<tr class="even _clickable">
+			<td class="col-attr-code col-attribute_code"><?php echo $attribute['label'];  ?></td>
+		</tr>
+	<?php } ?>
+	<?php  } ?>
+	</tbody>
+</table>
+	<?php } else {?>
+    <div class="message info empty notickets"><span><?php echo __('No Attribute Set Found'); ?></span></div>
+	<?php } ?>
+</div>
