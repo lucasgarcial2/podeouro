@@ -364,6 +364,7 @@ return [
         'Flurrybox_EnhancedPrivacy' => 1,
         'Hiddentechies_Base' => 1,
         'Hiddentechies_Bizkick' => 1,
+        'ImaginationMedia_Correios' => 1,
         'MageDev_BrazilZipCode' => 1,
         'MageWorx_SearchSuiteAutocomplete' => 1,
         'Magefan_Community' => 1,

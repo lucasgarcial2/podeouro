@@ -8,8 +8,8 @@ class ComposerStaticInit54fe4df829630c17355b7b0c607b5939
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
@@ -17,8 +17,8 @@ class ComposerStaticInit54fe4df829630c17355b7b0c607b5939
         '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '23c18046f52bef3eea034657bafda50f' => __DIR__ . '/..' . '/symfony/polyfill-php81/bootstrap.php',
-        'b3cf9c681af347c256e27d1a22bd8bfd' => __DIR__ . '/..' . '/vpietri/adm-quickdevbar/registration.php',
         'e8b0581a6d332830eb89701a48a29fe6' => __DIR__ . '/..' . '/rafaelstz/traducao_magento2_pt_br/registration.php',
+        'b3cf9c681af347c256e27d1a22bd8bfd' => __DIR__ . '/..' . '/vpietri/adm-quickdevbar/registration.php',
     );
 
     public static $prefixLengthsPsr4 = array (
